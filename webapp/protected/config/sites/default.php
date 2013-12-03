@@ -34,6 +34,7 @@ return array(
             'showScriptName'=>false,
             'baseUrl'=>'', // added to fix URL issues under Google App Engine
 			'rules'=>array(
+				'dashboard' => 'project/dashboard',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
@@ -81,6 +82,8 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+		'fbAppId' => '155307377991444',
+		'fbApiSecret' => 'd6b72609ff6cc3be6a4c3db13eb34416',
 	),
 
 

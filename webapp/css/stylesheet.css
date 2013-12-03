@@ -52,6 +52,11 @@ a {
 /************************************************************************************
 GENERAL STYLING
 *************************************************************************************/
+* {
+	-moz-box-sizing:content-box;
+	-webkit-box-sizing:content-box;
+	box-sizing:content-box;
+}
 body {
 	margin: 0px;
 	padding: 0px;
@@ -161,7 +166,7 @@ header {
 .dashNewStdy {
 	width: 100%;
 	float: left;
-	margin: 4% 0 0 0;
+	margin: 2% 0 0 0;
 }
 .dashBoxMainCntr {
 	float: left;
@@ -184,7 +189,7 @@ header {
 .dashBox {
 	width: 32%;
 	float: left;
-	margin: 0 2% 0 0;
+	margin: 0 1% 0 0;
 	background: #fff;
 	border-radius: 6px;
 	-moz-border-radius: 6px;
@@ -288,7 +293,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 	position: absolute;
 	top: -12px;
 	right: -5px;
-	background: url(../images/iconRed.png) no-repeat;
+	background: url(/img/dashboard/iconRed.png) no-repeat;
 	width: 29px;
 	height: 26px;
 	float: right;
@@ -339,7 +344,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 }
 .listRtTime {
 	float: left;
-	background: url(../images/iconClock.png) left center no-repeat;
+	background: url(/img/details/iconClock.png) left center no-repeat;
 	padding: 0 0 0 20px;
 	color: #999999;
 	font-size: 11px;
@@ -396,13 +401,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 }
 .detailNav ul {
 	float: left;
-	background: url(../images/iconNavStrip.png) top left repeat-y;
+	background: url(/img/nav/iconNavStrip.png) top left repeat-y;
 	margin: 0px;
 	width: 100%;
 }
 .detailNav ul li {
 	float: left;
-	background: url(../images/iconNavStrip.png) top right repeat-y;
+	background: url(/img/nav/iconNavStrip.png) top right repeat-y;
 	padding: 2% 3%;
 }
 .detailNav ul li a {
@@ -513,7 +518,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 }
 .detailMainContentMainBtn a span {
 	float: left;
-	margin: 5px 0 0 0;
+	line-height:45px;
 	color: #66cc66;
 	font-size: 26px;
 	font-weight: bold;
@@ -526,14 +531,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 	margin: 1% 0 2% 0;
 }
 .inputFilter {
-	background: url("../images/inputFlter.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+	background: url("/img/details/inputFlter.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 	border: 0 none;
 	height: 28px;
 	padding: 8px 19px 16px 47px;
 	width: 230px;
 }
 .inputSearch {
-	background: url("../images/inputSearch.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+	background: url("/img/details/inputSearch.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 	border: 0 none;
 	height: 28px;
 	padding: 8px 19px 16px 47px;

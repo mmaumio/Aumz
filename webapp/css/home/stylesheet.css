@@ -193,7 +193,6 @@ html[xmlns] .clearfix {
 	padding: 10px 2%;
 	font-size: 15px;
 	color: #5a5a5a;
-	text-transform: uppercase;
 	margin: 0 0 15px 0;
 	font-family: Tahoma, Geneva, sans-serif;
 }
@@ -216,6 +215,7 @@ html[xmlns] .clearfix {
 	padding: 7px 20px 2px 20px;
 	clear: both;
 	margin: 10px 0 0 0;
+	cursor: pointer;
 }
 .signUp {
 	background: #00e700;
@@ -547,4 +547,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	padding: 7px 20px 2px 20px;
 	clear: both;
 	margin: 10px 0 0 0;
+	cursor: pointer;
 	}

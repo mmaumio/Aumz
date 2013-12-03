@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>window.location.href="http://demo.omnisci.org";</script>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
@@ -28,19 +27,21 @@
       
       <div class="homeRt">
         <div class="signIn">
-          <h3>Signin to stirplate</h3>
+          <h3>Sign In to Stirplate.IO</h3>
           <div class="signInMain">
-            <input type="text" value="" name="" placeholder="UserName" />
-            <input type="password" value="" name="" placeholder="Password" />
-            <label class="floatLft">
-              <input type="checkbox" value="" name="" />
-              Keep me logged in.</label>
-            <label class="floatRt"><a href="javascript:void(0);">Forgot your password.</a></label>
-            <input type="submit" value="SIGNIN" name="" />
+            <?php if (!empty($errorMsg)) { ?>
+            <div class="alert alert-danger" style="color:#D00;"><?php echo $errorMsg ?></div>
+            <?php } ?>
+            <form action="/auth/login" method="post">
+              <input type="text" value="" name="email" placeholder="Email" />
+              <input type="password" value="" name="password" placeholder="Password" />
+              <label class="floatRt"><a href="javascript:void(0);">Forgot your password.</a></label>
+              <input type="submit" value="SIGN IN"/>
+            </form>
           </div>
         </div>
         <div class="signUp">
-          <h3>Signup for Our newsletters</h3>
+          <h3>Sign Up for Our newsletters</h3>
           <div class="signUpMain">
             <input type="text" value="" name="" placeholder="Email Address" />
             <input type="submit" value="SIGNUP" name="" />
