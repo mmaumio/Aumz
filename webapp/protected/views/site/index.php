@@ -125,7 +125,7 @@
       <div class="page3MainRt">
         <div class="page3MainRtMain">
           <h1> Science is hard </h1>
-          <ul> And we don't believe it should be. Stirplate was founded as an answer to the following questions that I frequently asked myself in the lab: </ul>
+          <ul> We don't believe it should be. Stirplate was founded as an answer to the following questions that I frequently asked myself in the lab: </ul>
             <br>
                 <li> "Isn't there a faster way to do this?" 
                   <li> "Isn't there a better way to share files?" 
