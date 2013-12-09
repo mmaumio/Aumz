@@ -1,7 +1,7 @@
 <?php
 
-Yii::import('application.extensions.*');
-require_once('facebook/facebook.php');
+// Yii::import('application.extensions.*');
+// require_once('facebook/facebook.php');
 
 class AuthController extends Controller
 {
@@ -10,10 +10,13 @@ class AuthController extends Controller
 	{
 		if(!empty($_POST['email']) && !empty($_POST['password']))
 		{
+			echo "user";
 			$user = User::model()->findByAttributes(array('email' => $_POST['email']));
-			
+			echo "yuuu";
 			if($user && $user->password == hash("sha256", $_POST['password'] . $user->id))
 			{
+					
+
 				$identity = new UserIdentity($user->id, $user->firstName, $user->profileImageUrl, $user->email);
 				if ($identity->authenticate())
 				{			
@@ -30,16 +33,13 @@ class AuthController extends Controller
 					}
 					return;
 				}
-			}
-		}
-
+			} 
 		$errorMsg = 'Sorry, that email and password combination was not valid';
+		}
+	}	
+	
 
-		$this->renderPartial('//site/index', array('errorMsg' => $errorMsg));
-		
-	}
-
-	public function actionFacebook()
+	/*public function actionFacebook()
 	{
 
 		$facebook = new Facebook(array(
@@ -136,6 +136,7 @@ class AuthController extends Controller
 		  	$this->redirect($loginUrl);
 		}	
 	}
+	 */
 
 	public function actionLogout()
 	{

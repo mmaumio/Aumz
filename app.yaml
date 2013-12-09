@@ -2,7 +2,7 @@ application: stirplateio
 version: 1
 runtime: php
 api_version: 1
-
+threadsafe: yes
 handlers:
 # favicon.ico support
 - url: /(favicon\.ico)
@@ -20,14 +20,6 @@ handlers:
 # IMG
 - url: /img
   static_dir: webapp/img
-
-# FONTS
-- url: /fonts
-  static_dir: webapp/fonts
-
-# JS
-- url: /js
-  static_dir: webapp/js
 
 # Main handler
 - url: /.*
