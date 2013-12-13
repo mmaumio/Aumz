@@ -2,7 +2,7 @@
     		<a id="discussion"></a>
          	<h3>Discussion</h3>
          	<div class="detailMainContentListBor">
-		        <?php foreach ($activities as $discuss) { ?>
+		        <?php foreach ($activities as $activity) { ?>
 		        	<?php $this->renderPartial('_discussion', array('activity' => $activity)); ?>
 		    	<?php } ?>
          	</div>

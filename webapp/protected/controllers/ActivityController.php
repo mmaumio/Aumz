@@ -4,21 +4,21 @@ class ActivityController extends Controller
 {
 	public function actionCreate()
 	{
-		echo "1";
+		// echo "1";
 		if (!empty($_POST['activity']))
 		{
-			echo "2";
+			// echo "2";
 			$activity = new Activity;
 			
 			$activity->attributes=$_POST['activity'];
 
 			$activity->userId = Yii::app()->session['uid'];
-			echo "3";
-			print_r($activity);
+			// echo "3";
+			// print_r($activity);
 			if ($activity->save())
 			{
-				echo "4";
-				$this->redirect(array('study/index', 'id' => $activity->studyId));
+				// echo "4";
+				$this->redirect(array('project/index', 'id' => $activity->projectId));
 			}
 			else
 			{
