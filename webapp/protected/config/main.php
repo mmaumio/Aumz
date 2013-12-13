@@ -34,10 +34,9 @@ return array(
 	// application components
 	'components'=>array(
         'assetManager'=>array(
-            // This is special Asset Manger which can work under Google App Engine
             'class'=>'application.components.CGAssetManager',
-            'basePath'=>Yii::getPathOfAlias('assets'),
-            'baseUrl'=> '/assets'
+            'basePath'=>'gs://temp__dev',
+            'baseUrl'=> 'http://commondatastorage.googleapis.com/temp__dev'
         ),
         'request'=>array(
             'baseUrl' => '/',
@@ -47,6 +46,7 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
+		
 		// uncomment the following to enable URLs in path-format
 
 		'urlManager'=>array(
@@ -62,16 +62,23 @@ return array(
 		),
 
 
+
 //		'db'=>array(
 //			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 //		),
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=127.0.0.1;dbname=omniscience',
+			'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'angelhack123',
+			'password' => '',
 			'charset' => 'utf8',
+		),
+		
+		'session' => array (
+			'class' => 'system.web.CDbHttpSession',
+			'connectionID' => 'db',
+			'sessionTableName' => 'omniscience.tempsession',
 		),
 		
 		'errorHandler'=>array(
@@ -87,10 +94,11 @@ return array(
 					'levels'=>'error, warning',
 				),
 				// uncomment the following to show log messages on web pages
-				
+				/*
 				array(
 					'class'=>'CWebLogRoute',
 				),
+				*/
 			),
 		),
 		'clientScript'=>array(
@@ -106,5 +114,10 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+		'filepickerioapikey' => 'APipHjEy4SYCn4SfbVvUzz',
+		'emailNotifications' => true,
+		'boxfolderid' => 1302694889,
+		'boxclientid' => '58l43p0xw5nv4vqpakexbg4iajqsadfh',
+		'boxclientsecret' => 'NwDCRMooJATY9pFv5ROl3bWRjcEGpqvZ'
 	),
 );

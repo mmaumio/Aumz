@@ -96,7 +96,7 @@ class SiteController extends Controller
 				$this->redirect(Yii::app()->user->returnUrl);
 		}
 
-        require_once 'google/appengine/api/users/UserService.php';
+        //require_once 'google/appengine/api/users/UserService.php';
         $googleLoginUrl = \google\appengine\api\users\UserService::createLoginURL('/site/googleLogin');
 		// display the login form
 		$this->render('login',array('model'=>$model, 'googleLoginUrl'=>$googleLoginUrl));

@@ -32,10 +32,11 @@
             <?php if (!empty($errorMsg)) { ?>
             <div class="alert alert-danger" style="color:#D00;"><?php echo $errorMsg ?></div>
             <?php } ?>
-            <form action="/auth/login" method="post">
-              <input type="text" value="" name="email" placeholder="Email" />
+			
+            <form action="auth/login" method="post">
+			  <input type="text" value="" name="email" placeholder="Email" />
               <input type="password" value="" name="password" placeholder="Password" />
-              <label class="floatRt"><a href="javascript:void(0);">Forgot your password.</a></label>
+              <label class="floatRt"><a href="javascript:void(0);">Forgot your passssword.</a></label>
               <input type="submit" value="SIGN IN"/>
             </form>
           </div>

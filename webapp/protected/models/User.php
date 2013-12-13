@@ -163,4 +163,9 @@ class User extends CActiveRecord
     
         return parent::beforeSave();
     }
+	 public static function hashPassword($password)
+    {
+    	$passwordWithSalt = $password . "omniscience super sercret hash";
+		return hash("sha256", $passwordWithSalt);
+    }
 }

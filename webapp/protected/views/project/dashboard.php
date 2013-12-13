@@ -20,22 +20,23 @@
                             <div class="dashBoxMain">
                                 <div class="dashBoxMainDiv dashBoxMain<?php echo $ctr ?>">
                                     <h3><?php echo CHtml::link($p->title, array('project/index', 'id' => $p->id)) ?></h3>
+									 <?php /* <h3><a href="index.php?r=project/index&id=<?php echo $p->id ?>"><?php echo $p->title ?></h3> */ ?>
                                     <p><!--#edtalk #edteach #edtech--></p>
                                 </div>
                                 <div class="dashBoxMainFtr">
-                                    <a href="/project/index/<?php echo $p->id ?>/#discussion">
+                                    <a href="project/index/<?php echo $p->id ?>/#discussion">
                                     <div class="dashBoxMainFtrBox">
                                         <img src="/img/dashboard/dashIcon1.png" alt="Discussion" />
                                         <!--<div class="dashBoxMainFtrBoxIcon">89</div>-->
                                     </div>
                                     </a>
-                                    <a href="/project/index/<?php echo $p->id ?>/#tasks">
+                                    <a href="project/index/<?php echo $p->id ?>/#tasks">
                                     <div class="dashBoxMainFtrBox">
                                         <img src="/img/dashboard/dashIcon2.png" alt="Tasks" />
                                         <!--<div class="dashBoxMainFtrBoxIcon">36</div>-->
                                     </div>
                                     </a>
-                                    <a href="/project/index/<?php echo $p->id ?>/#files">
+                                    <a href="project/index/<?php echo $p->id ?>/#files">
                                     <div class="dashBoxMainFtrBox dashBoxMainFtrBoxLst">
                                         <img src="/img/dashboard/dashIcon3.png" alt="Files" />
                                         <!--<div class="dashBoxMainFtrBoxIcon">65</div>-->
@@ -120,7 +121,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">New Project</h4>
       </div>
-      <form class="form-horizontal" action="/project/create" method="post">
+      <form class="form-horizontal" action="project/create" method="post">
       <div class="modal-body">
         <fieldset>
             <!-- Text input-->

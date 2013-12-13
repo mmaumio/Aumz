@@ -22,18 +22,25 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		        <h4 class="modal-title" id="myModalLabel">New Discussion</h4>
 		      </div>
-		      <div class="modal-body">
+			 <form action="/activity/create" id="newCommentForm" method="POST">
+			<div class="modal-body">
 		        <fieldset>
 		            <div class="form-group">
 		                <div class="col-md-11">
-		                    <textarea id="textarea" name="textarea">default text</textarea>
+						<input type="hidden" name="activity[projectId]" value="<?php echo $project->id ?>">
+				<input type="hidden" name="activity[type]" value="comment">
+				<textarea id="newComment" name="activity[content]" class="diss-form" placeholder="Add comment here" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 40px;" required=""></textarea>
+				<div class="clear"></div>
+				<button class="btn btn-primary" type="submit" style="float:right" id="submitCommentBtn">Submit Comment</button>
+		                   <!-- <textarea id="textarea" name="textarea">default text</textarea>-->
 		                </div>
 		            </div>
 		        </fieldset>
 		      </div>
-		      <div class="modal-footer">
+			  </form>
+		      <!--<div class="modal-footer">
 		        <button type="button" class="btn btn-primary">Add</button>
-		      </div>
+		      </div>-->
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->

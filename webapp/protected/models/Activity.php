@@ -76,7 +76,7 @@ class Activity extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'userId' => 'User',
-			'projectId' => 'Project',
+			'studyId' => 'Study',
 			'fileId' => 'File',
 			'taskId' => 'Task',
 			'parentActivityId' => 'Parent Activity',
@@ -84,6 +84,7 @@ class Activity extends CActiveRecord
 			'type' => 'Type',
 			'created' => 'Created',
 			'modified' => 'Modified',
+			'projectId' => 'Project',
 		);
 	}
 
@@ -107,7 +108,7 @@ class Activity extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('userId',$this->userId);
-		$criteria->compare('projectId',$this->projectId);
+		$criteria->compare('studyId',$this->studyId);
 		$criteria->compare('fileId',$this->fileId);
 		$criteria->compare('taskId',$this->taskId);
 		$criteria->compare('parentActivityId',$this->parentActivityId);
@@ -115,6 +116,7 @@ class Activity extends CActiveRecord
 		$criteria->compare('type',$this->type,true);
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('modified',$this->modified,true);
+		$criteria->compare('projectId',$this->projectId);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

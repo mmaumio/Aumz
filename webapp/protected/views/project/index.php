@@ -25,7 +25,7 @@
 </section>
 <section class="detailMainContent"> 
 	<div class="wrapper"> 
-    	<?php $this->renderPartial('_discussionList', array('activities' => $project->activities)); ?>
+    	<?php $this->renderPartial('_discussionList', array('activities' => $project->activities,'project'=>$project)); ?>
         
         <div class="detailMainContentMain detailMainContentMainLft">
          <a id="tasks"></a>
@@ -167,12 +167,19 @@
                 <div class="detailMainContentList3"><div class="listRtTime">5 minutes ago</div></div>
             </div>
          </div>
-            <div class="detailMainContentMainBtn">
-            	<a href="javascript:void(0);"><img src="/img/details/btnAdd.png" alt="Add Files" /><span>Add Files</span></a>
+            <!--<div class="detailMainContentMainBtn">
+            	<a href="#addAttachmentModal" role="button" data-toggle="modal"><img src="/img/details/btnAdd.png" alt="Add Files" /><span>Add Files</span></a>
+				
+
+				
+				<?php // $this->renderPartial('//attachment/_list', array('project'=>$project)); ?> 
             	<!--
                 <a href="javascript:void(0);"><img src="/img/details/btnMore.png" alt="More Files" /><span>More Files</span></a>
-            	-->
-            </div>
+            	
+            </div>-->
+			<?php $this->renderPartial('//attachment/_list', array('project'=>$project)); ?> 
         </div>
     </div>
 </section>
+
+

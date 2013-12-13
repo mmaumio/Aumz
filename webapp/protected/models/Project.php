@@ -1,5 +1,8 @@
 <?php
 
+Yii::import('application.extensions.*');
+
+
 /**
  * This is the model class for table "project".
  *
@@ -57,6 +60,7 @@ class Project extends CActiveRecord
 		return array(
 			'activities' => array(self::HAS_MANY, 'Activity', 'projectId'),
 			'files' => array(self::HAS_MANY, 'File', 'projectId'),
+			'discussions' => array(self::HAS_MANY, 'Discussion', 'projectId', 'order'=>'created DESC'),
 			'user' => array(self::BELONGS_TO, 'User', 'userId'),
 			'tags' => array(self::MANY_MANY, 'Tag', 'project_tag(projectId, tagId)'),
 			'users' => array(self::MANY_MANY, 'User', 'project_user(projectId, userId)'),
@@ -141,7 +145,7 @@ class Project extends CActiveRecord
             // create project user record
             $projectUser = new ProjectUser;
             $projectUser->projectId = $this->id;
-            $projectUser->userId = Yii::app()->user->id;
+            $projectUser->userId = Yii::app()->session['uid'];
             $projectUser->role = 'admin';
 
             if (!$projectUser->save())
@@ -150,7 +154,7 @@ class Project extends CActiveRecord
             }
         }   
 
-        /*
+      /* 
         if (empty($this->boxFolderId))
         {   
             $box = new Box_API(Yii::app()->params['boxclientid'], Yii::app()->params['boxclientsecret'], 'n/a');
@@ -168,8 +172,9 @@ class Project extends CActiveRecord
             	$this->update();
             }
         }
-        */   
-    
+          
+    */
         return parent::afterSave();
     }
+	
 }

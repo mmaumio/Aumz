@@ -1,6 +1,6 @@
 <?php
 
-// Yii::import('application.extensions.*');
+Yii::import('application.extensions.*');
 // require_once('facebook/facebook.php');
 
 class AuthController extends Controller
@@ -10,10 +10,48 @@ class AuthController extends Controller
 	{
 		if(!empty($_POST['email']) && !empty($_POST['password']))
 		{
-			echo "user";
+			
+		
+			// echo "yuuu";
+			//$conn = Yii::app()->db;
+			// echo "3";
+			// echo $conn->connectionString;
+			//$sql="select * from `omniscience`.`user`";
+			//$command=$conn->createCommand($sql);
+			//$rowcount=$command->execute();
+			// echo $rowcount;
 			$user = User::model()->findByAttributes(array('email' => $_POST['email']));
-			echo "yuuu";
-			if($user && $user->password == hash("sha256", $_POST['password'] . $user->id))
+			// echo "<br/>";
+			// echo $user->id;
+			if($user && $user->password == User::hashPassword($_POST['password']))
+			{
+				$identity = new UserIdentity($user->id, $user->firstName, $user->profileImageUrl, $user->email);
+				//print_r($identity);
+				if ($identity->authenticate())
+				{			
+					//ini_set('display_errors',true);
+				//$duration = 3600 * 24 * 30; // 30 day
+				Yii::app()->session['uid'] = $user->id;
+				//Yii::app()->user->login($identity,$duration);
+
+					if (!empty($_POST['retUrl']))
+					{
+						$this->redirect($_POST['retUrl']);
+					}
+					else
+					{
+					// echo "success";
+					$this->redirect('/dashboard');
+					}
+				//	return;
+			//echo "Success";
+				}
+				else{
+				echo "failed";
+				}
+			}
+			
+			/*if($user && $_POST['password'] == 123))
 			{
 					
 
@@ -29,11 +67,11 @@ class AuthController extends Controller
 					}
 					else
 					{
-						$this->redirect('/dashboard');
+						$this->redirect('index.php?r=project/dashboard');
 					}
 					return;
 				}
-			} 
+			} */
 		$errorMsg = 'Sorry, that email and password combination was not valid';
 		}
 	}	
