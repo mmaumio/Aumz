@@ -15,6 +15,22 @@ class ProjectController extends Controller
 		}
 	}
 
+	public function actionDelete_Comment(){
+		if (!empty($_GET['id'])){
+			$uid=Yii::app()->session['uid'];
+			$activity=Activity::model()->find(array(
+		    'condition'=>'userId=:userId AND id=:id',
+		    'params'=>array(':userId'=>$uid, ':id' => $_GET['id']),
+			));
+			// $activity= Activity::model()->findByPk($_GET['id']); 
+			if ($activity) {
+				$activity->delete();
+			}
+			$this->redirect('/project/index/'.$activity->projectId);
+			
+		}
+	}
+
 	public function actionDashboard()
 	{
 		$uid=Yii::app()->session['uid'];
