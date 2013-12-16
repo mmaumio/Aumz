@@ -177,7 +177,7 @@
                 <a href="javascript:void(0);"><img src="/img/details/btnMore.png" alt="More Files" /><span>More Files</span></a>
             	
             </div>-->
-			<?php $this->renderPartial('//attachment/_list', array('project'=>$project)); ?> 
+			<?php $this->renderPartial('//file/_list', array('project' => $project)); ?>				
         </div>
     </div>
 </section>
