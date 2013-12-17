@@ -44,7 +44,7 @@ class ProjectController extends Controller
 				$user = User::model()->find(array('condition'=>'firstName=:firstName AND lastName=:lastName','params'=>array(':firstName'=>$splited_names[0], ':lastName' => $splited_names[1])));
 				$user->add_to_project($_POST['projectId']);
 			}
-			$this->redirect('/project/index/'.$_POST['projectId']);
+			$this->redirect('/project/index/' . $_POST['projectId']);
 		}
 	}
 
