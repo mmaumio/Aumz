@@ -2,6 +2,7 @@
 	<div class="wrapper">
         <div class="detailMainGreen">
             <h3><?php echo $project->title ?></h3>
+            <p><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"><img src="/img/details/btnAdd.png" alt="New Collaborator" /></a></p>
             <p><!--#edtalk #edteach #edtech--></p>
             <div class="detailMainGreenImg">
             	<?php foreach ($project->users as $user) { ?>            		

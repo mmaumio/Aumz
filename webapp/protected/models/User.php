@@ -168,4 +168,24 @@ class User extends CActiveRecord
     	$passwordWithSalt = $password . "omniscience super sercret hash";
 		return hash("sha256", $passwordWithSalt);
     }
+    public function add_to_project($projectId)
+    {
+    	$exists = ProjectUser::model()->findAllByAttributes(array('userId' => $this->id, 'projectId' => $projectId));
+    	if(count($exists) == 0){
+
+	    	$project_user = new ProjectUser();
+	    	$project_user->projectId = $projectId;
+	    	$project_user->userId = $this->id;
+				$project_user->role = "collaborator";
+				$project= Project::model()->find(array('condition'=>'id=:id','params'=>array(':id'=>$projectId)));
+				if($project_user->save()){
+					Notification::sendEmail('userAdded', $this,$project);
+				}
+    	}
+
+    }
+    public function getName()
+    {
+    	return $this->firstName . " " .$this->lastName;
+    }
 }
