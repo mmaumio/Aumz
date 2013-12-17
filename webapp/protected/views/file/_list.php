@@ -1,9 +1,72 @@
-<h2>Files</h2>
 
-	<div class="span12 discussions pull-left" style="margin-left:0">
-		<div class="experiments-add">
+  <?php /* foreach ($file as $file) { ?>
+		        	<?php $this->renderPartial('_listfile', array('file' => $file)); ?>
+		    	<?php }  */ ?>
+				
+				
+				<?php	 /* 		
+				$sql = "SELECT * FROM `file` WHERE userId = ".Yii::app()->session['uid'];
+				$data = Yii::app()->db
+						->createCommand($sql)
+						->queryAll();
+				foreach($data as $d)
+				{ ?><a href="<?php echo $d['fpUrl']; ?>" ><?php
+				echo $d['name'];
+				echo "<br/>";
+				?></a><?php
+				}
+				*/ ?>
+				
+ <div class="detailMainContentMain">
+         <a id="files"></a>
+         <h3>
+         	Files
+         	<!--
+         	<span class="floatRt">
+	         	<input type="text" value="" name="" placeholder="Filter File Type" class="inputFilter" />
+	         	<input type="text" value="" name="" placeholder="Search File" class="inputSearch" /> 
+         	</span>
+         	-->
+     	</h3>
+         <div class="detailMainContentListBor">
+<?php
+	$proid=$project->id;
+	$uid=Yii::app()->session['uid'];
+	$row = Yii::app()->db->createCommand(array(
+    'select' => array('id','projectId','name', 'fpUrl'),
+    'from' => 'file',
+    'where' => 'userId=:userId and projectId=:projectId',
+    'params' => array(':userId'=>$uid , ':projectId'=>$proid),
+))->queryAll();
+// $rowcount=$row->execute();
 
-			<?php if (!empty($project->files)) { ?>
+foreach($row as $d)
+				{ ?>
+				 <div class="detailMainContentList">
+				<div class="detailMainContentList1"><img src="images/sampleImg1.png" alt="Image" /></div>
+				<div class="detailMainContentList2">
+				<p><b>
+				<?php $url= $d['fpUrl']; ?>
+				
+				
+				
+				<a href="#" onClick="downloadFile('<?php echo $url; ?>')"><?php
+				echo $d['name'];
+				?></b><?php 
+				echo "<br/>";
+				?></a>
+				</p>
+				</div>
+				<!--<div class="detailMainContentList3">
+  				<a href="/file/delete_comment/<?php // echo $d['id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+				</div>-->
+				</div>
+				<?php
+				}
+				?>	
+				</div>
+				
+			<?php /* if (!empty($project->files)) { ?>
 				<?php $ctr = 0; ?>
 				<?php foreach ($project->files as $data) { ?>
 					<?php 
@@ -18,11 +81,16 @@
 					
 				<?php } ?>
 
-			<?php } ?>
+			<?php } */ ?>
+	<h2>Files</h2>
+
+	<div class="span12 discussions pull-left" style="margin-left:0">
+		<div class="experiments-add">
 		</div>
 
 		<div class="clear">&nbsp;</div>
 
+		
 		<input type="filepicker" 
 		data-fp-apikey="<?php echo Yii::app()->params['filepickerioapikey'] ?>" 
 		data-fp-mimetypes="*/*" 
@@ -31,7 +99,8 @@
 		data-fp-services="COMPUTER,BOX,DROPBOX"
 		data-fp-button-text="Add Files" 
 		onchange="processFpResponse(event);"
-		class="btn btn-success fpaddfiles">
+		class="btn btn-success fpaddfiles" >
+		
 			
 	</div>
 
@@ -39,7 +108,7 @@
 <script>
 
 var processFpResponse = function(event) {
-	//console.log(event);
+	// console.log(event);
 
 	// file uploaded successfully
 
@@ -63,16 +132,283 @@ var processFpResponse = function(event) {
 		});
 	}
 
-	//console.log("attachments", attachments);
+	// console.log("attachments", attachments);
 
 	data['attachments'] = attachments;
 
 	//console.log(data);
+	var jsonText = JSON.stringify(data['attachments']);
 
-	$.post('/file/ajaxCreate', data, function(data, textStatus, jqXHR) {
+	$.ajax({
+            type: "POST",
+            url: "http://3.stirplateio.appspot.com/file/ajaxcreate",
+            data: data,
+            dataType: "json",
+            success: function (result) {
+							location.reload();
+
+		//	alert('success');
+			},
+			error:function (e){
+		//		alert(JSON.stringify(e));
+						location.reload();
+
+			}
+			});
+
+/*	$.post('/file/ajaxcreate', data, function(data, textStatus, jqXHR) {
+		//alert('hii');		
+
 		// refresh page
-		location.reload();
+	//location.reload();
 	});
+	*/
+
 
 }
 </script>
+		<style>
+
+		.replyForm {
+			display:none;
+		}
+
+		.discussions ul li ul.discussion-replies {
+			margin:0 0 0 50px;
+		}
+
+		.discussions ul li ul.discussion-replies .message {
+			margin:15px -10px 0 50px;
+		}
+
+		.experiments {
+			height:350px;
+		}
+		.collaborators, .experiments-add{
+		box-sizing: border-box;
+		}
+		.attachments, .tasks {
+			float:right;
+			background: white;
+			padding: 1%;
+			box-sizing: border-box;
+			box-shadow: 1px 1px 1px gray;
+			border-radius: 2px;
+			-webkit-box-shadow: 0 1px 0 1px #e4e6eb;
+			-moz-box-shadow: 0 1px 0 1px #e4e6eb;
+			box-shadow: 0 1px 0 1px #e4e6eb;
+			margin-bottom:3%;
+		}
+		.discussions a{
+		color:#08c;
+		}
+		.discussions ul li {
+		list-style: none;
+		position:relative;
+		-webkit-border-radius:2px;
+		-moz-border-radius:2px;
+		border-radius:2px;
+		-webkit-box-shadow:0 1px 0 1px #e4e6eb;
+		-moz-box-shadow:0 1px 0 1px #e4e6eb;
+		box-shadow:0 1px 0 1px #e4e6eb;
+		background:#fff;
+		-webkit-box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		box-sizing:border-box;
+		margin-top:20px;
+		margin-bottom:20px;
+		/*margin-right:40px;*/
+		padding:10px 0 10px 10px;
+		}
+
+		.discussions ul li:before {
+		content:'';
+		width:20px;
+		height:20px;
+		top:15px;
+		left:-20px;
+		position:absolute;
+		}
+
+		.discussions ul li .author {
+		z-index:1;
+		margin-right:1%;
+		float:left;
+		top:0;
+		}
+
+		.discussions ul li .author img {
+		height:50px;
+		-webkit-border-radius:50em;
+		-moz-border-radius:50em;
+		border-radius:50em;
+		-webkit-box-shadow:0 1px 0 1px #e4e6eb;
+		-moz-box-shadow:0 1px 0 1px #e4e6eb;
+		box-shadow:0 1px 0 1px #e4e6eb;
+		}
+
+		.discussion ul li .actvity-content {
+			margin-left:50px;
+		}
+
+		.discussions ul li .name {
+		-webkit-border-radius:2px 0 0 2px;
+		-moz-border-radius:2px 0 0 2px;
+		border-radius:2px 0 0 2px;
+		padding:0 10px;
+		}
+
+		.discussions ul li .date {
+		position:absolute;
+		top:10px;
+		right:0;
+		z-index:1;
+		background:#f3f4f6;
+		font-size:.7em;
+		-webkit-border-radius:2px 0 0 2px;
+		-moz-border-radius:2px 0 0 2px;
+		border-radius:2px 0 0 2px;
+		padding:5px 50px 5px 10px;
+		}
+
+		.discussions ul li .delete {
+		position:absolute;
+		-webkit-border-radius:0 2px 2px 0;
+		-moz-border-radius:0 2px 2px 0;
+		border-radius:0 2px 2px 0;
+		background:#e4e6eb;
+		top:10px;
+		right:0;
+		display:inline-block;
+		cursor:pointer;
+		padding:5px 10px;
+		z-index:999;
+		}
+
+		.discussions ul li .message {
+		margin:15px -10px 0 60px;
+		padding:0px;
+		}
+
+		.discussions ul.children{
+		padding-left:10px;
+		}
+
+		.discussions ul li ul {
+		overflow:hidden;
+		}
+
+		.discussions ul li ul li{
+		-webkit-box-shadow:none;
+		-moz-box-shadow:none;
+		box-shadow:none;
+		border-bottom:1px solid #e4e6eb;
+		margin:0;
+		}
+		.discussions ul.children li {
+		//border-top:1px solid #e4e6eb;
+		}
+
+		.discussions ul li ul li .author {
+		top:10px;
+		left:10px;
+		}
+
+		.discussions ul li ul li .author img {
+		height:40px;
+		-webkit-border-radius:50em;
+		-moz-border-radius:50em;
+		border-radius:50em;
+		-webkit-box-shadow:0 1px 0 1px #e4e6eb;
+		-moz-box-shadow:0 1px 0 1px #e4e6eb;
+		box-shadow:0 1px 0 1px #e4e6eb;
+		}
+
+		.discussions ul li ul li .name {
+		left:70px;
+		}
+
+		/*
+		.discussions ul li ul li .date {
+		background:transparent;
+		right:30px;
+		}
+		*/
+
+		.discussions ul li ul li textarea {
+		border:0;
+		background:rgba(199, 203, 213, 0.15);
+		-webkit-box-shadow:none;
+		-moz-box-shadow:none;
+		box-shadow:none;
+		width:100%;
+		padding:5px;
+		}
+		.discussions ul li ul li textarea::-webkit-input-placeholder {
+		color:gray!important;
+		font-size:.7em;
+		}
+		.discussions ul li ul li textarea:-moz-placeholder { /* Firefox 18- */
+		color:gray!important;
+		}
+
+		.discussions ul li ul li textarea::-moz-placeholder {  /* Firefox 19+ */
+		color:gray!important;  
+		}
+
+		.discussions ul li ul li textarea:-ms-input-placeholder {  
+		color:gray!important;
+		}
+		.discussions .attachment{
+		margin-top:10px;
+		font-size:.85em;
+		}
+		.discussions ul{
+		margin-left:0px;
+		}
+		.discussions .attachment li{
+		border: none;
+		padding: 0 10px;
+		}
+		.discussions .attachment i{
+		margin-right:1%;
+		}
+		.discussions .attachment a{
+		cursor: pointer;
+		}
+		.discussions .reply-footer a{
+		float:right;
+		}
+	</style>
+	<!-- start: JavaScript-->
+
+	<!--<script type="text/javascript" src="/js/custom.min.js"></script>-->	
+	<!-- js usages -->
+	<!--<script type="text/javascript" src="/js/core.min.js"></script>	
+	<script type="text/javascript" src="/js/jquery.transit.min.js"></script>-->
+
+	
+	<!-- end: JavaScript-->
+
+	
+  	
+	<!-- webengage feedback tab -->
+	<!--<script id="_webengage_script_tag" type="text/javascript">
+	  var _weq = _weq || {};
+	  _weq['webengage.licenseCode'] = "~99198d06";
+	  _weq['webengage.widgetVersion'] = "4.0";
+	  //_weq['webengage.feedback.alignment'] = 'left';
+	  
+	  (function(d){
+	    var _we = d.createElement('script');
+	    _we.type = 'text/javascript';
+	    _we.async = true;
+	    _we.src = (d.location.protocol == 'https:' ? "https://ssl.widgets.webengage.com" : "http://cdn.widgets.webengage.com") + "/js/widget/webengage-min-v-4.0.js";
+	    var _sNode = d.getElementById('_webengage_script_tag');
+	    _sNode.parentNode.insertBefore(_we, _sNode);
+	  })(document);
+	</script>
+
+	<script type="text/javascript" src="/js/clickheat.js"></script><noscript><p><a href="http://www.dugwood.com/index.html">Open Source Sofware</a></p></noscript>-->
+
+	<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>

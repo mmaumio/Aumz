@@ -114,6 +114,10 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+		'webengageLicenseCode' => '~99198d06',
+		'gaId' => 'UA-42897925-2',
+		'gaDomain' => 'appspot.com',
+		'mandrilKey' => '1GQGWuuFZMObqhbFLDffbQ',
 		'filepickerioapikey' => 'APipHjEy4SYCn4SfbVvUzz',
 		'emailNotifications' => true,
 		'boxfolderid' => 1302694889,

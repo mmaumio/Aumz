@@ -7,10 +7,7 @@ class StudyController extends Controller
 
 		parent::beforeAction($action);
 
-		$adminEmails = array('paraturesol@gmail.com', 
-			'solarc7@hotmail.com', 
-			'solchea@gmail.com', 
-			'kgonzales@omnisci.org', 
+		$adminEmails = array('kgonzales@omnisci.org', 
 			'kgonzales@gmail.com',
 			'kgonzalesit@yahoo.com');
 
