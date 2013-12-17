@@ -102,16 +102,16 @@
         </div>
         
         
-        <div class="detailMainContentMain">
+        <!--<div class="detailMainContentMain">
          <a id="files"></a>
          <h3>
          	Files
-         	<!--
+         	
          	<span class="floatRt">
 	         	<input type="text" value="" name="" placeholder="Filter File Type" class="inputFilter" />
 	         	<input type="text" value="" name="" placeholder="Search File" class="inputSearch" /> 
          	</span>
-         	-->
+         	
      	</h3>
          <div class="detailMainContentListBor">
             
@@ -166,7 +166,7 @@
                 </div>
                 <div class="detailMainContentList3"><div class="listRtTime">5 minutes ago</div></div>
             </div>
-         </div>
+         </div>-->
             <!--<div class="detailMainContentMainBtn">
             	<a href="#addAttachmentModal" role="button" data-toggle="modal"><img src="/img/details/btnAdd.png" alt="Add Files" /><span>Add Files</span></a>
 				

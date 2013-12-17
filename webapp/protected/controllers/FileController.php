@@ -1,47 +1,82 @@
 <?php
 
 Yii::import('application.extensions.*');
+// require_once('facebook/facebook.php');
 
 class FileController extends Controller
 {
-	public function actionAjaxCreate()
+
+	public function actionAjaxcreate()
 	{
-		if (!Yii::app()->user->isGuest && isset($_POST['attachments']) && is_array($_POST['attachments']))
+	// echo "enter";
+	$uid = Yii::app()->session['uid'];
+	// echo $uid;
+		if ($uid)
 		{
+			// print_r($_POST['attachments']);
 
+		
 			$respArray = array();
-
 			foreach ($_POST['attachments'] as $a)
 			{
-				$attachment = new File;
-			
-				$attachment->projectId = $a['projectId'];
-							
-				$attachment->name = $a['filename'];
-				$attachment->mimetype = $a['mimetype'];
-				$attachment->fpUrl = $a['url'];
+				$file = new File;
 				
 				// User Id
-				$attachment->userId = Yii::app()->user->id;
+				$file->userId = Yii::app()->session['uid'];
+				$file->projectId = $a['projectId'];			
+				$file->name = $a['filename'];
+				$file->mimetype = $a['mimetype'];
+				$file->fpUrl = $a['url'];
 				
+				//print_r($file);
+				
+				//$attachment->save();
 				// Save the attachment to the database
-				if (!$attachment->save()) 
+				//$file->save();
+				$created = new CDbExpression('UTC_TIMESTAMP()');
+				$conn = Yii::app()->db;
+				//$sql="insert into `file` values(`$file->userId`,`$file->projectId`,`$file->name`,`$file->mimetype`,`$file->fpUrl`)";
+				//$command=$conn->createCommand($sql);
+				$sql = "insert into file (userId, projectId,name,mimetype,fpUrl,created) values (:userId, :projectId,:name,:mimetype,:fpUrl,:created)";
+				$parameters = array(":userId"=>$file->userId, ':projectId' => $file->projectId, ':name' => $file->name, ':mimetype' => $file->mimetype, ':fpUrl' => $file->fpUrl,':created' => $created);
+				Yii::app()->db->createCommand($sql)->execute($parameters);
+			/*	if ($file->save())
 				{
-					Yii::log("Error saving attachment", 'error', 'FileController.actionAjaxCreate');
-					Yii::log(json_encode($attachment->getErrors()), 'error', 'FileController.actionAjaxCreate');
+					echo "success";
+			//	$this->redirect('/dashboard');
 				}
+				else 
+				{
+					Yii::log("Error saving attachment", 'error', 'FileController.actionAjaxcreate');
+					Yii::log(json_encode($file->getErrors()), 'error', 'FileController.actionAjaxcreate');
+				}	*/
 
 			}
 
-			$resp = json_decode(json_encode($respArray), false);
+	//	$file = json_decode(json_encode($file), false);
 
-			$this->_sendResponse(200, json_encode($resp));
+	//	$this->_sendResponse(200, json_encode($file));
 		}
 	}
-
+/*	public function actionDelete_Comment(){
+		if (!empty($_GET['id'])){
+			$uid=Yii::app()->session['uid'];
+			$file=File::model()->find(array(
+		    'condition'=>'userId=:userId AND id=:id',
+		    'params'=>array(':userId'=>$uid, ':id' => $_GET['id']),
+			));
+			// $activity= Activity::model()->findByPk($_GET['id']); 
+			if ($file) {
+				$file->delete();
+			}
+			$this->redirect('/file/ajaxcreate'.$file->projectId);
+			
+		}
+	}
+	*/
 	public function actionDownload()
 	{
-		if (!Yii::app()->user->isGuest && !empty($_GET['id']))
+		if (Yii::app()->session['uid'] && !empty($_GET['id']))
 		{
 			$file = File::model()->findByPk($_GET['id']);
 
@@ -61,4 +96,5 @@ class FileController extends Controller
 			}
 		}
 	}
+
 }

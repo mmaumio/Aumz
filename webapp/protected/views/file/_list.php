@@ -1,9 +1,72 @@
-<h2>Files</h2>
 
-	<div class="span12 discussions pull-left" style="margin-left:0">
-		<div class="experiments-add">
+  <?php /* foreach ($file as $file) { ?>
+		        	<?php $this->renderPartial('_listfile', array('file' => $file)); ?>
+		    	<?php }  */ ?>
+				
+				
+				<?php	 /* 		
+				$sql = "SELECT * FROM `file` WHERE userId = ".Yii::app()->session['uid'];
+				$data = Yii::app()->db
+						->createCommand($sql)
+						->queryAll();
+				foreach($data as $d)
+				{ ?><a href="<?php echo $d['fpUrl']; ?>" ><?php
+				echo $d['name'];
+				echo "<br/>";
+				?></a><?php
+				}
+				*/ ?>
+				
+ <div class="detailMainContentMain">
+         <a id="files"></a>
+         <h3>
+         	Files
+         	<!--
+         	<span class="floatRt">
+	         	<input type="text" value="" name="" placeholder="Filter File Type" class="inputFilter" />
+	         	<input type="text" value="" name="" placeholder="Search File" class="inputSearch" /> 
+         	</span>
+         	-->
+     	</h3>
+         <div class="detailMainContentListBor">
+<?php
+	$proid=$project->id;
+	$uid=Yii::app()->session['uid'];
+	$row = Yii::app()->db->createCommand(array(
+    'select' => array('id','projectId','name', 'fpUrl'),
+    'from' => 'file',
+    'where' => 'userId=:userId and projectId=:projectId',
+    'params' => array(':userId'=>$uid , ':projectId'=>$proid),
+))->queryAll();
+// $rowcount=$row->execute();
 
-			<?php if (!empty($project->files)) { ?>
+foreach($row as $d)
+				{ ?>
+				 <div class="detailMainContentList">
+				<div class="detailMainContentList1"><img src="images/sampleImg1.png" alt="Image" /></div>
+				<div class="detailMainContentList2">
+				<p><b>
+				<?php $url= $d['fpUrl']; ?>
+				
+				
+				
+				<a href="#" onClick="downloadFile('<?php echo $url; ?>')"><?php
+				echo $d['name'];
+				?></b><?php 
+				echo "<br/>";
+				?></a>
+				</p>
+				</div>
+				<!--<div class="detailMainContentList3">
+  				<a href="/file/delete_comment/<?php // echo $d['id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+				</div>-->
+				</div>
+				<?php
+				}
+				?>	
+				</div>
+				
+			<?php /* if (!empty($project->files)) { ?>
 				<?php $ctr = 0; ?>
 				<?php foreach ($project->files as $data) { ?>
 					<?php 
@@ -18,11 +81,16 @@
 					
 				<?php } ?>
 
-			<?php } ?>
+			<?php } */ ?>
+	<h2>Files</h2>
+
+	<div class="span12 discussions pull-left" style="margin-left:0">
+		<div class="experiments-add">
 		</div>
 
 		<div class="clear">&nbsp;</div>
 
+		
 		<input type="filepicker" 
 		data-fp-apikey="<?php echo Yii::app()->params['filepickerioapikey'] ?>" 
 		data-fp-mimetypes="*/*" 
@@ -40,7 +108,7 @@
 <script>
 
 var processFpResponse = function(event) {
-	//console.log(event);
+	// console.log(event);
 
 	// file uploaded successfully
 
@@ -64,16 +132,38 @@ var processFpResponse = function(event) {
 		});
 	}
 
-	//console.log("attachments", attachments);
+	// console.log("attachments", attachments);
 
 	data['attachments'] = attachments;
 
 	//console.log(data);
+	var jsonText = JSON.stringify(data['attachments']);
 
-	$.post('/file/ajaxCreate', data, function(data, textStatus, jqXHR) {
+	$.ajax({
+            type: "POST",
+            url: "http://3.stirplateio.appspot.com/file/ajaxcreate",
+            data: data,
+            dataType: "json",
+            success: function (result) {
+							location.reload();
+
+		//	alert('success');
+			},
+			error:function (e){
+		//		alert(JSON.stringify(e));
+						location.reload();
+
+			}
+			});
+
+/*	$.post('/file/ajaxcreate', data, function(data, textStatus, jqXHR) {
+		//alert('hii');		
+
 		// refresh page
-		location.reload();
+	//location.reload();
 	});
+	*/
+
 
 }
 </script>
@@ -292,10 +382,10 @@ var processFpResponse = function(event) {
 	</style>
 	<!-- start: JavaScript-->
 
-	<script type="text/javascript" src="/js/custom.min.js"></script>	
+	<!--<script type="text/javascript" src="/js/custom.min.js"></script>-->	
 	<!-- js usages -->
-	<script type="text/javascript" src="/js/core.min.js"></script>	
-	<script type="text/javascript" src="/js/jquery.transit.min.js"></script>	
+	<!--<script type="text/javascript" src="/js/core.min.js"></script>	
+	<script type="text/javascript" src="/js/jquery.transit.min.js"></script>-->
 
 	
 	<!-- end: JavaScript-->
@@ -303,7 +393,7 @@ var processFpResponse = function(event) {
 	
   	
 	<!-- webengage feedback tab -->
-	<script id="_webengage_script_tag" type="text/javascript">
+	<!--<script id="_webengage_script_tag" type="text/javascript">
 	  var _weq = _weq || {};
 	  _weq['webengage.licenseCode'] = "~99198d06";
 	  _weq['webengage.widgetVersion'] = "4.0";
@@ -319,8 +409,6 @@ var processFpResponse = function(event) {
 	  })(document);
 	</script>
 
-	<script type="text/javascript" src="/clickheat/js/clickheat.js"></script><noscript><p><a href="http://www.dugwood.com/index.html">Open Source Sofware</a></p></noscript><script type="text/javascript"><!--
-	clickHeatSite = 'omni';clickHeatGroup = (document.title == '' ? '-none-' : encodeURIComponent(document.title));clickHeatServer = '/clickheat/click.php';initClickHeat(); //-->
-	</script>
+	<script type="text/javascript" src="/js/clickheat.js"></script><noscript><p><a href="http://www.dugwood.com/index.html">Open Source Sofware</a></p></noscript>-->
 
 	<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
