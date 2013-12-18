@@ -5,7 +5,7 @@ class AdminController extends Controller
 
 	public function beforeAction($action)
 	{
-		$adminEmails = array('kgonzales@omnisci.org' 
+		$adminEmails = array('kgonzales@omnisci.org' ,
 			's@hotmail.com', 
 			'kgonzales@omnisci.org', 
 			'kgonzales@gmail.com',

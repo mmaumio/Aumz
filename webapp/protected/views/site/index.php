@@ -107,7 +107,7 @@
 <!--Page 3 End--> 
 
 <!--Page 4 Start-->
-<section class="page4">
+<!--<section class="page4">
   <div class="wrapper">
     <div class="page4Main">
       <h2>About Us</h2>
@@ -131,7 +131,7 @@
         </div>
     </div>
   </div>
-</section>
+</section>-->
 <!--Page 4 End--> 
 
 <!--Page 5 Start-->
@@ -140,7 +140,19 @@
     <div class="contactMain">
       <div class="contactMainHead">
         <div class="contactMainHeadBox">
-          <h2>Say Hi to the Stirplate Team</h2>
+          <!--<h2>Contact us</h2>-->
+		  <p class="homelinks">
+			<span><a href="#">About us</a></span>
+			<span><a href="#">Privacy and terms of service</a></span>
+			<span><a href="#">FAQ</a></span>
+			<span><a href="mailto:info@stirplate.io">Contact us</a></span>
+			<span><a href="#">Blog</a></span>
+			<span class=""><a href="#">Follow us :</a> 
+			     <a href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
+				<a href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
+			</span>
+			
+		<p>
 <h3>Want to know more about what we are up to? Send us a message </h3>        </div>
       </div>
       <div class="contactForm">
