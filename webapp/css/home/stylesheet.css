@@ -549,6 +549,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	margin: 10px 0 0 0;
 	cursor: pointer;
 	}
+<<<<<<< HEAD
 .homelinks
 {
 text-align:center;
@@ -580,3 +581,6 @@ color:#0099CC;
 {
 vertical-align:top;
 }
+/**addition by arvind **/
+.errorMessage{color:#B94A48;}
+.error{border-color: #B94A48 !important;}

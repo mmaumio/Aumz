@@ -2,6 +2,7 @@
 
 class SiteController extends Controller
 {
+        
 	/**
 	 * Declares class-based actions.
 	 */
@@ -29,8 +30,31 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-
-		$this->renderPartial('index');
+                $this->layout='//layouts/columnfull';
+                $model=new LoginForm;
+                //collect user input
+                if(isset($_POST['LoginForm']))
+                {   
+                        if(isset(Yii::app()->session['user_trails'.$user->id])){
+                            Yii::app()->session['user_trails'.$user->id] = 1 + Yii::app()->session['user_trails'.$user->id];
+                        }else{
+                             Yii::app()->session['user_trails'.$user->id] = 1;
+                        }
+                        
+			$model->attributes=$_POST['LoginForm'];
+                            // validate user input
+                           if($model->validate() && $model->login()){
+                                $user = User::model()->findByPk(Yii::app()->user->id);
+				{	
+                                        if(isset(Yii::app()->session['uid'])){
+                                            $this->redirect(Yii::app()->user->returnUrl);
+                                        }else{
+                                            $this->redirect('/dashboard');
+                                        }
+				}
+                         }
+                }
+		$this->render('index',array('model'=>$model));
 	}
 
 	/**

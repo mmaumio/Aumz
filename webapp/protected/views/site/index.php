@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-  <title>Stirplate.io</title>
-  <link rel="stylesheet" type="text/css" href="/css/home/stylesheet.css">
-  <link rel="stylesheet" type="text/css" href="/css/layout.css">
-  <script type="text/javascript">  
-  (function(){if(!/*@cc_on!@*/0)return;var e = "abbr,article,aside,audio,bb,canvas,datagrid,datalist,details,dialog,eventsource,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video".split(','),i=e.length;while(i--){document.createElement(e[i])}})()
-  </script>
-  <!--[if lt IE 9]>
-  <script src="js/html5.js"></script>
-  <![endif]-->
-</head>
-
-<body>
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $('#LoginForm_password').val("");
+        $('#login-form-ajaxcall').submit(function(e){
+            if(<?php echo Yii::app()->session['user_trails'.$user->id]; ?> > 3){
+                 e.preventDefault();
+                 alert("Would you like to reset your password?");
+                 <?php Yii::app()->session['user_trails'.$user->id] = 0; ?>
+            }
+        })
+    })
+</script>
 <!--Page 1 Start-->
 <section class="homePage1">
   <div class="homePage1Main">
@@ -29,16 +23,30 @@
         <div class="signIn">
           <h3>Sign In to Stirplate</h3>
           <div class="signInMain">
-            <?php if (!empty($errorMsg)) { ?>
-            <div class="alert alert-danger" style="color:#D00;"><?php echo $errorMsg ?></div>
-            <?php } ?>
-			
-            <form action="auth/login" method="post">
-			  <input type="text" value="" name="email" placeholder="Email" />
-              <input type="password" value="" name="password" placeholder="Password" />
-              <label class="floatRt"><a href="javascript:void(0);">Forgot your passssword.</a></label>
-              <input type="submit" value="SIGN IN"/>
-            </form>
+            <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'login-form-ajaxcall'
+            )); ?>
+                     <?php echo $form->error($model,'email'); ?>
+                     <?php echo $form->error($model,'password'); ?>
+                    <div class="control-group">
+                        <div class="controls">
+                            <?php echo $form->textField($model,'email',array('placeholder'=>'Email')); ?>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                             <div class="controls">
+                            <?php echo $form->passwordField($model,'password',array('placeholder'=>'Password')); ?>
+                            </div>
+                    </div>
+                    <label class="floatRt">
+                             <?php echo CHtml::link('Forgot your passssword?', 'forgot') ?>
+                    </label>
+                    <div class="control-group buttons">
+                         <div class="controls">
+                            <?php echo CHtml::submitButton('SIGN IN'); ?>
+                              </div>
+                    </div>
+            <?php $this->endWidget(); ?>
           </div>
         </div>
         <div class="signUp">
@@ -172,6 +180,4 @@
     </div>
   </div>
 </section>
-<!--Page 5 End-->
-</body>
-</html>
+
