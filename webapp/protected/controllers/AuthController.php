@@ -22,6 +22,7 @@ class AuthController extends Controller
 			// echo $rowcount;
 			$user = User::model()->findByAttributes(array('email' => $_POST['email']));
 			// echo "<br/>";
+           
 			// echo $user->id;
 			if($user && $user->password == User::hashPassword($_POST['password']))
 			{
