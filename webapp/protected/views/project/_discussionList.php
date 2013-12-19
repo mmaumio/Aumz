@@ -60,7 +60,8 @@
 		            <div class="form-group">
 		                <div class="col-md-11">
 						<input type="hidden" name="projectId" value="<?php echo $project->id ?>">
-				<textarea id="names" name="names" class="diss-form" placeholder="Enter users names" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 40px;" required=""></textarea>
+				<input id="names" placeholder="Enter users names" size="20" />
+				<input id="mynames" name="names" type="hidden" />
 
 				<div class="clear"></div>
 				<button class="btn btn-primary" type="submit" style="float:right" id="submitCommentBtn">Submit</button>

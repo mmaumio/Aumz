@@ -16,24 +16,10 @@
                     } ?> ]
                  
                 $(document).ready(function() {
-                    $('#names').typeahead({source: names_array, updater:function (item) {
-                        var currentText = $('#names').val();
-                        if (currentText.indexOf(",") == -1) {
-                          currentText = "";
-                        };
-                        for (var i = currentText.length; i >= 0; i--) {
-                          if(currentText.charAt(i) == ','){
-                            currentText = currentText.substr(0, i+1);
-                            break;
-                          }
-                        }
-
-                        return currentText + item+",";
-                    }, matcher: function(item) {
-                        var a = this.query.replace(/(.*\,)+/,"");
-                        console.log(a);
-                        return item.toLowerCase().indexOf(a.toLowerCase());
-                    }})
+                    $("#names").select2({tags:names_array, width: "400"});
+                    $("#names").on("change", function(e) {
+                      $("#mynames").val($("#names").select2("val").join(","));
+                    });
                 });
             </script>
             </div>
