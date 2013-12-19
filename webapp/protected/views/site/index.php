@@ -2,10 +2,10 @@
     $(document).ready(function() {
         $('#LoginForm_password').val("");
         $('#login-form-ajaxcall').submit(function(e){
-            if(<?php echo Yii::app()->session['user_trails'.$user->id]; ?> > 3){
+            if(parseInt("<?php if(isset(Yii::app()->request->cookies['user_trails'])){echo Yii::app()->request->cookies['user_trails']->value;}else{echo 0;} ?>") > parseInt("2")){
                  e.preventDefault();
                  alert("Would you like to reset your password?");
-                 <?php Yii::app()->session['user_trails'.$user->id] = 0; ?>
+                 <?php if(isset(Yii::app()->request->cookies['user_trails']) && (Yii::app()->request->cookies['user_trails']->value > 2 )){unset(Yii::app()->request->cookies['user_trails']);} ?>
             }
         })
     })

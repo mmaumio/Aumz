@@ -547,3 +547,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 /**addition by arvind **/
 .errorMessage{color:#B94A48;}
 .error{border-color: #B94A48 !important;}
+.logout-button{background:none !important;}
+.logout-button a{margin: 9px 0px;}

@@ -34,11 +34,12 @@ class SiteController extends Controller
                 $model=new LoginForm;
                 //collect user input
                 if(isset($_POST['LoginForm']))
-                {   
-                        if(isset(Yii::app()->session['user_trails'.$user->id])){
-                            Yii::app()->session['user_trails'.$user->id] = 1 + Yii::app()->session['user_trails'.$user->id];
+                {  
+                        if(isset(Yii::app()->request->cookies['user_trails'])){
+                            $val = Yii::app()->request->cookies['user_trails']->value;
+                            Yii::app()->request->cookies['user_trails'] =new CHttpCookie('user_trails', (1 + $val));
                         }else{
-                             Yii::app()->session['user_trails'.$user->id] = 1;
+                             Yii::app()->request->cookies['user_trails'] = new CHttpCookie('user_trails', 1);
                         }
                         
 			$model->attributes=$_POST['LoginForm'];
@@ -46,9 +47,7 @@ class SiteController extends Controller
                            if($model->validate() && $model->login()){
                                 $user = User::model()->findByPk(Yii::app()->user->id);
 				{	
-                                        if(isset(Yii::app()->session['uid'])){
-                                            $this->redirect(Yii::app()->user->returnUrl);
-                                        }else{
+                                        {
                                             $this->redirect('/dashboard');
                                         }
 				}

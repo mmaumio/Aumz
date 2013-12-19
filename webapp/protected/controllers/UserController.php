@@ -27,7 +27,7 @@ class UserController extends Controller
 			}
 		}
 
-		$this->redirect('/login');
+		$this->redirect('/');
 	}
 
 	public function actionPublicProfile()
