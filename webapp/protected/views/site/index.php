@@ -143,20 +143,20 @@
         <div class="contactMainHeadBox">
           <!--<h2>Contact us</h2>-->
 		  <p class="homelinks">
-			<span><a href="#">About us</a></span>
-			<span><a href="#">Privacy and terms of service</a></span>
-			<span><a href="#">FAQ</a></span>
+			<span><a href="site/aboutus">About us</a></span>
+			<span><a href="site/privacy">Privacy and terms of service</a></span>
+			<span><a href="site/faq">FAQ</a></span>
 			<span><a href="mailto:info@stirplate.io">Contact us</a></span>
-			<span><a href="#">Blog</a></span>
+			<span><a href="site/blog">Blog</a></span>
 			<span class=""><a href="#">Follow us :</a> 
-			     <a href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
-				<a href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
+			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
+				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
 			</span>
 			
 		<p>
-<h3>Want to know more about what we are up to? Send us a message </h3>        </div>
+<!--<h3>Want to know more about what we are up to? Send us a message </h3> -->       </div>
       </div>
-      <div class="contactForm">
+      <!--<div class="contactForm">
         <div class="contactFormMain">
           <div class="contactFormMainLft">
             <input type="text" value="" name="" placeholder="NAME" />
@@ -168,7 +168,7 @@
             <input type="submit" value="SEND" name="" />
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </section>

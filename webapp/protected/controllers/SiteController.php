@@ -123,4 +123,30 @@ class SiteController extends Controller
         }
 
     }
+    /*
+     * 
+     * About Us Page
+     *
+    */
+    public function actionAboutus()
+	{
+	
+				$this->render('aboutus',array());
+	
+	}
+     public function actionfaq()
+	{
+	
+				$this->render('faq',array());
+	
+	}
+
+ public function actionBlog()
+	{
+	
+				$this->render('blog',array());
+	
+	}
+
+
 }
