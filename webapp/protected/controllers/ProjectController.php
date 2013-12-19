@@ -64,7 +64,7 @@ class ProjectController extends Controller
 
 	public function actionDashboard()
 	{
-		$uid=Yii::app()->session['uid'];
+                        $uid=Yii::app()->session['uid'];
 			$projects = array();
 			$userProjects = ProjectUser::model()->findAllByAttributes(array('userId' => $uid));
 			foreach ($userProjects as $project) {

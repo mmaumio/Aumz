@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-  <title>Stirplate.io</title>
-  <link rel="stylesheet" type="text/css" href="/css/home/stylesheet.css">
-  <link rel="stylesheet" type="text/css" href="/css/layout.css">
-  <script type="text/javascript">  
-  (function(){if(!/*@cc_on!@*/0)return;var e = "abbr,article,aside,audio,bb,canvas,datagrid,datalist,details,dialog,eventsource,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video".split(','),i=e.length;while(i--){document.createElement(e[i])}})()
-  </script>
-  <!--[if lt IE 9]>
-  <script src="js/html5.js"></script>
-  <![endif]-->
-</head>
-
-<body>
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $('#LoginForm_password').val("");
+        $('#login-form-ajaxcall').submit(function(e){
+            if(parseInt("<?php if(isset(Yii::app()->request->cookies['user_trails'])){echo Yii::app()->request->cookies['user_trails']->value;}else{echo 0;} ?>") > parseInt("2")){
+                 e.preventDefault();
+                 alert("Would you like to reset your password?");
+                 <?php if(isset(Yii::app()->request->cookies['user_trails']) && (Yii::app()->request->cookies['user_trails']->value > 2 )){unset(Yii::app()->request->cookies['user_trails']);} ?>
+            }
+        })
+    })
+</script>
 <!--Page 1 Start-->
 <section class="homePage1">
   <div class="homePage1Main">
@@ -29,16 +23,30 @@
         <div class="signIn">
           <h3>Sign In to Stirplate</h3>
           <div class="signInMain">
-            <?php if (!empty($errorMsg)) { ?>
-            <div class="alert alert-danger" style="color:#D00;"><?php echo $errorMsg ?></div>
-            <?php } ?>
-			
-            <form action="auth/login" method="post">
-			  <input type="text" value="" name="email" placeholder="Email" />
-              <input type="password" value="" name="password" placeholder="Password" />
-              <label class="floatRt"><a href="javascript:void(0);">Forgot your passssword.</a></label>
-              <input type="submit" value="SIGN IN"/>
-            </form>
+            <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'login-form-ajaxcall'
+            )); ?>
+                     <?php echo $form->error($model,'email'); ?>
+                     <?php echo $form->error($model,'password'); ?>
+                    <div class="control-group">
+                        <div class="controls">
+                            <?php echo $form->textField($model,'email',array('placeholder'=>'Email')); ?>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                             <div class="controls">
+                            <?php echo $form->passwordField($model,'password',array('placeholder'=>'Password')); ?>
+                            </div>
+                    </div>
+                    <label class="floatRt">
+                             <?php echo CHtml::link('Forgot your passssword?', 'forgot') ?>
+                    </label>
+                    <div class="control-group buttons">
+                         <div class="controls">
+                            <?php echo CHtml::submitButton('SIGN IN'); ?>
+                              </div>
+                    </div>
+            <?php $this->endWidget(); ?>
           </div>
         </div>
         <div class="signUp">
@@ -107,7 +115,7 @@
 <!--Page 3 End--> 
 
 <!--Page 4 Start-->
-<section class="page4">
+<!--<section class="page4">
   <div class="wrapper">
     <div class="page4Main">
       <h2>About Us</h2>
@@ -129,9 +137,10 @@
         </br>
 <h4>We've all been there and it's frustrating. The current tools to fix these problems tend to be difficult to use. So we made something that is easy, simple, and address the needs of scientists.</h4>
         </div>
-    </div>
+    </div>                  
+	<dsds></dsdsd>
   </div>
-</section>
+</section>-->
 <!--Page 4 End--> 
 
 <!--Page 5 Start-->
@@ -140,10 +149,22 @@
     <div class="contactMain">
       <div class="contactMainHead">
         <div class="contactMainHeadBox">
-          <h2>Say Hi to the Stirplate Team</h2>
-<h3>Want to know more about what we are up to? Send us a message </h3>        </div>
+          <!--<h2>Contact us</h2>-->
+		  <p class="homelinks">
+			<span><a href="site/aboutus">About us</a></span>
+			<span><a href="site/privacy">Privacy and terms of service</a></span>
+			<span><a href="site/faq">FAQ</a></span>
+			<span><a href="mailto:info@stirplate.io">Contact us</a></span>
+			<span><a href="site/blog">Blog</a></span>
+			<span class=""><a href="#">Follow us :</a> 
+			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
+				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
+			</span>
+			
+		<p>
+<!--<h3>Want to know more about what we are up to? Send us a message </h3> -->       </div>
       </div>
-      <div class="contactForm">
+      <!--<div class="contactForm">
         <div class="contactFormMain">
           <div class="contactFormMainLft">
             <input type="text" value="" name="" placeholder="NAME" />
@@ -155,10 +176,8 @@
             <input type="submit" value="SEND" name="" />
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </section>
-<!--Page 5 End-->
-</body>
-</html>
+
