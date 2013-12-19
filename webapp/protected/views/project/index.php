@@ -20,6 +20,14 @@
                 <li><a href="#discussion"><img src="/img/details/dashNav2.png" alt="Discussion"><span>Discussion</span></a></li>
                 <li><a href="#tasks"><img src="/img/details/dashNav3.png" alt="Tasks"><span>Tasks</span></a></li>
                 <li><a href="#files"><img src="/img/details/dashNav4.png" alt="Files"><span>Files</span></a></li>
+             <li class="dropdown" >
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img height="40px" src="/img/details/dashNav5.png" alt="Files"><span>Settings</span> <b class="caret" style=""></b></a>
+              <ul class="dropdown-menu" style="background: #FFFFFF;">
+                <li style="background: none;"><a href="#">Delete Study</a></li>
+                <li style="background: none;"><a href="#">Move Project to Study Board</a></li>
+                
+              </ul>
+            </li>
             </ul>
         </div> 
     </div>
@@ -183,4 +191,4 @@
     </div>
 </section>
 
-
+<script></script>

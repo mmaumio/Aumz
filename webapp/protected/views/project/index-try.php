@@ -18,7 +18,8 @@
             	<li><a href="/dashboard"><img src="/img/details/dashNav1.png" alt="Dashboard"><span>Dashboard</span></a></li>
                 <li><a href="#discussion"><img src="/img/details/dashNav2.png" alt="Discussion"><span>Discussion</span></a></li>
                 <li><a href="#tasks"><img src="/img/details/dashNav3.png" alt="Tasks"><span>Tasks</span></a></li>
-                <li><a href="#files"><img src="/img/details/dashNav4.png" alt="Files"><span>Files</span></a></li>
+                <li><a href="#files"><img src="/img/details/dashNav4.png" alt="Files"><span>mFiles</span></a></li>
+               
             </ul>
         </div> 
     </div>
