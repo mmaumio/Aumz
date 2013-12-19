@@ -544,3 +544,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 	padding: 8px 19px 16px 47px;
 	width: 230px;
 }
+/**addition by arvind **/
+.errorMessage{color:#B94A48;}
+.error{border-color: #B94A48 !important;}
+.logout-button{background:none !important;}
+.logout-button a{margin: 9px 0px;}

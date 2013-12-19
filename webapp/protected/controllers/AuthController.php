@@ -22,6 +22,7 @@ class AuthController extends Controller
 			// echo $rowcount;
 			$user = User::model()->findByAttributes(array('email' => $_POST['email']));
 			// echo "<br/>";
+           
 			// echo $user->id;
 			if($user && $user->password == User::hashPassword($_POST['password']))
 			{
@@ -179,7 +180,7 @@ class AuthController extends Controller
 	public function actionLogout()
 	{
 		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
+		$this->redirect(Yii::app()->baseUrl);
 	}
 
 }

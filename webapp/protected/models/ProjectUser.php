@@ -31,8 +31,6 @@ class ProjectUser extends CActiveRecord
 			array('projectId, userId', 'required'),
 			array('projectId, userId', 'numerical', 'integerOnly'=>true),
 			array('role', 'length', 'max'=>255),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
 			array('projectId, userId, role, created, modified', 'safe', 'on'=>'search'),
 		);
 	}

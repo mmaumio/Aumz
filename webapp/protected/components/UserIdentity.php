@@ -8,22 +8,31 @@
 class UserIdentity extends CUserIdentity
 {
 	private $_id;
-
-	public function UserIdentity($id, $name, $image, $email)
-	{
-		$this->_id = $id;
-		$this->setState('name', $name);
-		$this->setState('image', $image);
-		$this->setState('email', $email);
-	}
-
+        
+        /**
+	 * Authenticates a user.
+	 * @return boolean whether authentication succeeds.
+	 */
 	public function authenticate()
 	{
-		return true;
+                $record = User::model()->findByAttributes(array('email' => $this->username));
+                if($record===null)
+                    $this->errorCode=self::ERROR_USERNAME_INVALID;
+                elseif($record->password!== User::hashPassword($this->password))
+                    $this->errorCode=self::ERROR_PASSWORD_INVALID;
+                else{
+                    $this->_id=$record->id;
+                    $this->setState('name', $record->firstName);
+                    $this->setState('image', $record->profileImageUrl);
+                    $this->setState('email',  $record->email);
+                    Yii::app()->session['uid'] = $record->id;
+                    $this->errorCode=self::ERROR_NONE;
+                }
+		return !$this->errorCode;
 	}
 
 	public function getId()
-    {
-        return $this->_id;
-    }
+        {
+            return $this->_id;
+        }
 }

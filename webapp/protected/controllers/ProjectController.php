@@ -7,10 +7,14 @@ class ProjectController extends Controller
 		if (!empty($_GET['id']))
 		{
 			$project = Project::model()->findByPk($_GET['id']);
+			$authers_projects = ProjectUser::model()->findAllByAttributes(array('projectId' => $_GET['id']));
+			foreach ($authers_projects as $user) {
+				$authers[] = $user->user;
+			}
 			// print_r($project);
 			if ($project)
 			{
-				$this->render('index', array('project' => $project));
+				$this->render('index', array('project' => $project, 'authers' => $authers));
 			}
 		}
 	}
@@ -31,9 +35,22 @@ class ProjectController extends Controller
 		}
 	}
 
+	public function actionAdd_Collaborators()
+	{
+		if (!empty($_POST['projectId'])) {
+			$names = explode(',', $_POST['names']);
+			foreach ($names as $name) {
+				$splited_names = explode(' ', $name);
+				$user = User::model()->find(array('condition'=>'firstName=:firstName AND lastName=:lastName','params'=>array(':firstName'=>$splited_names[0], ':lastName' => $splited_names[1])));
+				$user->add_to_project($_POST['projectId']);
+			}
+			$this->redirect('/project/index/' . $_POST['projectId']);
+		}
+	}
+
 	public function actionDashboard()
 	{
-		$uid=Yii::app()->session['uid'];
+                        $uid=Yii::app()->session['uid'];
 			$projects = array();
 			$userProjects = ProjectUser::model()->findAllByAttributes(array('userId' => $uid));
 			foreach ($userProjects as $project) {

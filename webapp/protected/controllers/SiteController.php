@@ -2,6 +2,7 @@
 
 class SiteController extends Controller
 {
+        
 	/**
 	 * Declares class-based actions.
 	 */
@@ -29,8 +30,30 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-
-		$this->renderPartial('index');
+                $this->layout='//layouts/columnfull';
+                $model=new LoginForm;
+                //collect user input
+                if(isset($_POST['LoginForm']))
+                {  
+                        if(isset(Yii::app()->request->cookies['user_trails'])){
+                            $val = Yii::app()->request->cookies['user_trails']->value;
+                            Yii::app()->request->cookies['user_trails'] =new CHttpCookie('user_trails', (1 + $val));
+                        }else{
+                             Yii::app()->request->cookies['user_trails'] = new CHttpCookie('user_trails', 1);
+                        }
+                        
+			$model->attributes=$_POST['LoginForm'];
+                            // validate user input
+                           if($model->validate() && $model->login()){
+                                $user = User::model()->findByPk(Yii::app()->user->id);
+				{	
+                                        {
+                                            $this->redirect('/dashboard');
+                                        }
+				}
+                         }
+                }
+		$this->render('index',array('model'=>$model));
 	}
 
 	/**
@@ -123,4 +146,35 @@ class SiteController extends Controller
         }
 
     }
+    /*
+     * 
+     * About Us Page
+     *
+    */
+    public function actionAboutus()
+	{
+	
+				$this->render('aboutus',array());
+	
+	}
+     public function actionfaq()
+	{
+	
+				$this->render('faq',array());
+	
+	}
+
+    public function actionBlog()
+	{
+	
+				$this->render('blog',array());
+	
+	}
+    public function actionPrivacy()
+	{
+	
+				$this->render('privacy',array());
+	
+	}
+
 }
