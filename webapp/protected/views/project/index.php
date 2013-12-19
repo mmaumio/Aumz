@@ -7,7 +7,7 @@
             <div class="detailMainGreenImg">
             	<?php foreach ($project->users as $user) { ?>            		
             		<img src="<?php echo $user->profileImageUrl ?>" alt="<?php echo $user->firstName ?>" title="<?php echo $user->firstName ?>"/>
-                    <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">Remove <?php echo $user->firstName ?></a>
+                    <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">X</a>
                     <br />
             	<?php } ?>
                 <script type="text/javascript">
