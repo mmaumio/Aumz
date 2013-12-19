@@ -18,8 +18,12 @@
     
         <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+        <link rel="stylesheet" type="text/css" href="/css/select2.css">
         <?php } ?>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="/css/select2.min.js"></script>
+
 	<script type="text/javascript">   
 		$s(function(){if(!/*@cc_on!@*/0)return;var e = "abbr,article,aside,audio,bb,canvas,datagrid,datalist,details,dialog,eventsource,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video".split(','),i=e.length;while(i--){document.createElement(e[i])}})()
 	</script>
@@ -41,13 +45,8 @@ function downloadFile(path){
 
 </head> 
 <body> 
+
 <?php echo $content; ?>
-<script src="/css/jquery.timeago.js"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function() {
-    jQuery(".listRtTime").timeago();
-  });
-</script>
 <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>  
 </body>
 </html>

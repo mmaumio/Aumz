@@ -8,13 +8,14 @@ class ProjectController extends Controller
 		{
 			$project = Project::model()->findByPk($_GET['id']);
 			$authers_projects = ProjectUser::model()->findAllByAttributes(array('projectId' => $_GET['id']));
+			$all_users = User::model()->findAll();
 			foreach ($authers_projects as $user) {
 				$authers[] = $user->user;
 			}
 			// print_r($project);
 			if ($project)
 			{
-				$this->render('index', array('project' => $project, 'authers' => $authers));
+				$this->render('index', array('project' => $project, 'authers' => $authers, 'all_users' => $all_users));
 			}
 		}
 	}
@@ -35,14 +36,31 @@ class ProjectController extends Controller
 		}
 	}
 
+	public function actionRemove_Collaborator(){
+		if(!empty($_GET['id'])){
+			$project = Project::model()->findByPk($_GET['id']);
+			$authers_projects = ProjectUser::model()->findByAttributes(array('projectId' => $_GET['id'], 'userId' => $_GET['userId'], 'role' => 'collaborator'));
+			if($authers_projects){
+				$authers_projects->delete();
+				$this->redirect('/project/index/'.$_GET['id']);
+			}
+			else
+				echo "Can't remove this user";
+		}
+	}
+
 	public function actionAdd_Collaborators()
 	{
 		if (!empty($_POST['projectId'])) {
 			$names = explode(',', $_POST['names']);
 			foreach ($names as $name) {
 				$splited_names = explode(' ', $name);
-				$user = User::model()->find(array('condition'=>'firstName=:firstName AND lastName=:lastName','params'=>array(':firstName'=>$splited_names[0], ':lastName' => $splited_names[1])));
-				$user->add_to_project($_POST['projectId']);
+				if(count($splited_names) == 2)
+					$user = User::model()->find(array('condition'=>'firstName=:firstName AND lastName=:lastName','params'=>array(':firstName'=>$splited_names[0], ':lastName' => $splited_names[1])));
+				else
+					$user = User::model()->find(array('condition'=>'firstName=:name or lastName=:name','params'=>array(':name'=>$splited_names[0])));
+				if($user)
+					$user->add_to_project($_POST['projectId']);
 			}
 			$this->redirect('/project/index/' . $_POST['projectId']);
 		}
