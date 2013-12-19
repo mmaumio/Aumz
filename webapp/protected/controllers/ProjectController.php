@@ -35,6 +35,19 @@ class ProjectController extends Controller
 		}
 	}
 
+	public function actionRemove_Collaborator(){
+		if(!empty($_GET['id'])){
+			$project = Project::model()->findByPk($_GET['id']);
+			$authers_projects = ProjectUser::model()->findByAttributes(array('projectId' => $_GET['id'], 'userId' => $_GET['userId'], 'role' => 'collaborator'));
+			if($authers_projects){
+				$authers_projects->delete();
+				$this->redirect('/project/index/'.$_GET['id']);
+			}
+			else
+				echo "Can't remove this user";
+		}
+	}
+
 	public function actionAdd_Collaborators()
 	{
 		if (!empty($_POST['projectId'])) {
