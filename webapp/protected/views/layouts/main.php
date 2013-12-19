@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 	<link rel="stylesheet" type="text/css" href="/css/layout.css">
-        <?php// Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+        <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <?php 
                 $controller = Yii::app()->getController();
                 $isHome = $controller->getId() === 'site' && $controller->getAction()->getId() === 'index';
