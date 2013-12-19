@@ -55,8 +55,12 @@ class ProjectController extends Controller
 			$names = explode(',', $_POST['names']);
 			foreach ($names as $name) {
 				$splited_names = explode(' ', $name);
-				$user = User::model()->find(array('condition'=>'firstName=:firstName AND lastName=:lastName','params'=>array(':firstName'=>$splited_names[0], ':lastName' => $splited_names[1])));
-				$user->add_to_project($_POST['projectId']);
+				if(count($splited_names) == 2)
+					$user = User::model()->find(array('condition'=>'firstName=:firstName AND lastName=:lastName','params'=>array(':firstName'=>$splited_names[0], ':lastName' => $splited_names[1])));
+				else
+					$user = User::model()->find(array('condition'=>'firstName=:name or lastName=:name','params'=>array(':name'=>$splited_names[0])));
+				if($user)
+					$user->add_to_project($_POST['projectId']);
 			}
 			$this->redirect('/project/index/' . $_POST['projectId']);
 		}
