@@ -141,12 +141,17 @@ class SiteController extends Controller
 	
 	}
 
- public function actionBlog()
+    public function actionBlog()
 	{
 	
 				$this->render('blog',array());
 	
 	}
-
+    public function actionPrivacy()
+	{
+	
+				$this->render('privacy',array());
+	
+	}
 
 }
