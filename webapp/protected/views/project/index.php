@@ -10,6 +10,32 @@
                     <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">Remove <?php echo $user->firstName ?></a>
                     <br />
             	<?php } ?>
+                <script type="text/javascript">
+                    var names_array = [ <?php foreach ($all_users as $user) {
+                        echo "'" . $user->firstName . " " . $user->lastName . "' ,";
+                    } ?> ]
+                 
+                $(document).ready(function() {
+                    $('#names').typeahead({source: names_array, updater:function (item) {
+                        var currentText = $('#names').val();
+                        if (currentText.indexOf(",") == -1) {
+                          currentText = "";
+                        };
+                        for (var i = currentText.length; i >= 0; i--) {
+                          if(currentText.charAt(i) == ','){
+                            currentText = currentText.substr(0, i+1);
+                            break;
+                          }
+                        }
+
+                        return currentText + item+",";
+                    }, matcher: function(item) {
+                        var a = this.query.replace(/(.*\,)+/,"");
+                        console.log(a);
+                        return item.toLowerCase().indexOf(a.toLowerCase());
+                    }})
+                });
+            </script>
             </div>
         </div>
     </div>

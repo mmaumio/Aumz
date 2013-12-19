@@ -6,6 +6,7 @@
 		        	<?php $this->renderPartial('_discussion', array('activity' => $activity)); ?>
 		    	<?php } ?>
          	</div>
+         	
 	        <div class="detailMainContentMainBtn">
 	        	<a href="#" data-toggle="modal" data-target="#discussionModal"><img src="/img/details/btnAdd.png" alt="New Discussion" /><span>New Discussion</span></a>
 	        	<!--
@@ -59,7 +60,7 @@
 		            <div class="form-group">
 		                <div class="col-md-11">
 						<input type="hidden" name="projectId" value="<?php echo $project->id ?>">
-				<textarea id="newComment" name="names" class="diss-form" placeholder="Enter users names" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 40px;" required=""></textarea>
+				<textarea id="names" name="names" class="diss-form" placeholder="Enter users names" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 40px;" required=""></textarea>
 				<div class="clear"></div>
 				<button class="btn btn-primary" type="submit" style="float:right" id="submitCommentBtn">Submit</button>
 		                   <!-- <textarea id="textarea" name="textarea">default text</textarea>-->

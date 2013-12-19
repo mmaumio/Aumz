@@ -32,6 +32,13 @@ function downloadFile(path){
 <body> 
 <header>
   <div class="wrapper">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/css/jquery.timeago.js"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+        jQuery(".listRtTime").timeago();
+      });
+    </script>
       <div class="logo"><a href="/" title="Stirplate"><img src="/img/nav/logo.png" alt="Stirplate" /></a></div>
       <div class="headerNav">
           <ul>
@@ -45,13 +52,6 @@ function downloadFile(path){
   </div>
 </header>
 <?php echo $content; ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="/css/jquery.timeago.js"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function() {
-    jQuery(".listRtTime").timeago();
-  });
-</script>
 <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>  
 </body>
 </html>

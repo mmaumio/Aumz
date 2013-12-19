@@ -8,13 +8,14 @@ class ProjectController extends Controller
 		{
 			$project = Project::model()->findByPk($_GET['id']);
 			$authers_projects = ProjectUser::model()->findAllByAttributes(array('projectId' => $_GET['id']));
+			$all_users = User::model()->findAll();
 			foreach ($authers_projects as $user) {
 				$authers[] = $user->user;
 			}
 			// print_r($project);
 			if ($project)
 			{
-				$this->render('index', array('project' => $project, 'authers' => $authers));
+				$this->render('index', array('project' => $project, 'authers' => $authers, 'all_users' => $all_users));
 			}
 		}
 	}
