@@ -39,7 +39,7 @@
                                 <div class="dashBoxMainDiv dashBoxMain<?php if(($ctr%6) == 0){echo 6;}else{echo $ctr%6;} ?>">
                                     <h3><?php echo CHtml::link($p->title, array('project/index', 'id' => $p->id)) ?></h3>
 									 <?php /* <h3><a href="index.php?r=project/index&id=<?php echo $p->id ?>"><?php echo $p->title ?></h3> */ ?>
-                                    <p><!--#edtalk #edteach #edtech-->ss</p>
+                                    
                                 </div>
                                 <div class="dashBoxMainFtr">
                                     <a href="project/index/<?php echo $p->id ?>/#discussion">
