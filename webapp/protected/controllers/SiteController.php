@@ -233,9 +233,7 @@ class SiteController extends Controller
                                 }
                             }
                     }
-                }else{
-                        Yii::app()->user->setFlash('error', "Invalid Request.");
-                    }
+                }
                 if(isset($_GET['k'])){
                     $this->render('changepass',array('model'=>$model, 'k'=>$_GET['k']));
                 }else{
