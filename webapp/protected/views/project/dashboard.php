@@ -1,3 +1,18 @@
+ 
+ <?php
+      if(isset(Yii::app()->session['msg']) && !empty(Yii::app()->session['msg']))
+      {
+        ?>
+        <div class="alert alert-success">
+        <p class="text-center"><?php echo Yii::app()->session['msg'];
+        unset(Yii::app()->session['msg']);
+        ?></p>
+ </div>
+ 
+        
+        <?php
+      }
+?>
 <section class="middle">
 	<div class="wrapper">
     	<div class="middleMain">
@@ -6,6 +21,7 @@
             	   <a href="#" data-toggle="modal" data-target="#myModal"><img src="/img/dashboard/btnAdd.png" alt="New Project" /><span>New Project</span></a>
                 </div>
             </div>
+           
             <div class="dashBoxMainCntr">
             	<div class="dashBoxMainLft">
                     <?php $ctr = 0; ?>
@@ -115,6 +131,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

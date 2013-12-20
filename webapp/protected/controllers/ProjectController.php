@@ -77,13 +77,14 @@ class ProjectController extends Controller
 
 	public function actionDashboard()
 	{
-                        $uid=Yii::app()->session['uid'];
+              $uid=Yii::app()->session['uid'];
 			$projects = array();
-			$userProjects = ProjectUser::model()->findAllByAttributes(array('userId' => $uid));
+			/*$userProjects = ProjectUser::model()->findAllByAttributes(array('userId' => $uid,));
 			foreach ($userProjects as $project) {
 				$projects[] = $project->project;
-			}
-			$this->render('dashboard', array('projects' => $projects));
+			}*/
+            $projects=Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
+            		$this->render('dashboard', array('projects' => $projects,));
 		
 	}
 
@@ -124,33 +125,78 @@ class ProjectController extends Controller
     
     public function actionDelete_project()
     {
-            if(isset($_GET['node']) && !empty($_GET['node']))
+           $uid=Yii::app()->session['uid'];
+		if ($uid)
+		{
+		  if(isset($_GET['node']) && !empty($_GET['node']))
             {
-                  $transaction=Yii::app()->db->beginTransaction();
-               try{
-                      
-                
-                     Activity::model()->deleteAllByAttributes(array('projectId'=>$_GET['node']));
-                     ProjectUser::model()->deleteAllByAttributes(array('projectId'=>$_GET['node']));
-                     File::model()->deleteAllByAttributes(array('projectId'=>$_GET['node']));
-                     Project::model()->deleteByPk($_GET['node']);
-                     if($transaction->commit())
+                  
+                  try{
+                     $projectData=Project::model()->findByPk($_GET['node']);
+                     $projectData->status='trash';
+                     
+                     if($projectData->update(false))
                      {
-                        Yii::app()->user->setFlash("success",'Project deleted successfully');
+                        
+                     
+                        Yii::app()->session['msg']='Project has been moved to Trash .<a href="/project/undo_delete/node/'.$_GET['node'].'">Undo Delete</a>';
+	    
                      }
-                            
-                   }
+                     }
                    catch(Exception $e)
                    {
-                      $transaction->rollback();
-                      Yii::app()->user->setFlash("error",'Unable to perform delete operation');
-                      
+                     
+                     Yii::app()->session['msg']="Project deletion operation failed";   
                    }
                
-                 $this->redirect('/project/dashboard');  
+                 $this->redirect('/dashboard');  
                 
                 
             }
+            else
+            {
+                echo "Fail";
+            }
+           }
+            else
+            {
+                echo "Fail";
+            }
+    }
+    public function actionUndo_delete()
+    {
+         $uid=Yii::app()->session['uid'];
+		if ($uid)
+		{
+		  if(isset($_GET['node']) && !empty($_GET['node']))
+            {
+                  
+                  try{
+                    $projectData=Project::model()->findByPk($_GET['node']);
+                     $projectData->status='active';
+                     if($projectData->update())
+                     {
+                        
+                     
+                        Yii::app()->session['msg']='Project recovered successfully';
+	    
+                     }
+                     }
+                   catch(Exception $e)
+                   {
+                     
+                      Yii::app()->session['msg']='Project recovery operation failed'; 
+                   }
+               
+                 $this->redirect('/dashboard');  
+                
+                
+            }
+            else
+            {
+                echo "Fail";
+            }
+           }
             else
             {
                 echo "Fail";
