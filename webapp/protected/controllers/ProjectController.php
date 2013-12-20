@@ -112,4 +112,39 @@ class ProjectController extends Controller
 			// redirect to login page
 		}
 	}
+    
+    public function actionDelete_project()
+    {
+            if(isset($_GET['node']) && !empty($_GET['node']))
+            {
+                  $transaction=Yii::app()->db->beginTransaction();
+               try{
+                      
+                
+                     Activity::model()->deleteAllByAttributes(array('projectId'=>$_GET['node']));
+                     ProjectUser::model()->deleteAllByAttributes(array('projectId'=>$_GET['node']));
+                     File::model()->deleteAllByAttributes(array('projectId'=>$_GET['node']));
+                     Project::model()->deleteByPk($_GET['node']);
+                     if($transaction->commit())
+                     {
+                        Yii::app()->user->setFlash("success",'Project deleted successfully');
+                     }
+                            
+                   }
+                   catch(Exception $e)
+                   {
+                      $transaction->rollback();
+                      Yii::app()->user->setFlash("error",'Unable to perform delete operation');
+                      
+                   }
+               
+                 $this->redirect('/project/dashboard');  
+                
+                
+            }
+            else
+            {
+                echo "Fail";
+            }
+    }
 }

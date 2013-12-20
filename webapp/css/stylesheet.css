@@ -551,3 +551,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 .logout-button a{margin: 9px 0px;}
 
 .detailNavMain .dropdown .dropdown-menu  a:hover{background: none !important;}
+
+.ui-dialog-buttonset button
+{
+    color: #000000;
+    font-size: 14px !important;
+    padding: 0 5px;
+}

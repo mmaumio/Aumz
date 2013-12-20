@@ -2,17 +2,17 @@
 	<div class="wrapper">
         <div class="detailMainGreen">
             <h3><?php echo $project->title ?></h3>
-            <p><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"><img src="/img/details/btnAdd.png" alt="New Collaborator" /></a></p>
-            <p><!--#edtalk #edteach #edtech--></p>
             <div class="detailMainGreenImg">
-            	<?php foreach ($project->users as $user) { ?>            		
-            		<img src="<?php echo $user->profileImageUrl ?>" alt="<?php echo $user->firstName ?>" title="<?php echo $user->firstName ?>"/>
-                    <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">X</a>
+            	<h3> Project members: </h3> 
+                    
+                <?php foreach ($project->users as $user) { ?>            		
+            		<h3><?php echo $user->firstName  ?>
+                    <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">x</a>
                     <br />
-            	<?php } ?>
+            	<?php } ?> </h3>
                 <script type="text/javascript">
                     var names_array = [ <?php foreach ($all_users as $user) {
-                        echo "'" . $user->firstName . " " . $user->lastName . "' ,";
+                        echo '"' . $user->firstName . " " . $user->lastName . '" ,';
                     } ?> ]
                  
                 $(document).ready(function() {
@@ -22,6 +22,8 @@
                     });
                 });
             </script>
+            <br><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"> Add new project member  </a>
+          
             </div>
         </div>
     </div>
@@ -37,7 +39,7 @@
              <li class="dropdown" >
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img height="40px" src="/img/details/dashNav5.png" alt="Files"><span>Settings</span> <b class="caret" style=""></b></a>
               <ul class="dropdown-menu" style="background: #FFFFFF;">
-                <li style="background: none;"><a href="#">Delete Study</a></li>
+                <li style="background: none;"><a href="javascript:void(0);" rel="<?php echo $project->id;?>" id="del-btn">Delete Study</a></li>
                 <li style="background: none;"><a href="#">Move Project to Study Board</a></li>
                 
               </ul>
@@ -204,5 +206,33 @@
         </div>
     </div>
 </section>
+<div id="dialog-confirm" title="Empty the recycle bin?" style="display:none;">
+<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+</div>
 
-<script></script>
+       <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+ 
+ <script>
+    $(document).ready(function(){
+        $('#del-btn').click(function(){
+            var node=$(this).prop("rel");
+            $('.ui-dialog-titlebar-close').text("x");
+            $( "#dialog-confirm" ).dialog({
+            resizable: true,
+          //  height:200,
+            modal: true,
+            buttons: {
+            "Delete all items": function() {
+                   window.location.href="/project/delete_project/node/"+node;
+                   $( this ).dialog( "close" );
+            },
+            Cancel: function() {
+            $( this ).dialog( "close" );
+            }
+            
+            }
+            });
+        });
+            
+    });
+</script>
