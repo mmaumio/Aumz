@@ -2,14 +2,14 @@
 	<div class="wrapper">
         <div class="detailMainGreen">
             <h3><?php echo $project->title ?></h3>
-            <p><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"><img src="/img/details/btnAdd.png" alt="New Collaborator" /></a></p>
-            <p><!--#edtalk #edteach #edtech--></p>
             <div class="detailMainGreenImg">
-            	<?php foreach ($project->users as $user) { ?>            		
-            		<img src="<?php echo $user->profileImageUrl ?>" alt="<?php echo $user->firstName ?>" title="<?php echo $user->firstName ?>"/>
-                    <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">X</a>
+            	<h3> Project members: </h3> 
+                    
+                <?php foreach ($project->users as $user) { ?>            		
+            		<h3><?php echo $user->firstName  ?>
+                    <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">x</a>
                     <br />
-            	<?php } ?>
+            	<?php } ?> </h3>
                 <script type="text/javascript">
                     var names_array = [ <?php foreach ($all_users as $user) {
                         echo "'" . $user->firstName . " " . $user->lastName . "' ,";
@@ -22,6 +22,8 @@
                     });
                 });
             </script>
+            <br><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"> Add new project member  </a>
+          
             </div>
         </div>
     </div>
