@@ -6,6 +6,7 @@
                  e.preventDefault();
                  alert("Would you like to reset your password?");
                  <?php if(isset(Yii::app()->request->cookies['user_trails']) && (Yii::app()->request->cookies['user_trails']->value > 2 )){unset(Yii::app()->request->cookies['user_trails']);} ?>
+                location.reload();
             }
         })
     })
