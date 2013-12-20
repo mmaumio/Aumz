@@ -4,8 +4,17 @@ class ProjectController extends Controller
 {
 	public function actionIndex()
 	{
+            
 		if (!empty($_GET['id']))
 		{
+                        //check for user, if not a member of project then redirect to homepage.
+                        if(isset(Yii::app()->session['uid']))
+                        $findproject = ProjectUser::model()->findByAttributes(array('projectId'=>$_GET['id'], 'userId'=>Yii::app()->session['uid']));
+
+                        if(Yii::app()->user->isGuest || !isset($findproject) || empty($findproject)){
+                             $this->redirect('/');
+                        }
+                
 			$project = Project::model()->findByPk($_GET['id']);
 			$authers_projects = ProjectUser::model()->findAllByAttributes(array('projectId' => $_GET['id']));
 			$all_users = User::model()->findAll();
