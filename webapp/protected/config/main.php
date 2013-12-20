@@ -69,6 +69,8 @@ return array(
 		// uncomment the following to use a MySQL database
 		'db'=>array(
 			'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
+	
+	// Uncomment the following to use a local copy of the DB(located in the repo)
 			//'connectionString' => 'mysql:host=localhost;dbname=omniscience',
 		  'emulatePrepare' => true,
 			'username' => 'root',
