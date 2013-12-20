@@ -217,12 +217,14 @@ class SiteController extends Controller
                 if(isset($_POST) && isset($_POST['k'])){
                     foreach ($records as $value) {
                             if(md5($value->id).md5(strtotime($value->created))==$_POST['k']){
-                                if(isset($_POST['newpassword']) && isset($_POST['confirmpassword']) && !empty(trim($_POST['newpassword'])) && !empty(trim($_POST['confirmpassword']))){
+                                $pass1 = trim($_POST['newpassword']);
+                                $pass2 = trim($_POST['confirmpassword']);
+                                if(isset($_POST['newpassword']) && isset($_POST['confirmpassword']) && !empty($pass1) && !empty($pass2)){
                                         $data=User::model()->findByPk($value->idusers);
-                                        if($_POST['newpassword']!= $_POST['confirmpassword']){
+                                        if($pass1 != $pass2){
                                                     Yii::app()->user->setFlash('error', "Passwords don't match. Please try again.");
                                             }else{
-                                                    $data->password=$_POST['newpassword'];
+                                                    $data->password=$pass1;
                                                     $data->save();
                                                     Yii::app()->user->setFlash('success', "Password is changed. Please login with your new password.");
                                             }
