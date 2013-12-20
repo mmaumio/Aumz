@@ -15,7 +15,12 @@
   <div class="homePage1Main">
     <div class="wrapper">
       <!--Logo For Desktop-->
-      <div><a href="javascript:void(0);" title="Stirlpate" class="logo" >&nbsp;</a></div>
+       <?php if(Yii::app()->user->isGuest){ ?>
+      <div><a href="/" title="Stirlpate" class="logo" >&nbsp;</a></div>
+       <?php }else{ ?>
+       <div><a href="<?php echo $this->createUrl('dashboard') ?>" title="Stirlpate" class="logo" >&nbsp;</a></div>
+       <?php } ?>
+      
       <!--Logo For Responsive-->
       <div class="logoRespo"><a href="javasccript:void(0);" title="Stirplate"><img src="/img/home/logoHomeRespo.jpg" alt="Logo" /></a></div>
       
@@ -39,7 +44,7 @@
                             </div>
                     </div>
                     <label class="floatRt">
-                             <?php echo CHtml::link('Forgot your passssword?', 'forgot') ?>
+                             <?php echo CHtml::link('Forgot your passssword?', 'site/ForgotPassword') ?>
                     </label>
                     <div class="control-group buttons">
                          <div class="controls">

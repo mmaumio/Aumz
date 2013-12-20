@@ -18,6 +18,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+                'ext.yii-mail.YiiMailMessage',
 	),
 
 	'modules'=>array(
@@ -33,15 +34,15 @@ return array(
 
 	// application components
 	'components'=>array(
-        'assetManager'=>array(
-            'class'=>'application.components.CGAssetManager',
-            'basePath'=>'gs://temp__dev',
-            'baseUrl'=> 'http://commondatastorage.googleapis.com/temp__dev'
-        ),
-        'request'=>array(
-            'baseUrl' => '/',
-            'scriptUrl' => '/',
-        ),
+                'assetManager'=>array(
+                    'class'=>'application.components.CGAssetManager',
+                    'basePath'=>'gs://temp__dev',
+                    'baseUrl'=> 'http://commondatastorage.googleapis.com/temp__dev'
+                ),
+                'request'=>array(
+                    'baseUrl' => '/',
+                    'scriptUrl' => '/',
+                ),
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
@@ -51,8 +52,8 @@ return array(
 
 		'urlManager'=>array(
 			'urlFormat'=>'path',
-            'showScriptName'=>false,
-            'baseUrl'=>'', // added to fix URL issues under Google App Engine
+                        'showScriptName'=>false,
+                        'baseUrl'=>'', // added to fix URL issues under Google App Engine
 			'rules'=>array(
 				'dashboard' => 'project/dashboard',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
@@ -66,10 +67,11 @@ return array(
 //		'db'=>array(
 //			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 //		),
-		// uncomment the following to use a MySQL database
 		'db'=>array(
+	//		KG comment: The following line connects the app w/ the cloudsql database, does not work w/ local copy
 			'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
-			//'connectionString' => 'mysql:host=localhost;dbname=omniscience',
+	// Uncomment the following to use a local copy of the DB(located in the repo)
+	//		'connectionString' => 'mysql:host=localhost;dbname=omniscience',
 		  'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
@@ -102,6 +104,15 @@ return array(
 				*/
 			),
 		),
+            
+                'mail' => array(
+ 			'class' => 'ext.yii-mail.YiiMail',
+			'transportType' => 'php',
+ 			'viewPath' => 'application.views.mail',
+ 			'logging' => true,
+ 			'dryRun' => false
+ 		),
+            
 		'clientScript'=>array(
 			'class' => 'CClientScript',
 			'scriptMap' => array(

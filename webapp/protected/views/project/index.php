@@ -12,7 +12,9 @@
             	<?php } ?> </h3>
                 <script type="text/javascript">
                     var names_array = [ <?php foreach ($all_users as $user) {
-                        echo '"' . $user->firstName . " " . $user->lastName . '" ,';
+
+                        echo "\"" . $user->firstName . " " . $user->lastName . "\" ,";
+
                     } ?> ]
                  
                 $(document).ready(function() {

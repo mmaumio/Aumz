@@ -2,7 +2,11 @@
 <?php $this->beginContent('//layouts/main'); ?>
 <header>
   <div class="wrapper">
+      <?php if(Yii::app()->user->isGuest){ ?>
       <div class="logo"><a href="/" title="Stirplate"><img src="/img/nav/logo.png" alt="Stirplate" /></a></div>
+       <?php }else{ ?>
+       <div class="logo"><a href="<?php echo $this->createUrl('dashboard') ?>" title="Stirplate"><img src="/img/nav/logo.png" alt="Stirplate" /></a></div>
+       <?php } ?>
       <div class="headerNav">
           <ul>
               <!--

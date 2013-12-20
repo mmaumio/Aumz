@@ -1,27 +1,20 @@
-[PHP] Yii Framework application skeleton which can work with Google App Engine
-===============================================================================
+Getting started:
 
-### Demo ###
+Software to download:
+Google app engine SDK
+https://developers.google.com/appengine/docs/php/gettingstarted/installing
+This will allow you to run the app in a local environment with minimal setup. 
 
-[Live Demo](http://yii-framework.appspot.com/)
+After you clone the repo, you can simply drag/drop it into the SDK and launch a copy of the site locally.
 
-### Goals: ###
+Note: When you do this, you won’t be able to reach the database. Here is how to fix that (and if you have alternative methods, please let me know).
 
-* create git repo of Yii application skeleton which you can clone and upload
-  to Google App Engine and it will instantly work
-* add necessary components which will allow to use "Google Cloud SQL" and "Google Cloud Storage"
-  instead of local MySQL and local filesystem
-* Maybe something else, but that's enough to start
+1. Install the MySQL server http://dev.mysql.com/downloads/mysql/5.6.html
 
-### What's done ###
-* You can see the very first default Yii application page which you see if you execute ```yiic webpp myproject```
-* Logs are routed to syslog (no need to have runtime directory writable)
-* Assets are published to Google Cloud Storage instead of local assets folder.
+2. Set up a local instance of the DB which can be found in the root of the repo (DB_schma.sql). Note, that DB has no user information in it, you may need to set up a test user account manually. 
+3. Uncomment line 74 in webapp/protected/config/main.php and comment out line# 71. 
+Note: after your final commit, please revert this so I can push the code to the server without any issue.
 
-### TODO ###
-* switch default page to /demo/default/index
-* make cool looking bootstrap front page (with links to github)
-* add Google Login button with icon
-* logged in user will be able to change it's own details
-* user data will be stored in Cloud SQL
-* better documentation
+That’s it, you now have a local copy of the program to edit. 
+Before pushing your final commit, please make sure it works locally. 
+

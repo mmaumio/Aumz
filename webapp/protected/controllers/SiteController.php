@@ -176,5 +176,69 @@ class SiteController extends Controller
 				$this->render('privacy',array());
 	
 	}
+        
+        /**
+         * Forgot password 
+         * Accepts an email and sends a change password link to the user
+         */
+       
+    public function actionForgotPassword(){
+            $model=new User;
+            
+            if(isset($_POST['User']))
+            {
+                    $records =  User::model()->findByAttributes(array('email'=>$_POST['User']['email']));
+                    if($records){
+                        $message = new YiiMailMessage;
+                        $message->view = 'forgotpassmail';
+                        $message->setBody(array('records'=>$records), 'text/html');
+                        $message->subject = 'Request to change password';
+                        $message->addTo('arvind@sprytechies.com');
+                        $message->from = Yii::app()->params['adminEmail'];
+                        Yii::app()->mail->send($message);
+                        
+                        Yii::app()->user->setFlash('success', "Please check your mails");
+
+                        $this->redirect('ForgotPassword');
+                    }else{
+                        Yii::app()->user->setFlash('error', "Invalid Email");
+                    }
+            }
+            $this->render('forgotpass',array('model'=>$model));
+        }
+        
+        /**
+         * Change password 
+         */
+        public function actionChangepass()
+	{       
+                $model = new User;
+                $records=  User::model()->findAll();
+                if(isset($_POST) && isset($_POST['k'])){
+                    foreach ($records as $value) {
+                            if(md5($value->id).md5(strtotime($value->created))==$_POST['k']){
+                                $pass1 = trim($_POST['newpassword']);
+                                $pass2 = trim($_POST['confirmpassword']);
+                                if(isset($_POST['newpassword']) && isset($_POST['confirmpassword']) && !empty($pass1) && !empty($pass2)){
+                                        $data=User::model()->findByPk($value->idusers);
+                                        if($pass1 != $pass2){
+                                                    Yii::app()->user->setFlash('error', "Passwords don't match. Please try again.");
+                                            }else{
+                                                    $data->password=$pass1;
+                                                    $data->save();
+                                                    Yii::app()->user->setFlash('success', "Password is changed. Please login with your new password.");
+                                            }
+                                }else{
+                                    Yii::app()->user->setFlash('error', "Please check entered values.");
+                                }
+                            }
+                    }
+                }
+                if(isset($_GET['k'])){
+                    $this->render('changepass',array('model'=>$model, 'k'=>$_GET['k']));
+                }else{
+                    $this->render('changepass',array('model'=>$model));
+                }
+	}
 
 }
