@@ -46,6 +46,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+                        'loginUrl'=>array('site/index'),
 		),
 		
 		// uncomment the following to enable URLs in path-format
@@ -72,7 +73,7 @@ return array(
 	//		'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
 	// Uncomment the following to use a local copy of the DB(located in the repo)
 			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
-		  'emulatePrepare' => true,
+                        'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',

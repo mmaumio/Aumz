@@ -2,6 +2,35 @@
 
 class ProjectController extends Controller
 {
+    
+        /**
+         * access control filter
+         */
+        public function filters()
+	{
+		return array(
+			'accessControl', 
+		);
+	}
+        
+        /*
+	 * Specifies the access control rules.
+	 * This method is used by the 'accessControl' filter.
+	 * @return array access control rules
+	 */
+	public function accessRules()
+	{
+		return array(
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project'),
+				'users'=>array('@'),
+			),
+			array('deny',  // deny all users
+				'users'=>array('*'),
+			),
+		);
+	}
+    
 	public function actionIndex()
 	{
             
