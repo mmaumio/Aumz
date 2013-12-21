@@ -585,3 +585,6 @@ vertical-align:top;
 /**addition by arvind **/
 .errorMessage{color:#B94A48;}
 .error{border-color: #B94A48 !important;}
+#forgot-popup{display: none;}
+#forgot-modal .modal-footer {border-top: none;}
+#forgot-modal .modal-header {border-bottom: none;}
