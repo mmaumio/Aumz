@@ -13,6 +13,7 @@
                 if($isHome){
         ?>
         <link rel="stylesheet" type="text/css" href="/css/home/stylesheet.css">
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
         <?php }else{ ?>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     
