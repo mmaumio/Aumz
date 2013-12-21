@@ -136,7 +136,7 @@ class ProjectController extends Controller
 				if ($project->save())
 				{
 					
-				$this->redirect('/dashboard');
+				$this->redirect('/project/index/'.$project->id);
 				}
 				else
 				{
