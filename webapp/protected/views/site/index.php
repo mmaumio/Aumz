@@ -56,7 +56,8 @@
           <h3>Sign In to Stirplate</h3>
           <div class="signInMain">
             <?php $form=$this->beginWidget('CActiveForm', array(
-                    'id'=>'login-form-ajaxcall'
+                    'id'=>'login-form-ajaxcall',
+                    'action'=> $this->createUrl('site/index')
             )); ?>
                      <?php echo $form->error($model,'email'); ?>
                      <?php echo $form->error($model,'password'); ?>
@@ -82,13 +83,21 @@
           </div>
         </div>
         <div class="signUp">
+            <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'newsletter-form',
+                    'action'=> $this->createUrl('site/newsletter'),
+                )); ?>
           <h3>Stirplate Newsletter</h3>
           <h4 align ="center"> We are currently invite only. Sign up for updates</h4>
           <div class="signUpMain">
-            <input type="text" value="" name="" placeholder="Email Address" />
-            <input type="submit" value="SIGNUP" name="" />
+              <?php echo $form->error($newsLetterModel,'email'); ?>
+              <?php echo Yii::app()->user->getFlash('success'); ?>
+              <?php echo $form->textField($newsLetterModel, 'email', array('placeholder' => 'Email Address')); ?>
+              <?php echo CHtml::submitButton('SIGNUP'); ?>
           </div>
+            <?php $this->endWidget(); ?>
         </div>
+
       </div>
     </div>
   </div>
