@@ -76,7 +76,7 @@ return array(
 	//		'connectionString' => 'mysql:host=localhost;dbname=omniscience',
 //		  'emulatePrepare' => true,
 //=======
-		//	'connectionString' => 'mysql:host=localhost;dbname=omniscience',
+//			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
                         'emulatePrepare' => true,
 //>>>>>>> 06b3e2cb84ec6d77b23d4bcfaafe3ef80948a01a
 			'username' => 'root',

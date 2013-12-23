@@ -1,6 +1,12 @@
+<center> <h1> Stirplate Blog </h1> </center>
 
-<h1>
-Blog page
-</h1>
-<b>Find At :</b> webapp/protected/views/site/blog.php
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Why a USB harddrive is not the way to store your research data.
+</h3>
+  </div>
+  <div class="panel-body">
+    Why a USB harddrive is not the way to store your research data.
 
+  </div>
+</div>
