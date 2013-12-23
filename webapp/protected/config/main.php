@@ -72,8 +72,13 @@ return array(
 	//		KG comment: The following line connects the app w/ the cloudsql database, does not work w/ local copy
 	//		'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
 	// Uncomment the following to use a local copy of the DB(located in the repo)
+//<<<<<<< HEAD
+	//		'connectionString' => 'mysql:host=localhost;dbname=omniscience',
+//		  'emulatePrepare' => true,
+//=======
 			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
                         'emulatePrepare' => true,
+//>>>>>>> 06b3e2cb84ec6d77b23d4bcfaafe3ef80948a01a
 			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',
@@ -135,6 +140,8 @@ return array(
 		'emailNotifications' => true,
 		'boxfolderid' => 1302694889,
 		'boxclientid' => '58l43p0xw5nv4vqpakexbg4iajqsadfh',
-		'boxclientsecret' => 'NwDCRMooJATY9pFv5ROl3bWRjcEGpqvZ'
+		'boxclientsecret' => 'NwDCRMooJATY9pFv5ROl3bWRjcEGpqvZ',
+		'mailChimpApiKey' => 'dff5a7e5f0ef8a7c5b2d077b4c525def-us7',
+		'mailChimpListId' => '64a24c221c'
 	),
 );

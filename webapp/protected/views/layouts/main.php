@@ -9,7 +9,7 @@
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <?php 
                 $controller = Yii::app()->getController();
-                $isHome = $controller->getId() === 'site' && $controller->getAction()->getId() === 'index';
+                $isHome = $controller->getId() === 'site' && $controller->getAction()->getId() === 'index' || $controller->getAction()->getId() === 'newsletter';
                 if($isHome){
         ?>
         <link rel="stylesheet" type="text/css" href="/css/home/stylesheet.css">

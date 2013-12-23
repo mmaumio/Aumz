@@ -56,7 +56,8 @@
           <h3>Sign In to Stirplate</h3>
           <div class="signInMain">
             <?php $form=$this->beginWidget('CActiveForm', array(
-                    'id'=>'login-form-ajaxcall'
+                    'id'=>'login-form-ajaxcall',
+                    'action'=> $this->createUrl('site/index')
             )); ?>
                      <?php echo $form->error($model,'email'); ?>
                      <?php echo $form->error($model,'password'); ?>
@@ -82,13 +83,21 @@
           </div>
         </div>
         <div class="signUp">
+            <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'newsletter-form',
+                    'action'=> $this->createUrl('site/newsletter'),
+                )); ?>
           <h3>Stirplate Newsletter</h3>
           <h4 align ="center"> We are currently invite only. Sign up for updates</h4>
           <div class="signUpMain">
-            <input type="text" value="" name="" placeholder="Email Address" />
-            <input type="submit" value="SIGNUP" name="" />
+              <?php echo $form->error($newsLetterModel,'email'); ?>
+              <?php echo Yii::app()->user->getFlash('success'); ?>
+              <?php echo $form->textField($newsLetterModel, 'email', array('placeholder' => 'Email Address')); ?>
+              <?php echo CHtml::submitButton('SIGNUP'); ?>
           </div>
+            <?php $this->endWidget(); ?>
         </div>
+
       </div>
     </div>
   </div>
@@ -188,13 +197,13 @@
 			<span><a href="site/faq">FAQ</a></span>
 			<span><a href="mailto:info@stirplate.io">Contact us</a></span>
 			<span><a href="site/blog">Blog</a></span>
-			<span class=""><a href="#">Follow us :</a> 
+			<span class="">Follow us :</a> 
 			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
 				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
-			</span>
-			
+			</span> 		
 		<p>
-<!--<h3>Want to know more about what we are up to? Send us a message </h3> -->       </div>
+<!--<h3>Want to know more about what we are up to? Send us a message </h3> -->       
+      </div>
       </div>
       <!--<div class="contactForm">
         <div class="contactFormMain">

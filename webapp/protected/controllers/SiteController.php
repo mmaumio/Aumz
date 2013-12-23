@@ -1,5 +1,6 @@
 <?php
 
+
 class SiteController extends Controller
 {
         
@@ -32,6 +33,7 @@ class SiteController extends Controller
 		// using the default layout 'protected/views/layouts/main.php'
                 $this->layout='//layouts/columnfull';
                 $model=new LoginForm;
+                $newsLetterModel = new NewsletterForm;
                 //collect user input
                 if(isset($_POST['LoginForm']))
                 {  
@@ -53,7 +55,7 @@ class SiteController extends Controller
 				}
                          }
                 }
-		$this->render('index',array('model'=>$model));
+		$this->render('index',array('model'=>$model, 'newsLetterModel'=>$newsLetterModel));
 	}
 
 	/**
@@ -241,4 +243,22 @@ class SiteController extends Controller
                 }
 	}
 
+
+    /**
+     * handles newsletter actions
+     */
+    public function actionNewsletter()
+    {
+        $this->layout = '//layouts/columnfull';
+        $model        = new NewsletterForm;
+        // collect user input data
+        if (isset($_POST['NewsletterForm'])) {
+            $model->attributes = $_POST['NewsletterForm'];
+            if ($model->validate() && $model->process()) {
+                Yii::app()->user->setFlash('success', 'User subscribed successfully!');
+            }
+        }
+        $loginModel = new LoginForm;
+        $this->render('index', array('model' => $loginModel, 'newsLetterModel' => $model));
+    }
 }
