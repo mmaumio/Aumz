@@ -197,13 +197,13 @@
 			<span><a href="site/faq">FAQ</a></span>
 			<span><a href="mailto:info@stirplate.io">Contact us</a></span>
 			<span><a href="site/blog">Blog</a></span>
-			<span class=""><a href="#">Follow us :</a> 
+			<span class="">Follow us :</a> 
 			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
 				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
-			</span>
-			
+			</span> 		
 		<p>
-<!--<h3>Want to know more about what we are up to? Send us a message </h3> -->       </div>
+<!--<h3>Want to know more about what we are up to? Send us a message </h3> -->       
+      </div>
       </div>
       <!--<div class="contactForm">
         <div class="contactFormMain">
