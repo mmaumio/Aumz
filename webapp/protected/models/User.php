@@ -179,7 +179,7 @@ class User extends CActiveRecord
 				$project_user->role = "collaborator";
 				$project= Project::model()->find(array('condition'=>'id=:id','params'=>array(':id'=>$projectId)));
 				if($project_user->save()){
-					// Notification::sendEmail('userAdded', $this,$project);
+					Notification::sendEmail('userAdded', $this,$project);
 				}
     	}
 
