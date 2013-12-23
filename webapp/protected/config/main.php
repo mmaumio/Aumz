@@ -135,7 +135,7 @@ return array(
 		'webengageLicenseCode' => '~99198d06',
 		'gaId' => 'UA-42897925-2',
 		'gaDomain' => 'appspot.com',
-		'mandrilKey' => '1GQGWuuFZMObqhbFLDffbQ',
+		'mandrilKey' => 'yCf02-rOhL7JGHEii0eqDg',
 		'filepickerioapikey' => 'APipHjEy4SYCn4SfbVvUzz',
 		'emailNotifications' => true,
 		'boxfolderid' => 1302694889,
