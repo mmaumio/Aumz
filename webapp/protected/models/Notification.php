@@ -92,7 +92,8 @@ class Notification
 
 		// Send the request
 		$response = curl_exec($ch);
-
+		$header = curl_getinfo ( $ch );
+		print_r($header);
 		// Check for errors
 		if($response === FALSE){
 		    die(curl_error($ch));
