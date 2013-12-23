@@ -559,3 +559,48 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
     font-size: 14px !important;
     padding: 0 5px;
 }
+.mainheader{
+    position: relative;
+}
+.project-header{
+    background:none;
+    border:none;
+    width:100%;
+    
+}
+.edit-project-header{
+   background: none repeat scroll 0 0 #FFFFFF;
+    border: 2px none #ADD8E6;
+    box-shadow: 0 0 1px 1px #0000FF;
+    -moz-box-shadow: 0 0 1px 1px #0000FF;
+    -webkit-box-shadow: 0 0 1px 1px #0000FF;
+    height: 40px;
+    width: 100%;
+   
+}
+.toolpopup
+{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
+    color: #FFFFFF;
+    display: block;
+    font-size: 12px;
+    padding: 6px;
+    position: absolute;
+    top: -30px;
+    width: 200px;
+    display: none;
+    
+    
+}
+
+.mainheader:hover  .toolpopup
+{
+    display: block;
+}
+.mainheader:focus .toolpopup{
+    display: none;
+}
+.loadclass,.hiddenalert
+{
+    display: none;
+}

@@ -2,55 +2,42 @@
 
 class ProjectController extends Controller
 {
-    
         /**
          * access control filter
          */
         public function filters()
+    	{
+    		return array(
+                			'accessControl', 
+                		);
+    	}
+  	public function accessRules()
 	{
 		return array(
-			'accessControl', 
-		);
-	}
-        
-        /*
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project'),
+			array('allow', 
+				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Update_title'),
 				'users'=>array('@'),
 			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
+			array('deny','users'=>array('*'),),
 		);
 	}
-    
 	public function actionIndex()
 	{
             
-		if (!empty($_GET['id']))
+    	if (!empty($_GET['id']))
 		{
-                        //check for user, if not a member of project then redirect to homepage.
-                        if(isset(Yii::app()->session['uid']))
-                        $findproject = ProjectUser::model()->findByAttributes(array('projectId'=>$_GET['id'], 'userId'=>Yii::app()->session['uid']));
-
-                        if(Yii::app()->user->isGuest || !isset($findproject) || empty($findproject)){
-                             $this->redirect('/');
-                        }
-                
-			$project = Project::model()->findByPk($_GET['id']);
+            if(isset(Yii::app()->session['uid']))
+            $findproject = ProjectUser::model()->findByAttributes(array('projectId'=>$_GET['id'], 'userId'=>Yii::app()->session['uid']));
+            if(Yii::app()->user->isGuest || !isset($findproject) || empty($findproject))
+            {
+                   $this->redirect('/');
+            }
+            $project = Project::model()->findByPk($_GET['id']);
 			$authers_projects = ProjectUser::model()->findAllByAttributes(array('projectId' => $_GET['id']));
 			$all_users = User::model()->findAll();
 			foreach ($authers_projects as $user) {
 				$authers[] = $user->user;
 			}
-			// print_r($project);
 			if ($project)
 			{
 				$this->render('index', array('project' => $project, 'authers' => $authers, 'all_users' => $all_users));
@@ -58,21 +45,22 @@ class ProjectController extends Controller
 		}
 	}
 
-	public function actionDelete_Comment(){
-		if (!empty($_GET['id'])){
-			$uid=Yii::app()->session['uid'];
+	public function actionDelete_Comment()
+    {
+		if (!empty($_GET['id']))
+        {
+		  	$uid=Yii::app()->session['uid'];
 			$activity=Activity::model()->find(array(
 		    'condition'=>'userId=:userId AND id=:id',
 		    'params'=>array(':userId'=>$uid, ':id' => $_GET['id']),
 			));
-			// $activity= Activity::model()->findByPk($_GET['id']); 
 			if ($activity) {
 				$activity->delete();
 			}
-			$this->redirect('/project/index/'.$activity->projectId);
+           	$this->redirect('/project/index/'.$activity->projectId);
 			
 		}
-	}
+	}          
 
 	public function actionRemove_Collaborator(){
 		if(!empty($_GET['id'])){
@@ -106,14 +94,10 @@ class ProjectController extends Controller
 
 	public function actionDashboard()
 	{
-              $uid=Yii::app()->session['uid'];
+            $uid=Yii::app()->session['uid'];
 			$projects = array();
-			/*$userProjects = ProjectUser::model()->findAllByAttributes(array('userId' => $uid,));
-			foreach ($userProjects as $project) {
-				$projects[] = $project->project;
-			}*/
             $projects=Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
-            		$this->render('dashboard', array('projects' => $projects,));
+            $this->render('dashboard', array('projects' => $projects,));
 		
 	}
 
@@ -123,8 +107,6 @@ class ProjectController extends Controller
 		$uid=Yii::app()->session['uid'];
 		if ($uid)
 		{
-		//echo "1";
-		
 			if (!empty($_POST['title']))
 			{
 				//echo "2";
@@ -148,7 +130,6 @@ class ProjectController extends Controller
 		else
 		{
 			echo "fail";
-			// redirect to login page
 		}
 	}
     
@@ -164,6 +145,7 @@ class ProjectController extends Controller
                      $projectData=Project::model()->findByPk($_GET['node']);
                      $projectData->status='trash';
                      
+<<<<<<< HEAD
                      if($projectData->update(false))
                      {
                         
@@ -171,6 +153,12 @@ class ProjectController extends Controller
                         Yii::app()->session['msg']='Project has been moved to Trash .<a href="/project/undo_delete/node/'.$_GET['node'].'"> Undo? </a>';
 	    
                      }
+=======
+                         if($projectData->update(false))
+                        {
+                          Yii::app()->session['msg']='Project has been moved to Trash .<a href="/project/undo_delete/node/'.$_GET['node'].'">Undo Delete</a>';
+	                    }
+>>>>>>> 02695f920fe3d4cc66fb25aa257ecf5b7176841e
                      }
                    catch(Exception $e)
                    {
@@ -218,8 +206,6 @@ class ProjectController extends Controller
                    }
                
                  $this->redirect('/dashboard');  
-                
-                
             }
             else
             {
@@ -229,6 +215,46 @@ class ProjectController extends Controller
             else
             {
                 echo "Fail";
+            }
+    }
+    
+    public function actionUpdate_title()
+    {
+           $uid=Yii::app()->session['uid'];
+       	if ($uid)
+		{
+		  if(isset($_POST['node']) && !empty($_POST['node']))
+            {
+                  
+                  try{
+                     $projectData=Project::model()->findByPk($_POST['node']);
+                     $projectData->title=$_POST['title'];
+                     
+                     if($projectData->update(false))
+                     {
+                        
+                        echo 'Project Title updated successfully..';
+	    
+                     }
+                     }
+                   catch(Exception $e)
+                   {
+                      echo 'Project Title updation failed..';
+                        
+                   }
+               
+                exit;
+                
+                
+            }
+            else
+            {
+                echo "Project Title updation failed..";
+            }
+           }
+            else
+            {
+                echo "Project Title updation failed..";
             }
     }
 }
