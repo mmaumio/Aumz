@@ -17,4 +17,18 @@ Note: after your final commit, please revert this so I can push the code to the 
 
 That’s it, you now have a local copy of the program to edit. 
 Before pushing your final commit, please make sure it works locally. 
+----
+<b>When you are done with your project</b>
+1. Review it locally and make sure it works. 
+2. Push the code to github 
+3. In trello, move your project from "doing" to "Pending review"
+4. Choose a new project to start working on, assign it to yourself, and move it to "doing"
+-------
 
+
+
+Live version: 
+To login to stirplate.io, use the following info:
+http://1.stirplateio.appspot.com/
+userid: deleme1@omnisci.org
+password: t3h1s1saw3som
