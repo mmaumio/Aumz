@@ -141,7 +141,7 @@ return array(
 		'boxfolderid' => 1302694889,
 		'boxclientid' => '58l43p0xw5nv4vqpakexbg4iajqsadfh',
 		'boxclientsecret' => 'NwDCRMooJATY9pFv5ROl3bWRjcEGpqvZ',
-		'mailChimpApiKey' => '53e7c7da6fefa26b4fb12896905b3db3-us3',
-		'mailChimpListId' => 'e59e1c0ef8'
+		'mailChimpApiKey' => 'dff5a7e5f0ef8a7c5b2d077b4c525def-us7',
+		'mailChimpListId' => '64a24c221c'
 	),
 );
