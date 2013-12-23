@@ -145,7 +145,7 @@ class ProjectController extends Controller
                      $projectData=Project::model()->findByPk($_GET['node']);
                      $projectData->status='trash';
                      
-<<<<<<< HEAD
+
                      if($projectData->update(false))
                      {
                         
@@ -153,12 +153,7 @@ class ProjectController extends Controller
                         Yii::app()->session['msg']='Project has been moved to Trash .<a href="/project/undo_delete/node/'.$_GET['node'].'"> Undo? </a>';
 	    
                      }
-=======
-                         if($projectData->update(false))
-                        {
-                          Yii::app()->session['msg']='Project has been moved to Trash .<a href="/project/undo_delete/node/'.$_GET['node'].'">Undo Delete</a>';
-	                    }
->>>>>>> 02695f920fe3d4cc66fb25aa257ecf5b7176841e
+
                      }
                    catch(Exception $e)
                    {
