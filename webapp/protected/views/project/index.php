@@ -1,7 +1,10 @@
 <section class="detailMain">
 	<div class="wrapper">
         <div class="detailMainGreen">
-            <h3><?php echo $project->title ?></h3>
+         
+            <h3 class="mainheader">
+            <div class="toolpopup">Click on title to edit</div>
+               <input value="<?php echo $project->title ?>" type="text" style="" class="project-header"/><img class="loadclass" src="/img/dashboard/loadimage.gif"/></h3>
             <div class="detailMainGreenImg">
             	<h3> Project members: </h3> 
                     
@@ -22,6 +25,7 @@
                     $("#names").on("change", function(e) {
                       $("#mynames").val($("#names").select2("val").join(","));
                     });
+                    
                 });
             </script>
             <br><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"> Add new project member  </a>
@@ -208,33 +212,96 @@
         </div>
     </div>
 </section>
-<div id="dialog-confirm" title="Empty the recycle bin?" style="display:none;">
+<<<<<<< HEAD
+<div id="dialog-confirm" title="Confirm delete project?">
+<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This project, files and discussions will be deleted. Are you sure?</p>
+=======
+<div id="dialog-confirm" title="Delete Project ?" style="display:none;">
 <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+>>>>>>> 02695f920fe3d4cc66fb25aa257ecf5b7176841e
 </div>
 
        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
  
  <script>
     $(document).ready(function(){
-        $('#del-btn').click(function(){
+        $('.project-header').attr('readonly','readonly');
+        $('#del-btn').click(function()
+        {
             var node=$(this).prop("rel");
             $('.ui-dialog-titlebar-close').text("x");
             $( "#dialog-confirm" ).dialog({
             resizable: true,
-          //  height:200,
             modal: true,
             buttons: {
-            "Delete all items": function() {
-                   window.location.href="/project/delete_project/node/"+node;
-                   $( this ).dialog( "close" );
-            },
-            Cancel: function() {
-            $( this ).dialog( "close" );
-            }
-            
-            }
+                        "Delete all items": function()
+                         {
+                         window.location.href="/project/delete_project/node/"+node;
+                         $( this ).dialog( "close" );
+                     },
+            Cancel: function() 
+                     {
+                     $( this ).dialog( "close" );
+                     }
+             }
             });
         });
+        
+        $('.project-header').click(function()
+        {
+            
+            $(this).addClass("edit-project-header");
+            $(this).removeAttr("readonly");
+            $('.toolpopup').addClass('hiddenalert');
+            
+        });
+        $('.project-header').focus(function()
+        {
+            
+            $('.toolpopup').addClass('hiddenalert');
+            
+        });                                                                      
+      /* $('.project-header').mouseover(function(){
+            
+              $('.toolpopup').css('display','block');
+        });
+       /* $('.project-header').mousedown(function(){
+            
+              $('.toolpopup').css('display','none');
+        });*/
+        $('.project-header').blur(function()
+        {
+            
+           $('.toolpopup').removeClass('hiddenalert');
+           var node="<?php echo $project->id;?>"
+           var title=$(this).val();
+            $(this).removeClass("edit-project-header");
+            $(this).attr('readonly','readonly');
+            if(title=="")
+            {
+                title="Untitled Project";
+            }
+            
+            $.ajax({
+                data:"node="+node+"&title="+title,
+                url:'/project/update_title',
+                type:'POST',
+                beforeSend:function(){
+                    $('.loadclass').css('display','block');
+                },
+                success:function(){},
+                complete:function()
+                {
+                          $('.loadclass').css('display','none');
+                },
+            });
+            
+            
+        });
+        
+      
+            
+       
             
     });
 </script>

@@ -70,13 +70,13 @@ return array(
 //		),
 		'db'=>array(
 	//		KG comment: The following line connects the app w/ the cloudsql database, does not work w/ local copy
-	//		'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
+			'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
 	// Uncomment the following to use a local copy of the DB(located in the repo)
 //<<<<<<< HEAD
 	//		'connectionString' => 'mysql:host=localhost;dbname=omniscience',
 //		  'emulatePrepare' => true,
 //=======
-			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
+		//	'connectionString' => 'mysql:host=localhost;dbname=omniscience',
                         'emulatePrepare' => true,
 //>>>>>>> 06b3e2cb84ec6d77b23d4bcfaafe3ef80948a01a
 			'username' => 'root',
@@ -135,7 +135,7 @@ return array(
 		'webengageLicenseCode' => '~99198d06',
 		'gaId' => 'UA-42897925-2',
 		'gaDomain' => 'appspot.com',
-		'mandrilKey' => '1GQGWuuFZMObqhbFLDffbQ',
+		'mandrilKey' => 'yCf02-rOhL7JGHEii0eqDg',
 		'filepickerioapikey' => 'APipHjEy4SYCn4SfbVvUzz',
 		'emailNotifications' => true,
 		'boxfolderid' => 1302694889,
