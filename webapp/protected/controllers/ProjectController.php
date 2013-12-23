@@ -168,7 +168,7 @@ class ProjectController extends Controller
                      {
                         
                      
-                        Yii::app()->session['msg']='Project has been moved to Trash .<a href="/project/undo_delete/node/'.$_GET['node'].'">Undo Delete</a>';
+                        Yii::app()->session['msg']='Project has been moved to Trash .<a href="/project/undo_delete/node/'.$_GET['node'].'"> Undo? </a>';
 	    
                      }
                      }

@@ -208,8 +208,8 @@
         </div>
     </div>
 </section>
-<div id="dialog-confirm" title="Empty the recycle bin?" style="display:none;">
-<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+<div id="dialog-confirm" title="Confirm delete project?">
+<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This project, files and discussions will be deleted. Are you sure?</p>
 </div>
 
        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
