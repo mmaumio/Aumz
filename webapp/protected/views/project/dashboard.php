@@ -3,12 +3,14 @@
       if(isset(Yii::app()->session['msg']) && !empty(Yii::app()->session['msg']))
       {
         ?>
-        <div class="alert alert-success">
-        <p class="text-center"><?php echo Yii::app()->session['msg'];
+        
+ <div class="alert alert-warning alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong><p class="text-center"><?php echo Yii::app()->session['msg'];
         unset(Yii::app()->session['msg']);
-        ?></p>
- </div>
- 
+        ?><p></strong> 
+</div>
+
         
         <?php
       }

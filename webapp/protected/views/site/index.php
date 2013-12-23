@@ -4,13 +4,39 @@
         $('#login-form-ajaxcall').submit(function(e){
             if(parseInt("<?php if(isset(Yii::app()->request->cookies['user_trails'])){echo Yii::app()->request->cookies['user_trails']->value;}else{echo 0;} ?>") > parseInt("2")){
                  e.preventDefault();
-                 alert("Would you like to reset your password?");
                  <?php if(isset(Yii::app()->request->cookies['user_trails']) && (Yii::app()->request->cookies['user_trails']->value > 2 )){unset(Yii::app()->request->cookies['user_trails']);} ?>
-                location.reload();
+                 $("#forgot-popup").click();
             }
         })
+        $("#forgot-modal .close, #forgot-modal #forgot-close").click(function(){
+           location.reload(); 
+        });
     })
 </script>
+
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#forgot-modal" id="forgot-popup">
+  Launch 
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="forgot-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+       Would you like to reset your password? Click <a href="site/ForgotPassword">here</a> to reset.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="forgot-close">Cancel</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <!--Page 1 Start-->
 <section class="homePage1">
   <div class="homePage1Main">
@@ -30,7 +56,8 @@
           <h3>Sign In to Stirplate</h3>
           <div class="signInMain">
             <?php $form=$this->beginWidget('CActiveForm', array(
-                    'id'=>'login-form-ajaxcall'
+                    'id'=>'login-form-ajaxcall',
+                    'action'=> $this->createUrl('site/index')
             )); ?>
                      <?php echo $form->error($model,'email'); ?>
                      <?php echo $form->error($model,'password'); ?>
@@ -56,13 +83,21 @@
           </div>
         </div>
         <div class="signUp">
+            <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'newsletter-form',
+                    'action'=> $this->createUrl('site/newsletter'),
+                )); ?>
           <h3>Stirplate Newsletter</h3>
           <h4 align ="center"> We are currently invite only. Sign up for updates</h4>
           <div class="signUpMain">
-            <input type="text" value="" name="" placeholder="Email Address" />
-            <input type="submit" value="SIGNUP" name="" />
+              <?php echo $form->error($newsLetterModel,'email'); ?>
+              <?php echo Yii::app()->user->getFlash('success'); ?>
+              <?php echo $form->textField($newsLetterModel, 'email', array('placeholder' => 'Email Address')); ?>
+              <?php echo CHtml::submitButton('SIGNUP'); ?>
           </div>
+            <?php $this->endWidget(); ?>
         </div>
+
       </div>
     </div>
   </div>
