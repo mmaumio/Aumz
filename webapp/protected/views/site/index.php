@@ -87,13 +87,13 @@
                     'id'=>'newsletter-form',
                     'action'=> $this->createUrl('site/newsletter'),
                 )); ?>
-          <h3>Stirplate Newsletter</h3>
+          <h2 align = "center">Stirplate Newsletter</h3>
           <h4 align ="center"> We are currently invite only. Sign up for updates</h4>
           <div class="signUpMain">
               <?php echo $form->error($newsLetterModel,'email'); ?>
               <?php echo Yii::app()->user->getFlash('success'); ?>
               <?php echo $form->textField($newsLetterModel, 'email', array('placeholder' => 'Email Address')); ?>
-              <?php echo CHtml::submitButton('SIGNUP'); ?>
+              <?php echo CHtml::submitButton('Subscribe'); ?>
           </div>
             <?php $this->endWidget(); ?>
         </div>
