@@ -15,7 +15,7 @@ class ProjectController extends Controller
 	{
 		return array(
 			array('allow', 
-				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Update_title'),
+				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title'),
 				'users'=>array('@'),
 			),
 			array('deny','users'=>array('*'),),
