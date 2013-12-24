@@ -3,7 +3,7 @@
         <div class="detailMainGreen">
          
             <h3 class="mainheader">
-            <div class="toolpopup">Click on title to edit</div>
+            <div class="toolpopup"><img src="/img/dashboard/file_edit.png" style="margin:-3px 5px;">Click on title to edit</div>
                <input value="<?php echo $project->title ?>" type="text" style="" class="project-header"/><img class="loadclass" src="/img/dashboard/loadimage.gif"/></h3>
             <div class="detailMainGreenImg">
             	<h3> Project members: </h3> 
@@ -212,23 +212,32 @@
         </div>
     </div>
 </section>
-<<<<<<< HEAD
-<div id="dialog-confirm" title="Confirm delete project?">
-<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This project, files and discussions will be deleted. Are you sure?</p>
-=======
-<div id="dialog-confirm" title="Delete Project ?" style="display:none;">
-<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
->>>>>>> 02695f920fe3d4cc66fb25aa257ecf5b7176841e
-</div>
 
-       <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
- 
- <script>
+<div class="prmodal" id="deleteblock" style="display: none;">
+<div class="prmodal-header" style=""><h3 class="alert alert-warning">Confirm delete project ? </h3></div>
+<div class="prmodal-body">This project, files and discussions will be deleted. Are you sure?</div>
+<div class="prmodal-footer">
+        <button class="btn cl">Cancel</button>
+        <button class="btn btn-primary delitem" id="">OK</button>
+</div>
+</div>
+<div class="modal-backdrop fade in" id="hiddenel" ></div>
+     <script>
     $(document).ready(function(){
+        $('#hiddenel').hide();
         $('.project-header').attr('readonly','readonly');
+        
         $('#del-btn').click(function()
         {
-            var node=$(this).prop("rel");
+            
+            $('#hiddenel').show();
+            $('#deleteblock').show(1000);
+            $('#deleteblock').animate({dispay:"block",top: "20%"}, 500,function(){
+                
+               
+            });
+            
+           /* var node=$(this).prop("rel");
             $('.ui-dialog-titlebar-close').text("x");
             $( "#dialog-confirm" ).dialog({
             resizable: true,
@@ -244,9 +253,20 @@
                      $( this ).dialog( "close" );
                      }
              }
-            });
+            });*/
         });
         
+        $('.delitem').click(function(){
+            node="<?php echo $project->id;?>";
+            window.location.href="/project/delete_project/node/"+node;
+        });
+        $('.cl').click(function(){
+            $('#hiddenel').hide();
+            $('#deleteblock').hide(1000);
+            $('#deleteblock').animate({dispay:"none",top: "-20%"}, 500,function(){
+             
+        });
+        });
         $('.project-header').click(function()
         {
             
