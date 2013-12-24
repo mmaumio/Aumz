@@ -214,8 +214,8 @@
 </section>
 
 <div class="prmodal" id="deleteblock" style="display: none;">
-<div class="prmodal-header" style=""><h3 class="alert alert-warning">Delete Project ? </h3></div>
-<div class="prmodal-body">Deleted items will not be longer available in later</div>
+<div class="prmodal-header" style=""><h3 class="alert alert-warning">Confirm delete project ? </h3></div>
+<div class="prmodal-body">This project, files and discussions will be deleted. Are you sure?</div>
 <div class="prmodal-footer">
         <button class="btn cl">Cancel</button>
         <button class="btn btn-primary delitem" id="">OK</button>

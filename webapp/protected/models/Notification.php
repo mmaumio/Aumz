@@ -79,33 +79,43 @@ class Notification
         	)
         );
 
-		// Setup cURL
-		$ch = curl_init('https://mandrillapp.com/api/1.0/messages/send.json');
-		curl_setopt_array($ch, array(
-		    CURLOPT_POST => TRUE,
-		    CURLOPT_RETURNTRANSFER => TRUE,
-		    CURLOPT_HTTPHEADER => array(
-		        'Content-Type: application/json'
-		    ),
-		    CURLOPT_POSTFIELDS => json_encode($emailJson)
-		));
+        
+		$opts = array('http' =>
+		    array(
+		        'method'  => 'POST',
+		        'header'  => 'Content-type: application/json',
+		        'content' => json_encode($emailJson)
+		    )
+		);
 
-		// Send the request
-		$response = curl_exec($ch);
-		$header = curl_getinfo ( $ch );
-		print_r($header);
-		// Check for errors
-		if($response === FALSE){
-		    die(curl_error($ch));
-		}
+		$context  = stream_context_create($opts);
+    $result = file_get_contents('https://mandrillapp.com/api/1.0/messages/send.json', false, $context);    
+		// // Setup cURL
+		// $ch = curl_init('https://mandrillapp.com/api/1.0/messages/send.json');
+		// curl_setopt_array($ch, array(
+		//     CURLOPT_POST => TRUE,
+		//     CURLOPT_RETURNTRANSFER => TRUE,
+		//     CURLOPT_HTTPHEADER => array(
+		//         'Content-Type: application/json'
+		//     ),
+		//     CURLOPT_POSTFIELDS => json_encode($emailJson)
+		// ));
 
-		// Decode the response
-		$responseData = json_decode($response, TRUE);
+		// // Send the request
+		// $response = curl_exec($ch);
 
-		if (!isset($responseData[0]['status']) || $responseData[0]['status'] !== 'sent')
-		{
-			YII::log(json_encode($responseData), 'error', 'Notification._sendEmail');
-		}
+		// // Check for errors
+		// if($response === FALSE){
+		//     die(curl_error($ch));
+		// }
+
+		// // Decode the response
+		// $responseData = json_decode($response, TRUE);
+
+		// if (!isset($responseData[0]['status']) || $responseData[0]['status'] !== 'sent')
+		// {
+		// 	YII::log(json_encode($responseData), 'error', 'Notification._sendEmail');
+		// }
 	}
 
 }
