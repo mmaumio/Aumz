@@ -32,6 +32,7 @@ class SiteController extends Controller
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
                 $this->layout='//layouts/columnfull';
+                $userModel=new User;
                 $model=new LoginForm;
                 $newsLetterModel = new NewsletterForm;
                 //collect user input
@@ -55,7 +56,7 @@ class SiteController extends Controller
 				}
                          }
                 }
-		$this->render('index',array('model'=>$model, 'newsLetterModel'=>$newsLetterModel));
+		$this->render('index',array('model'=>$model, 'newsLetterModel'=>$newsLetterModel,'userModel'=>$userModel));
 	}
 
 	/**
@@ -260,5 +261,38 @@ class SiteController extends Controller
         }
         $loginModel = new LoginForm;
         $this->render('index', array('model' => $loginModel, 'newsLetterModel' => $model));
+    }
+    
+    public function actionSignup()
+    {
+        $userModel=new User;
+        if(isset($_POST['User']))
+        {
+           
+            $userModel->attributes=$_POST['User'];
+           if(User::model()->exists('email=:email',array(":email"=>$userModel->email)))
+           {
+            echo 'exits';exit;
+           }
+           if(!filter_var($userModel->email, FILTER_VALIDATE_EMAIL))
+           {
+             echo "invalid1";exit;
+           }
+          $array=explode("@",$userModel->email);
+          $array2=explode(".",$array[1]);
+          if($array2[1]!='edu')
+          {
+            echo 'invalid';exit;
+          }
+         
+            $userModel->password=User::hashPassword($_POST['Users']['password']);
+                        $userModel->status='block';
+                        
+            if($userModel->save())
+            {
+                echo 'success';
+            }
+        }
+        exit;
     }
 }

@@ -41,7 +41,6 @@ function downloadFile(path){
 	a.remove();
 }
   </script>	
-	
 
 </head> 
 <body> 

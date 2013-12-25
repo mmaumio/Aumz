@@ -15,7 +15,7 @@
 </script>
 
 <!-- Button trigger modal -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#forgot-modal" id="forgot-popup">
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#forgot-modal" id="forgot-popup" style="">
   Launch 
 </button>
 
@@ -36,7 +36,293 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
+<div class="modal fade" id="signup-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!--<div class="modal-header">
+      </div>
+      -->
+      <div class="modal-header"><div class="bootstrap-dialog-header">SIGN UP TO STIREPLATE    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+   </div></div>
+      <div class="modal-body">
+           <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'signup-form-ajaxcall',
+                    //'action'=> $this->createUrl('site/index')
+            )); ?>
+                   <table class="signInMain">
+                   <!--<tr><td class="form-label" style="vertical-align:middle;">First Name</td>
+                       <td>
+                            <div class="control-group">
+                        <div class="controls">
+                            <?php //echo $form->textField($userModel,'firstName',array('placeholder'=>'First Name')); ?>
+                             <?php //echo $form->error($userModel,'firstName'); ?>
+                              <p class="errorMessage" id="firstnameerror"></p>
+                        </div>
+                    </div>
+                       </td>
+                   </tr>
+                  <tr><td class="form-label" style="vertical-align:middle;">Last Name</td>
+                       <td>
+                            <div class="control-group">
+                        <div class="controls">
+                            <?php //echo $form->textField($userModel,'lastName',array('placeholder'=>'Last Name')); ?>
+                            <?php //echo $form->error($userModel,'lastName'); ?>
+                             <p class="errorMessage" id="lastnameerror"></p>
+                        </div>
+                    </div>
+                       </td>
+                   </tr>-->
+                   <tr><td class="form-label" style="vertical-align:middle;">Email</td>
+                       <td>
+                            <div class="control-group">
+                        <div class="controls">
+                            <?php echo $form->textField($userModel,'email',array('placeholder'=>'Email')); ?>
+                          <?php //echo $form->error($userModel,'email'); ?>
+                           <p class="errorMessage" id="emailerror"></p>
+                        </div>
+                    </div>
+                       </td>
+                   </tr>
+                  <!-- <tr><td class="form-label" style="vertical-align:middle;">Gender</td>
+                       <td>
+                            <div class="control-group">
+                        <div class="controls">
+                        <?php //echo CHtml::activeDropDownList($userModel, 'gender',CHtml::listData(,'id'), array('option selected'=>'M')); ?>
+                       <select name="User[gender]" class="select-btn">
+                           <option value="M">Male</option>
+                           <option value="F">Female</option>
+                       </select>
+                        </div>
+                    </div>
+                       </td>
+                   </tr>-->
+                   <tr><td class="form-label" style="vertical-align:middle;">Password</td>
+                       <td>
+                            <div class="control-group">
+                        <div class="controls">
+                            <?php echo $form->passwordField($userModel,'password',array('placeholder'=>'Password')); ?>
+                           <?php //echo $form->error($userModel,'password'); ?>
+                          <p class="errorMessage" id="passworderror"></p>
+                        </div>
+                    </div>
+                       </td>
+                   </tr>
+                   <tr><td class="form-label" style="vertical-align:middle;">Confirm Password</td>
+                       <td>
+                            <div class="control-group">
+                        <div class="controls">
+                            <?php echo $form->passwordField($userModel,'confirmpassword',array('placeholder'=>'Confirm Password')); ?>
+                            <p class="errorMessage" id="confirmpassworderror"></p>
+                     
+                        </div>
+                    </div>
+                       </td>
+                   </tr>
+                   </table>
+               <?php $this->endWidget();?> 
+               <div class="clearBoth"></div>
+      </div>
+      <br />    
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="sign-up-btn"> Submit </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="forgot-close">Cancel</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<script>
+        $(document).ready(function(){
+            
+            
+            
+            $('#sign-up-btn').click(function(){
+               /* if($('#User_firstName').val()=="")
+                {
+                    $('#firstnameerror').text("Please fill first name");
+                    return false;
+                }
+                else
+                {
+                     $('#firstnameerror').text("");
+                }
+                if($('#User_lastName').val()=="")
+                {
+                    $('#lastnameerror').text("Please fill last name");
+                    return false;
+                }
+                else
+                {
+                        $('#lastnameerror').text("");
+               
+                }*/
+                if($('#User_email').val()=="")
+                {
+                    $('#emailerror').text("Please fill email");
+                    return false;
+                }
+                else
+                {
+                         $('#emailerror').text("");
+               
+                }
+                if($('#User_password').val()=="")
+                {
+                    $('#passworderror').text("Please fill password field");
+                    return false;
+                }
+                else
+                {
+                          $('#passworderror').text("");
+              
+                }
+                if($('#User_confirmpassword').val()=="")
+                {
+                    $('#confirmpassworderror').text("Please fill confirm password field");
+                    return false;
+                }
+                else
+                {
+                            $('#confirmpassworderror').text("");
+            
+                }
+                
+                if($('#User_password').val()!=$('#User_confirmpassword').val())
+                {
+                    $('#confirmpassworderror').text("Confirm password not matched !");
+                
+                    return false;
+                }
+                $.ajax({
+                    type:'post',
+                    url:'signup',
+                    data:$('#signup-form-ajaxcall').serialize(),
+                    beforeSend:function(){
+                        $('#sign-up-btn').attr('disabled','disabled');
+                    },
+                    success:function(response){
+                        
+                        if(response=='exits')
+                        {
+                            $('#emailerror').text("Email already registered !");
+                        }
+                        else if(response=='invalid1')
+                        {
+                            $('#emailerror').text("Email not valid");
+                        }
+                        else if(response=='invalid')
+                        {
+                            $('#emailerror').text("Email should be end with .edu !");
+                        }
+                        else if(response=='success')
+                        {
+                            $('.close').click();
+                        }
+                             $('#sign-up-btn').removeAttr('disabled');
+                  
+                    },
+                    complte:function(){},
+                    
+                });
+                
+            });
+            
+            
+            /**-------------------------------*/
+            
+           /* $('#User_firstName').focus(function(){
+                $('#firstnameerror').text("");
+            });
+            
+            $('#User_firstName').blur(function(){
+                if($('#User_firstName').val()=="")
+                {
+                    $('#firstnameerror').text("Please fill first name");
+                    return false;
+                }
+                else
+                {
+                     $('#firstnameerror').text("");
+                }
+            });
+            
+            $('#User_lastName').focus(function(){
+                $('#lastnameerror').text("");
+            });
+             $('#User_lastName').blur(function(){
+           
+            if($('#User_lastName').val()=="")
+                {
+                    $('#lastnameerror').text("Please fill last name");
+                    return false;
+                }
+                else
+                {
+                        $('#lastnameerror').text("");
+               
+                }
+            });
+            */
+            
+             $('#User_email').focus(function(){
+                $('#emailerror').text("");
+            });
+            
+            
+             $('#User_email').blur(function(){
+           
+            
+            if($('#User_email').val()=="")
+                {
+                    $('#emailerror').text("Please fill email");
+                    return false;
+                }
+                else
+                {
+                         $('#emailerror').text("");
+               
+                }
+               }); 
+               
+               
+               $('#User_password').focus(function(){
+                $('#passworderror').text("");
+            });
+             $('#User_password').blur(function(){
+           
+            if($('#User_password').val()=="")
+                {
+                    $('#passworderror').text("Please fill password field");
+                    return false;
+                }
+                else
+                {
+                          $('#passworderror').text("");
+              
+                }
+            });
+            
+              $('#User_confirmpassword').focus(function(){
+                $('#confirmpassworderror').text("");
+            });
+             $('#User_confirmpassword').blur(function(){
+           
+            if($('#User_confirmpassword').val()=="")
+                {
+                    $('#confirmpassworderror').text("Please fill confirm password field");
+                    return false;
+                }
+                else
+                {
+                            $('#confirmpassworderror').text("");
+            
+                }
+            });
+            
+            
+            //*------------------------------*
+        });
+</script>
 <!--Page 1 Start-->
 <section class="homePage1">
   <div class="homePage1Main">
@@ -76,8 +362,11 @@
                     </label>
                     <div class="control-group buttons">
                          <div class="controls">
-                            <?php echo CHtml::submitButton('SIGN IN'); ?>
-                              </div>
+                            
+                            <?php echo CHtml::submitButton('SIGN IN',array('class'=>'btn-submit')); ?>
+                             <a class="btn btn-success btn-signup" data-toggle="modal" data-target="#signup-dialog">SIGN UP</a>
+                         
+                            </div>
                     </div>
             <?php $this->endWidget(); ?>
           </div>

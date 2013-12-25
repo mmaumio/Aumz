@@ -35,11 +35,14 @@ class User extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
+     
+    public $confirmpassword; 
+     
 	public function tableName()
 	{
 		return 'user';
 	}
-
+ 
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -48,7 +51,8 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('firstName, lastName, email', 'required'),
+            array('email', 'unique'),
+			array('email', 'required'),
 			array('firstName, lastName, email, link, profileImageUrl', 'length', 'max'=>128),
 			array('gender, locale', 'length', 'max'=>8),
 			array('timezone', 'length', 'max'=>4),
