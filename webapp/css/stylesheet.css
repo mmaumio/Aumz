@@ -566,6 +566,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
     background:none;
     border:none;
     width:100%;
+    padding-right: 50px;
     
 }
 .edit-project-header{
@@ -649,4 +650,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
     z-index: 1040;
     width: 100%;
     height: 100%;
+}
+.dropdownli
+{
+    box-shadow: 0 0 1px 1px #D3D3D3;
+    margin: 2px 5px;
+    width: 90%;
+}
+.dropdownli a{
+    padding-left: 0px !important;
 }

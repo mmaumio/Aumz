@@ -3,8 +3,8 @@
         <div class="detailMainGreen">
          
             <h3 class="mainheader">
-            <div class="toolpopup"><img src="/img/dashboard/file_edit.png" style="margin:-3px 5px;">Click on title to edit</div>
-               <input value="<?php echo $project->title ?>" type="text" style="" class="project-header"/><img class="loadclass" src="/img/dashboard/loadimage.gif"/></h3>
+            <div class="toolpopup"><img src="/img/dashboard/file_edit2.png" style="margin:-3px 5px;">Click on title to edit</div>
+               <input value="<?php echo $project->title ?>" type="text" style="background:url('/img/dashboard/file_edit.png') no-repeat scroll 100% center / 4% 100% rgba(0, 0, 0, 0);" class="project-header"/><img class="loadclass" src="/img/dashboard/loadimage.gif"/></h3>
             <div class="detailMainGreenImg">
             	<h3> Project members: </h3> 
                     
@@ -42,11 +42,11 @@
                 <li><a href="#discussion"><img src="/img/details/dashNav2.png" alt="Discussion"><span>Discussion</span></a></li>
                 <li><a href="#tasks"><img src="/img/details/dashNav3.png" alt="Tasks"><span>Tasks</span></a></li>
                 <li><a href="#files"><img src="/img/details/dashNav4.png" alt="Files"><span>Files</span></a></li>
-             <li class="dropdown" >
+             <li class="dropdown " style="" >
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img height="40px" src="/img/details/dashNav5.png" alt="Files"><span>Settings</span> <b class="caret" style=""></b></a>
-              <ul class="dropdown-menu" style="background: #FFFFFF;">
-                <li style="background: none;"><a href="javascript:void(0);" rel="<?php echo $project->id;?>" id="del-btn">Delete Study</a></li>
-                <li style="background: none;"><a href="#">Move Project to Study Board</a></li>
+              <ul class="dropdown-menu " style="background: #FFFFFF;width: 116%;">
+                <li style="background: none;" class="dropdownli"><a href="javascript:void(0);" rel="<?php echo $project->id;?>" id="del-btn"><img src="/img/dashboard/remove.png"  width="30px"/><b>Delete Study</b></a></li>
+                <li style="background: none;" class="dropdownli"><a href="#"><img src="/img/dashboard/move.png"  width="25px"/> <b>Move Project to Study Board</b></a></li>
                 
               </ul>
             </li>
