@@ -26,7 +26,19 @@
         <script type="text/javascript" src="/css/select2.min.js"></script>
 
 	<script type="text/javascript">   
+<<<<<<< HEAD
 		$(document).ready(function(){if(!/*@cc_on!@*/0)return;var e = "abbr,article,aside,audio,bb,canvas,datagrid,datalist,details,dialog,eventsource,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video".split(','),i=e.length;while(i--){document.createElement(e[i])}});	</script>
+=======
+		$(function(){
+                    if(!/*@cc_on!@*/0)
+                        return;
+                        var e = "abbr,article,aside,audio,bb,canvas,datagrid,datalist,details,dialog,eventsource,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video".split(','),i=e.length;while(i--){
+                            document.createElement(e[i]);
+                        }
+                    }
+                  );
+	</script>
+>>>>>>> box
 	<!--[if lt IE 9]>
   	<script src="js/html5.js"></script>
   	<![endif]-->

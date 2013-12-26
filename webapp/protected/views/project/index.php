@@ -132,84 +132,9 @@
          </div>
         </div>
         
-        
-        <!--<div class="detailMainContentMain">
-         <a id="files"></a>
-         <h3>
-         	Files
-         	
-         	<span class="floatRt">
-	         	<input type="text" value="" name="" placeholder="Filter File Type" class="inputFilter" />
-	         	<input type="text" value="" name="" placeholder="Search File" class="inputSearch" /> 
-         	</span>
-         	
-     	</h3>
-         <div class="detailMainContentListBor">
+        <!--  File List    -->
+        <?php $this->renderPartial('//file/_list', array('project' => $project)); ?>				
             
-            <div class="detailMainContentList">
-            	<div class="detailMainContentList1"><img src="images/sampleImg1.png" alt="Image" /><p><b>Albert E</b><br/>Job Title Scientist</p></div>
-                <div class="detailMainContentList2">
-                	<p>
-                    	<span><img src="/img/details/greenIcon1.png" alt="Icon" />10 Documents</span>
-                        <span><img src="/img/details/greenIcon2.png" alt="Icon" />24 Pictures</span>
-                        <span><img src="/img/details/greenIcon3.png" alt="Icon" />14 Audio</span>
-                        <span><img src="/img/details/greenIcon4.png" alt="Icon" />14 Videos</span>
-                    </p>
-                </div>
-                <div class="detailMainContentList3"><div class="listRtTime">5 minutes ago</div></div>
-            </div>
-            
-            <div class="detailMainContentList">
-            	<div class="detailMainContentList1"><img src="images/sampleImg1.png" alt="Image" /><p><b>Albert E</b><br/>Job Title Scientist</p></div>
-                <div class="detailMainContentList2">
-                	<p>
-                    	<span><img src="/img/details/greenIcon1.png" alt="Icon" />10 Documents</span>
-                        <span><img src="/img/details/greenIcon2.png" alt="Icon" />24 Pictures</span>
-                        <span><img src="/img/details/greenIcon3.png" alt="Icon" />14 Audio</span>
-                        <span><img src="/img/details/greenIcon4.png" alt="Icon" />14 Videos</span>
-                    </p>
-                </div>
-                <div class="detailMainContentList3"><div class="listRtTime">5 minutes ago</div></div>
-            </div>
-            
-            <div class="detailMainContentList">
-            	<div class="detailMainContentList1"><img src="images/sampleImg1.png" alt="Image" /><p><b>Albert E</b><br/>Job Title Scientist</p></div>
-                <div class="detailMainContentList2">
-                	<p>
-                    	<span><img src="/img/details/greenIcon1.png" alt="Icon" />10 Documents</span>
-                        <span><img src="/img/details/greenIcon2.png" alt="Icon" />24 Pictures</span>
-                        <span><img src="/img/details/greenIcon3.png" alt="Icon" />14 Audio</span>
-                        <span><img src="/img/details/greenIcon4.png" alt="Icon" />14 Videos</span>
-                    </p>
-                </div>
-                <div class="detailMainContentList3"><div class="listRtTime">5 minutes ago</div></div>
-            </div>
-            
-            <div class="detailMainContentList">
-            	<div class="detailMainContentList1"><img src="images/sampleImg1.png" alt="Image" /><p><b>Albert E</b><br/>Job Title Scientist</p></div>
-                <div class="detailMainContentList2">
-                	<p>
-                    	<span><img src="/img/details/greenIcon1.png" alt="Icon" />10 Documents</span>
-                        <span><img src="/img/details/greenIcon2.png" alt="Icon" />24 Pictures</span>
-                        <span><img src="/img/details/greenIcon3.png" alt="Icon" />14 Audio</span>
-                        <span><img src="/img/details/greenIcon4.png" alt="Icon" />14 Videos</span>
-                    </p>
-                </div>
-                <div class="detailMainContentList3"><div class="listRtTime">5 minutes ago</div></div>
-            </div>
-         </div>-->
-            <!--<div class="detailMainContentMainBtn">
-            	<a href="#addAttachmentModal" role="button" data-toggle="modal"><img src="/img/details/btnAdd.png" alt="Add Files" /><span>Add Files</span></a>
-				
-
-				
-				<?php // $this->renderPartial('//attachment/_list', array('project'=>$project)); ?> 
-            	<!--
-                <a href="javascript:void(0);"><img src="/img/details/btnMore.png" alt="More Files" /><span>More Files</span></a>
-            	
-            </div>-->
-			<?php $this->renderPartial('//file/_list', array('project' => $project)); ?>				
-        </div>
     </div>
 </section>
 

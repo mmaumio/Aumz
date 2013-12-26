@@ -1,88 +1,76 @@
-
-  <?php /* foreach ($file as $file) { ?>
-		        	<?php $this->renderPartial('_listfile', array('file' => $file)); ?>
-		    	<?php }  */ ?>
-				
-				
-				<?php	 /* 		
-				$sql = "SELECT * FROM `file` WHERE userId = ".Yii::app()->session['uid'];
-				$data = Yii::app()->db
-						->createCommand($sql)
-						->queryAll();
-				foreach($data as $d)
-				{ ?><a href="<?php echo $d['fpUrl']; ?>" ><?php
-				echo $d['name'];
-				echo "<br/>";
-				?></a><?php
-				}
-				*/ ?>
-				
- <div class="detailMainContentMain">
+<div class="detailMainContentMain">
          <a id="files"></a>
          <h3>
          	Files
-         	<!--
+         	
          	<span class="floatRt">
 	         	<input type="text" value="" name="" placeholder="Filter File Type" class="inputFilter" />
 	         	<input type="text" value="" name="" placeholder="Search File" class="inputSearch" /> 
          	</span>
-         	-->
+         	
      	</h3>
          <div class="detailMainContentListBor">
-<?php
-	$proid=$project->id;
-	$uid=Yii::app()->session['uid'];
-	$row = Yii::app()->db->createCommand(array(
-    'select' => array('id','projectId','name', 'fpUrl'),
-    'from' => 'file',
-    'where' => 'userId=:userId and projectId=:projectId',
-    'params' => array(':userId'=>$uid , ':projectId'=>$proid),
-))->queryAll();
-// $rowcount=$row->execute();
+            
+         <?php
+         // Getting project's file data 
+         $proid=$project->id;
+         $uid=Yii::app()->session['uid'];
 
-foreach($row as $d)
-				{ ?>
-				 <div class="detailMainContentList">
-				<div class="detailMainContentList1"><img src="images/sampleImg1.png" alt="Image" /></div>
-				<div class="detailMainContentList2">
-				<p><b>
-				<?php $url= $d['fpUrl']; ?>
-				
-				
-				
-				<a href="#" onClick="downloadFile('<?php echo $url; ?>')"><?php
-				echo $d['name'];
-				?></b><?php 
-				echo "<br/>";
-				?></a>
-				</p>
-				</div>
-				<!--<div class="detailMainContentList3">
-  				<a href="/file/delete_comment/<?php // echo $d['id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
-				</div>-->
-				</div>
-				<?php
-				}
-				?>	
-				</div>
-				
-			<?php /* if (!empty($project->files)) { ?>
-				<?php $ctr = 0; ?>
-				<?php foreach ($project->files as $data) { ?>
-					<?php 
-						$projectCreated = new DateTime($data->created);
-						$projectCreated->setTimeZone(new DateTimeZone('America/New_York'));
-					?>
-					
-						<div class="experiment-item">
-							<h3><?php echo CHtml::link($data->name, '/file/download/' . $data->id, array('objId' => $data->id, 'data-toggle' => 'modal')) ?> - <?php echo $data->mimetype ?></h3>
-							<p><?php echo $projectCreated->format('M j, Y') ?> by <?php echo isset($data->user) ? CHtml::link($data->user->getName(), array('user/view', 'id' => $data->userId)) : '' ?></p>
-						</div>
-					
-				<?php } ?>
+         $file = File::model()->findAllByAttributes(array('userId'=>$uid,'projectId'=>$proid));        
+         
+         foreach($file as $d):
 
-			<?php } */ ?>
-	<h2>Files</h2>
+           $user = ucfirst($d->user->firstName).' '.ucfirst($d->user->lastName);   
+           $lab_title = 'Job Title '.ucfirst($d->user->labTitle);
+           $time = GeneralFunctions::getPrettyTime($d->created);          
+           
+           $file_name = $d->name;
+           $fp_url= $d['fpUrl'];      
+           
+           $thumbnail = "images/sampleImg1.png";
+           $type = explode('/', $d->mimetype);           
+           switch ($type[0]){
+               case 'text':
+                   $details_icon = '/img/details/greenIcon1.png';
+                   break;
+               case 'image':
+                   $details_icon = '/img/details/greenIcon2.png';
+                   $thumbnail = $fp_url.'/convert?w=80&h=80&dl=false';
+                   break;
+               
+               case 'audio':
+                   $details_icon = '/img/details/greenIcon3.png';
+                   break;
+               
+               case 'video':
+                   $details_icon = '/img/details/greenIcon4.png';
+                   break;               
+               
+               default:
+                   $details_icon = '/img/details/greenIcon1.png';
+                   break;                   
+                   
+           }
+              
+
+
+               
+         ?>            
+            <div class="detailMainContentList">
+            	<div class="detailMainContentList1"><img src="<?php echo $thumbnail;?>" alt="Image" /><p><b><?php echo $user; ?></b><br/><?php echo $lab_title;?></p></div>
+                <div class="detailMainContentList2" >
+                	<p>   
+                            <span style="padding-left: 25px;width:100%"><a href="<?php echo $fp_url;?>?dl=true" target="_blank"><img src="<?php echo $details_icon;?>" alt="Icon" /><?php echo $file_name;?></a></span>
+                        </p>
+                </div>
+                <div class="detailMainContentList3"><div class="listRtTime"><?php echo $time; ?></div></div>
+            </div>
+         <?php
+         endforeach;
+         ?>    
+         </div>
+        		
+</div>
 
 	<div class="span12 discussions pull-left" style="margin-left:0">
 		<div class="experiments-add">
@@ -103,7 +91,6 @@ foreach($row as $d)
 		
 			
 	</div>
-
 
 <script>
 
@@ -141,30 +128,18 @@ var processFpResponse = function(event) {
 
 	$.ajax({
             type: "POST",
-            url: "http://3.stirplateio.appspot.com/file/ajaxcreate",
+            url : "<?php echo Yii::app()->createUrl('file/ajaxcreate') ;?>",        
             data: data,
             dataType: "json",
             success: function (result) {
-							location.reload();
-
-		//	alert('success');
-			},
+		location.reload();
+	    },
 			error:function (e){
 		//		alert(JSON.stringify(e));
 						location.reload();
 
 			}
 			});
-
-/*	$.post('/file/ajaxcreate', data, function(data, textStatus, jqXHR) {
-		//alert('hii');		
-
-		// refresh page
-	//location.reload();
-	});
-	*/
-
-
 }
 </script>
 		<style>
