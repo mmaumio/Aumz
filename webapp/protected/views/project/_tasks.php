@@ -7,7 +7,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">Add New Task</h4>
       </div>
-        <div class="form">
+        <div class="form-horizontal">
             <?php $form=$this->beginWidget('CActiveForm', array(
                       'id'=>'task-form',
                       'enableAjaxValidation'=>true,
@@ -25,41 +25,41 @@
 
                 <?php echo $form->hiddenField($task,'ownerId',array('value'=>Yii::app()->user->id)); ?>
                 <?php echo $form->hiddenField($task,'projectId',array('value'=>$_GET['id'])); ?>
-                <div class="control-group">
-                    <?php echo $form->labelEx($task,'assigneeId',array('class'=>'control-label')); ?>
-                    <div class="controls">
-                      <?php  echo $form->dropDownList($task,'assigneeId',  Omniscience::getUsers($_GET['id']) );?>
+                <div class="form-group">
+                    <?php echo $form->labelEx($task,'assigneeId',array('class'=>'col-sm-2 control-label')); ?>
+                    <div class="col-sm-6">
+                      <?php  echo $form->dropDownList($task,'assigneeId',  Omniscience::getUsers($_GET['id']),array('class'=>'form-control input-sm') );?>
                       <?php echo $form->error($task,'assigneeId'); ?>
                     </div>
                 </div>
 
-                <div class="control-group">
-                      <?php echo $form->labelEx($task,'subject'); ?>
-                    <div class="controls">
-                        <?php echo $form->textField($task,'subject',array('size'=>47,'maxlength'=>128,'placeholder'=>'Subject')); ?>
+                <div class="form-group">
+                      <?php echo $form->labelEx($task,'subject',array('class'=>'col-sm-2 control-label')); ?>
+                   <div class="col-sm-6">
+                        <?php echo $form->textField($task,'subject',array('size'=>47,'maxlength'=>128,'placeholder'=>'Subject','class'=>'form-control input-sm')); ?>
                         <?php echo $form->error($task,'subject'); ?>
                     </div>
                 </div>
 
-                <div class="control-group">
-                      <?php echo $form->labelEx($task,'description'); ?>
-                      <div class="controls">
-                        <?php echo $form->textArea($task,'description',array('rows'=>6, 'cols'=>50,'placeholder'=>'Description')); ?>
+                 <div class="form-group">
+                      <?php echo $form->labelEx($task,'description',array('class'=>'col-sm-2 control-label')); ?>
+                      <div class="col-sm-6">
+                        <?php echo $form->textArea($task,'description',array('rows'=>6, 'cols'=>50,'placeholder'=>'Description','class'=>'form-control input-sm')); ?>
                         <?php echo $form->error($task,'description'); ?>
                       </div>
                 </div>
 
-                <div class="control-group">
-                      <?php echo $form->labelEx($task,'status'); ?>
-                      <div class="controls">
-                        <?php echo $form->dropDownList($task, 'status', array('Pending'=>'Pending','Complete'=>'Complete')); ?>
+                 <div class="form-group">
+                      <?php echo $form->labelEx($task,'status',array('class'=>'col-sm-2 control-label')); ?>
+                      <div class="col-sm-6">
+                        <?php echo $form->dropDownList($task, 'status', array('Pending'=>'Pending','Complete'=>'Complete'),array('class'=>'form-control input-sm')); ?>
                         <?php echo $form->error($task,'status'); ?>
                       </div>
                 </div>
 
-                <div class="control-group">
-                      <?php echo $form->labelEx($task,'dueBy'); ?>
-                      <div class="controls">
+                 <div class="form-group">
+                      <?php echo $form->labelEx($task,'dueBy',array('class'=>'col-sm-2 control-label')); ?>
+                     <div class="col-sm-6">
                         <?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                             'attribute'=>'dueBy',
                             'model'=>$task,
@@ -68,7 +68,7 @@
                                 'showAnim'=>'fold',
                             ),
                             'htmlOptions'=>array(
-                                'style'=>'height:20px;width:368px'
+                                'class'=>'form-control input-sm'
                             ),
                         )); ?>
                         <?php echo $form->error($task,'dueBy'); ?>
