@@ -62,43 +62,40 @@
          <a id="tasks"></a>
          <h3>My Tasks</h3>
          <div class="detailMainContentListBor">
-            <div class="detailMainContentList">
-            	<div class="detailMainContentList1 detailMainContentList1Sm"><img src="images/sampleImg1.png" alt="Image" /><p><b>Albert E</b><br/>Job Title Scientist</p></div>
-                <div class="detailMainContentList2">
-                	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquet convallis libero, ut congue leo rutrum quis. </p>
-                </div>
-            </div>
-            
-            <div class="detailMainContentList">
-            	<div class="detailMainContentList1 detailMainContentList1Sm"><img src="images/sampleImg1.png" alt="Image" /><p><b>Albert E</b><br/>Job Title Scientist</p></div>
-                <div class="detailMainContentList2">
-                	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquet convallis libero, ut congue leo rutrum quis. </p>
-                </div>
-            </div>
-            
-            <div class="detailMainContentList">
-            	<div class="detailMainContentList1 detailMainContentList1Sm"><img src="images/sampleImg1.png" alt="Image" /><p><b>Albert E</b><br/>Job Title Scientist</p></div>
-                <div class="detailMainContentList2">
-                	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquet convallis libero, ut congue leo rutrum quis. </p>
-                </div>
-            </div>
-            
-            <div class="detailMainContentList">
-            	<div class="detailMainContentList1 detailMainContentList1Sm"><img src="images/sampleImg1.png" alt="Image" /><p><b>Albert E</b><br/>Job Title Scientist</p></div>
-                <div class="detailMainContentList2">
-                	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquet convallis libero, ut congue leo rutrum quis. </p>
-                </div>
-            </div> 
-         </div>
+            <?php 
+            if(isset($tasks)){
+                foreach($tasks as $val){
+                   
+                   ?>
+                       <div class="detailMainContentList">
+                           <div class="detailMainContentList1 detailMainContentList1Sm"><?php if(isset($user->profileImageUrl)){ ?> <img src="<?php echo $user->profileImageUrl;?>" alt="Image" /><?php } ?><p><b><?php echo Yii::app()->user->name;?></b><br/><?php echo $project->title;?></p></div>
+                            <div class="detailMainContentList2">
+                                    <p><?php echo $val->description;?></p>
+                            </div>
+                        </div>
+                       
+                  <?php
+                }
+            }
+            else{
+                ?>
+                    <div class="detailMainContentList">
+                        No Result Found
+                    </div>
+                  <?php
+            }
+            ?> 
+         </div>   
          <div class="detailMainContentMainBtn">
-            	<a href="javascript:void(0);"><img src="/img/details/btnAdd.png" alt="New Task" /><span>New Task</span></a>
+            	<?php $this->renderPartial('_tasks', array('task' => $task)); ?>
+       
             	<!--
                 <a href="javascript:void(0);"><img src="/img/details/btnMore.png" alt="More Task" /><span>More Task</span></a>
             	-->
             </div>
         </div>
         
-        <div class="detailMainContentMain detailMainContentMainRt">
+<!--        <div class="detailMainContentMain detailMainContentMainRt">
         <h3>Group Tasks</h3>
          <div class="detailMainContentListBor">
             <div class="detailMainContentList">
@@ -130,7 +127,7 @@
             </div>
             
          </div>
-        </div>
+        </div>-->
         
         <!--  File List    -->
         <?php $this->renderPartial('//file/_list', array('project' => $project)); ?>				
