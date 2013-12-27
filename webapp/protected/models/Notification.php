@@ -29,7 +29,10 @@ class Notification
 		if ($type === 'userAdded')
 		{
 			$data = array();
-			$data['studyName'] = $obj->title;
+			$data['studyName'] = $obj->project->title;
+			$data['user'] =  User::model()->findByPk($obj->invitedUser);
+			$data['invited_user'] =  User::model()->findByPk($obj->userId);
+
 			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('study/index', array('id' => $obj->id));
 			Notification::_sendEmail($toName, $toEmail, $subject, $template, $data);
 		}
@@ -60,7 +63,6 @@ class Notification
 	{
 		
 		if (!Yii::app()->params['emailNotifications']) return;
-		
         $emailJson = array(
         	'key' => Yii::app()->params['mandrilKey'],
         	'message' => array(
