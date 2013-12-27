@@ -41,7 +41,7 @@ class Notification
 			$data = array();
 			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('study/index', array('id' => $obj['study']->id));
 			$data['studyName'] = $obj['study']->title;
-			$data['authorName'] = $obj['author']->getShortName();
+			$data['authorName'] = $obj['author']->getName();
 			$data['comment'] = $obj['activity']->content;
 			Notification::_sendEmail($toName, $toEmail, $subject, $template, $data);	
 		}

@@ -18,6 +18,12 @@ class ActivityController extends Controller
 			if ($activity->save())
 			{
 				// echo "4";
+				$obj = array();
+				$obj['study'] = Project::model()->findByPk($_POST['activity']['projectId']);
+				$obj['activity'] = $activity;
+				$obj['author'] = User::model()->findByPk($activity->userId);
+				$user  = User::model()->findByPk(Yii::app()->session['uid']);
+				Notification::sendEmail('newActivity', $user, $obj);
 				$this->redirect(array('project/index', 'id' => $activity->projectId));
 			}
 			else
