@@ -1,6 +1,5 @@
 
   <center> <h1>Frequently asked questions</h1> </center>
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Is my data safe?</h3>

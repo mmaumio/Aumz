@@ -8,7 +8,7 @@
          	</div>
          	
 	        <div class="detailMainContentMainBtn">
-	        	<a href="#" data-toggle="modal" data-target="#discussionModal"><img src="/img/details/btnAdd.png" alt="New Discussion" /><span>New Discussion</span></a>
+	        	<a href="#" data-toggle="modal" data-target="#discussionModal"><img src="/img/details/btnAdd.png" alt="Add comment" /><span>Add Comment</span></a>
 	        	<!--
 	            <a href="javascript:void(0);"><img src="/img/details/btnMore.png" alt="More Discussions" /><span>More Discussions</span></a>
 	        	-->
@@ -21,7 +21,7 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">New Discussion</h4>
+		        <h4 class="modal-title" id="myModalLabel">Add new comment </h4>
 		      </div>
 			 <form action="/activity/create" id="newCommentForm" method="POST">
 			<div class="modal-body">
