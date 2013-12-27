@@ -62,6 +62,7 @@ class Project extends CActiveRecord
 			'files' => array(self::HAS_MANY, 'File', 'projectId'),
 			'discussions' => array(self::HAS_MANY, 'Discussion', 'projectId', 'order'=>'created DESC'),
 			'user' => array(self::BELONGS_TO, 'User', 'userId'),
+			'invitedUser' => array(self::BELONGS_TO, 'User', 'invited_user'),
 			'tags' => array(self::MANY_MANY, 'Tag', 'project_tag(projectId, tagId)'),
 			'users' => array(self::MANY_MANY, 'User', 'project_user(projectId, userId)'),
 			'tasks' => array(self::HAS_MANY, 'Task', 'projectId'),
