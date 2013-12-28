@@ -213,7 +213,7 @@ class SiteController extends Controller
         /**
          * Change password 
          */
-        public function actionChangepass()
+    public function actionChangepass()
 	{       
                 $model = new User;
                 $records=  User::model()->findAll();
@@ -285,14 +285,56 @@ class SiteController extends Controller
             echo 'invalid';exit;
           }
          
-            $userModel->password=User::hashPassword($_POST['Users']['password']);
+            $userModel->password=User::hashPassword($_POST['User']['password']);
                         $userModel->status='block';
+                        $userModel->keystring=md5($userModel->email.time());
                         
             if($userModel->save())
             {
                 echo 'success';
+                $message = new YiiMailMessage;
+                        $message->view = 'welcomemail';
+                        $message->setBody(array('records'=>$userModel,'string'=>base64_encode($_POST['Users']['password'])), 'text/html');
+                        $message->subject = 'Welcome to Stirplate';
+                        $message->addTo($userModel->email);
+                        $message->from = Yii::app()->params['adminEmail'];
+                        Yii::app()->mail->send($message);
+                        Yii::app()->user->setFlash('success', "Please check your mails to verify your email");
+
             }
         }
         exit;
+    }
+    public function actionVerifyemail()
+    {
+            $login=new LoginForm;
+           if(isset($_GET['key']) && isset($_GET['string']))
+           {
+               $userData=User::model()->findByAttributes(array('keystring'=>$_GET['key']));
+               if(!empty($userData))
+               {
+               $userData->keystring=md5($userData->id.time());
+               $userData->status='active';
+               if($userData->update())
+                 {
+                    $login->email=$userData->email;
+                    $login->password=base64_decode($_GET['string']);
+                    if($login->login())
+                    {
+                       	$this->redirect(array('user/profile'));
+	
+                    }
+                        
+			      exit;
+                 }
+               }
+               else
+               {
+               echo  'invalid link'; exit;
+               }
+           }
+           else{
+              echo 'invalid link'; exit;
+           }
     }
 }

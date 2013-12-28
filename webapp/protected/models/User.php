@@ -57,7 +57,7 @@ class User extends CActiveRecord
 			array('gender, locale', 'length', 'max'=>8),
 			array('timezone', 'length', 'max'=>4),
 			array('type, status', 'length', 'max'=>32),
-			array('password', 'length', 'max'=>255),
+			array('password,keystring', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, firstName, lastName, email, gender, link, timezone, locale, type, status, profileImageUrl, password, created, modified', 'safe', 'on'=>'search'),
@@ -104,6 +104,7 @@ class User extends CActiveRecord
 			'password' => 'Password',
 			'created' => 'Created',
 			'modified' => 'Modified',
+            'keystring'=>'Keystring',
 		);
 	}
 
@@ -170,7 +171,7 @@ class User extends CActiveRecord
 	 public static function hashPassword($password)
     {
     	$passwordWithSalt = $password . "omniscience super sercret hash";
-		return hash("sha256", $passwordWithSalt);
+		 return hash("sha256", $passwordWithSalt);
     }
     public function add_to_project($projectId)
     {

@@ -1705,3 +1705,12 @@ CREATE TABLE `user_group_member` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2013-12-19 21:13:36
+
+
+
+/**************************** modified by varun***********************************************/
+
+
+ALTER TABLE `user` ADD `keystring` VARCHAR( 255 ) NULL DEFAULT '';
+
+/******************************************************************************************/
