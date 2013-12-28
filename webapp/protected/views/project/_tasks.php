@@ -60,7 +60,8 @@
                  <div class="form-group">
                       <?php echo $form->labelEx($task,'dueBy',array('class'=>'col-sm-2 control-label')); ?>
                      <div class="col-sm-6">
-                        <?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                        <?php 
+                            $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                             'attribute'=>'dueBy',
                             'model'=>$task,
                             // additional javascript options for the date picker plugin
@@ -70,7 +71,8 @@
                             'htmlOptions'=>array(
                                 'class'=>'form-control input-sm'
                             ),
-                        )); ?>
+                        )); 
+                                ?>
                         <?php echo $form->error($task,'dueBy'); ?>
                       </div>
                 </div>

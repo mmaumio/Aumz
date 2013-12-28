@@ -294,6 +294,7 @@ class ProjectController extends Controller
                                     $respArray['task'] = array();
                                     $respArray['task']['subject'] = $task->subject;
                                     $respArray['task']['description'] = $task->description;
+                                    $respArray['task']['projectId'] = $_POST['Task']['projectId'];
                                     $respArray['task']['assigneeImgUrl'] = $task->owner->profileImageUrl;
                                     //$respArray['task']['assigneeImgUrl'] = $task->assignedToUser->getUserImage();
                                     ob_end_clean();
