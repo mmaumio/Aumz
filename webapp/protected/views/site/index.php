@@ -350,7 +350,7 @@
       
       <div class="homeRt">
         <div class="signIn">
-          <h3>Sign In to Stirplate</h3>
+          <h3>SignIn to stirplate</h3>
           <div class="signInMain">
             <?php $form=$this->beginWidget('CActiveForm', array(
                     'id'=>'login-form-ajaxcall',
@@ -387,7 +387,7 @@
                     'id'=>'newsletter-form',
                     'action'=> $this->createUrl('site/newsletter'),
                 )); ?>
-          <h2 align = "center">Stirplate Newsletter</h3>
+          <h3 align = "center">Stirplate Newsletter</h3>
           <h4 align ="center"> We are currently invite only. Sign up for updates</h4>
           <div class="signUpMain">
               <?php echo $form->error($newsLetterModel,'email'); ?>

@@ -37,9 +37,13 @@ class FileController extends Controller
 				$conn = Yii::app()->db;
 				//$sql="insert into `file` values(`$file->userId`,`$file->projectId`,`$file->name`,`$file->mimetype`,`$file->fpUrl`)";
 				//$command=$conn->createCommand($sql);
-				$sql = "insert into file (userId, projectId,name,mimetype,fpUrl,created) values (:userId, :projectId,:name,:mimetype,:fpUrl,:created)";
-				$parameters = array(":userId"=>$file->userId, ':projectId' => $file->projectId, ':name' => $file->name, ':mimetype' => $file->mimetype, ':fpUrl' => $file->fpUrl,':created' => $created);
-				Yii::app()->db->createCommand($sql)->execute($parameters);
+				$sql = "insert into file (userId, projectId,name,mimetype,fpUrl,created) values (:userId, :projectId,:name,:mimetype,:fpUrl,UTC_TIMESTAMP())";
+				$parameters = array(":userId"=>$file->userId, ':projectId' => $file->projectId, ':name' => $file->name, ':mimetype' => $file->mimetype, ':fpUrl' => $file->fpUrl);
+				//var_dump($parameters);
+                                
+                                Yii::app()->db->createCommand($sql)->execute($parameters);
+                                //var_dump(Yii::app()->db->createCommand($sql));
+                                
 			/*	if ($file->save())
 				{
 					echo "success";

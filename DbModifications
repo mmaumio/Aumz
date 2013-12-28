@@ -1,0 +1,14 @@
+12/27/2013
+
+ALTER TABLE  `task` CHANGE  `studyId`  `projectId` INT( 11 ) NULL DEFAULT NULL ;
+OK
+
+ALTER TABLE  `task` DROP FOREIGN KEY  `task_ibfk_1` ;
+OK
+
+
+ALTER TABLE  `task` ADD CONSTRAINT  `task_ibfk_1` FOREIGN KEY (  `projectId` ) REFERENCES  `omniscience`.`project` (
+`id`
+) ON DELETE CASCADE ON UPDATE RESTRICT ;
+
+Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`omniscience`.`#sql-f35_1f`, CONSTRAINT `task_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`) ON DELETE CASCADE)

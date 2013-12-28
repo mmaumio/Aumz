@@ -502,8 +502,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 	float: left;
 }
 .detailMainContentMainLft {
-	width: 49%;
-	margin: 0 1% 0 0;
+	width: 100%;
+	margin: 0 0 0 0;
 }
 .detailMainContentMainRt {
 	width: 49%;

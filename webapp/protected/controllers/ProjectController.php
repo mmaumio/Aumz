@@ -15,7 +15,7 @@ class ProjectController extends Controller
 	{
 		return array(
 			array('allow', 
-				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title'),
+				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask'),
 				'users'=>array('@'),
 			),
 			array('deny','users'=>array('*'),),
@@ -33,15 +33,19 @@ class ProjectController extends Controller
                    $this->redirect('/');
             }
             $project = Project::model()->findByPk($_GET['id']);
-			$authers_projects = ProjectUser::model()->findAllByAttributes(array('projectId' => $_GET['id']));
-			$all_users = User::model()->findAll();
-			foreach ($authers_projects as $user) {
-				$authers[] = $user->user;
-			}
-			if ($project)
-			{
-				$this->render('index', array('project' => $project, 'authers' => $authers, 'all_users' => $all_users));
-			}
+            $task = new Task;
+            $user = User::model()->findByPk(Yii::app()->user->id);
+            $tasks = Task::model()->findAll(array('condition'=>"ownerId='".Yii::app()->user->id."'"));
+            
+            $authers_projects = ProjectUser::model()->findAllByAttributes(array('projectId' => $_GET['id']));
+            $all_users = User::model()->findAll();
+            foreach ($authers_projects as $user) {
+                    $authers[] = $user->user;
+            }
+            if ($project)
+            {
+                    $this->render('index', array('project' => $project, 'authers' => $authers, 'all_users' => $all_users,'task'=>$task, 'user'=>$user,'tasks'=>$tasks));
+            }
 		}
 	}
 
@@ -252,4 +256,62 @@ class ProjectController extends Controller
                 echo "Project Title updation failed..";
             }
     }
+    
+     /**
+     * Ajax Call on Creating New Task
+     */
+    public function actionAjaxTaskCreate(){
+		//TODO: check to make sure user is logged in
+                $task = new Task;
+                if(isset($_POST['ajax']) && $_POST['ajax']==='task-form')
+		{
+			echo CActiveForm::validate($task);
+			Yii::app()->end();
+		}
+		if (isset($_POST['Task']))
+		{
+                        Yii::log(json_encode($_POST['Task']), 'error');
+
+			//TODO: check to make sure user is a member of study before letting them create a task
+                        $task->attributes = $_POST['Task'];
+			$task->ownerId = Yii::app()->user->id;
+			$task->status = empty($task->status) ? 'Pending' : $task->status;
+                        
+			$respArray = array();
+                        if ( $task->validate() && $task->save())
+			{
+                                $activity = new Activity;
+				$activity->userId = Yii::app()->user->id;
+				$activity->relatedObjectId = $task->id;
+				$activity->relatedObjectType = 'task';
+				$activity->type = 'task';
+				$activity->content = $task->owner->firstName . ' added a new task: "' . $task->subject . '"';
+
+				if($activity->save()){
+
+                                    $respArray['status'] = 'OK';
+                                    $respArray['id'] = $task->id;
+                                    $respArray['task'] = array();
+                                    $respArray['task']['subject'] = $task->subject;
+                                    $respArray['task']['description'] = $task->description;
+                                    $respArray['task']['assigneeImgUrl'] = $task->owner->profileImageUrl;
+                                    //$respArray['task']['assigneeImgUrl'] = $task->assignedToUser->getUserImage();
+                                    ob_end_clean();
+                                    echo CJSON::encode(array(
+                                       'status'=>'success',
+                                    ));
+                                    Yii::app()->end();
+                                }
+                        }
+			else
+			{
+                                ob_end_clean();
+                                echo CActiveForm::validate($task);
+                                Yii::app()->end();
+                        }
+                        $resp = json_decode(json_encode($respArray), false);
+                }
+                
+    }
+   
 }

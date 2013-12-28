@@ -20,7 +20,7 @@
     	<div class="middleMain">
         	<div class="dashNewStdy">
                 <div class="detailMainContentMainBtn">
-            	   <a href="#" data-toggle="modal" data-target="#myModal"><img src="/img/dashboard/btnAdd.png" alt="New Project" /><span>New Project</span></a>
+            	   <a href="#" data-toggle="modal" data-target="#myModal"><img src="/img/dashboard/btnAdd.png" alt="New Project" /><span>Start New Project</span></a>
                 </div>
             </div>
            
