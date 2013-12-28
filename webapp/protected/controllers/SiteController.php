@@ -196,7 +196,7 @@ class SiteController extends Controller
                         $message->view = 'forgotpassmail';
                         $message->setBody(array('records'=>$records), 'text/html');
                         $message->subject = 'Request to change password';
-                        $message->addTo('arvind@sprytechies.com');
+                        $message->addTo($records->email);
                         $message->from = Yii::app()->params['adminEmail'];
                         Yii::app()->mail->send($message);
                         
@@ -314,7 +314,7 @@ class SiteController extends Controller
                if(!empty($userData))
                {
                $userData->keystring=md5($userData->id.time());
-               $userData->status='active';
+               $userData->status='notlogged';
                if($userData->update())
                  {
                     $login->email=$userData->email;

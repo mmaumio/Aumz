@@ -38,7 +38,7 @@ class File extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('userId, projectId, created, modified', 'required'),
+			array('userId, projectId', 'required'),
 			array('userId, projectId, boxFileSize', 'numerical', 'integerOnly'=>true),
 			array('name, mimetype, fpUrl, boxId', 'length', 'max'=>255),
 			// The following rule is used by search().
@@ -124,4 +124,15 @@ class File extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public function behaviors(){
+            return array(
+                    'CTimestampBehavior' => array(
+                            'class' => 'zii.behaviors.CTimestampBehavior',
+                            'createAttribute' => 'created',
+                            'updateAttribute' => 'modified',
+                            'setUpdateOnCreate' => true,
+                    )
+            );
+        }
 }
