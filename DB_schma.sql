@@ -1705,4 +1705,11 @@ CREATE TABLE `user_group_member` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-27 17:01:26
+
+
+/**************************** modified by varun***********************************************/
+
+
+ALTER TABLE `user` ADD `keystring` VARCHAR( 255 ) NULL DEFAULT '';
+
+/******************************************************************************************/

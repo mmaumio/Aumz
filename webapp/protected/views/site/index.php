@@ -76,8 +76,9 @@
                        <td>
                             <div class="control-group">
                         <div class="controls">
-                            <?php echo $form->textField($userModel,'email',array('placeholder'=>'Email')); ?>
+                            <?php echo $form->textField($userModel,'email',array('placeholder'=>'eg : example@site.edu')); ?>
                           <?php //echo $form->error($userModel,'email'); ?>
+                          <p class="labelclass2">Only email address with .edu valid</p>
                            <p class="errorMessage" id="emailerror"></p>
                         </div>
                     </div>
@@ -123,6 +124,8 @@
                <div class="clearBoth"></div>
       </div>
       <br />    
+        <p class="alert alert-success msg">An email verification link sent on your email , Please check your email</p>  
+    
       <div class="modal-footer">
         <button class="btn btn-primary" id="sign-up-btn"> Submit </button>
         <button type="button" class="btn btn-danger" data-dismiss="modal" id="forgot-close">Cancel</button>
@@ -131,6 +134,7 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 	
+  
 <script>
         $(document).ready(function(){
             
@@ -195,7 +199,7 @@
                 }
                 $.ajax({
                     type:'post',
-                    url:'signup',
+                    url:'/site/signup',
                     data:$('#signup-form-ajaxcall').serialize(),
                     beforeSend:function(){
                         $('#sign-up-btn').attr('disabled','disabled');
@@ -216,7 +220,14 @@
                         }
                         else if(response=='success')
                         {
-                            $('.close').click();
+                           
+                           $('.msg').fadeIn(100,function(){
+                                      $('.msg').fadeOut(2000,function(){
+                                             
+                                      });
+                                      $('#forgot-close').click();
+                           });
+                            
                         }
                              $('#sign-up-btn').removeAttr('disabled');
                   

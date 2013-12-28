@@ -1,10 +1,10 @@
 <section class="detailMain">
 	<div class="wrapper">
         <div class="detailMainGreen">
-         
             <h3 class="mainheader">
             <div class="toolpopup"><img src="/img/dashboard/file_edit2.png" style="margin:-3px 5px;">Click on title to edit</div>
-               <input value="<?php echo $project->title ?>" type="text" style="background:url('/img/dashboard/file_edit.png') no-repeat scroll 100% center / 4% 100% rgba(0, 0, 0, 0);" class="project-header"/><img class="loadclass" src="/img/dashboard/loadimage.gif"/></h3>
+            <img class="edit-img" src="/img/dashboard/file_edit.png" style="height:30px"/>
+             <input value="<?php echo $project->title ?>" type="text" style="" class="project-header"/><img class="loadclass" src="/img/dashboard/loadimage.gif"/></h3>
             <div class="detailMainGreenImg">
             	<h3> Project members: </h3> 
                     
@@ -146,6 +146,15 @@
 <div class="modal-backdrop fade in" id="hiddenel" ></div>
      <script>
     $(document).ready(function(){
+        
+        $('.edit-img').mouseover(function(){
+            
+            $('.toolpopup').show();
+        });
+         $('.edit-img').mouseout(function(){
+            
+            $('.toolpopup').hide();
+        });
         $('#hiddenel').hide();
         $('.project-header').attr('readonly','readonly');
         
@@ -189,20 +198,18 @@
              
         });
         });
+        $('.edit-img').click(function(){
+             $('.project-header').click();
+        });
         $('.project-header').click(function()
         {
             
             $(this).addClass("edit-project-header");
             $(this).removeAttr("readonly");
-            $('.toolpopup').addClass('hiddenalert');
+           $('.edit-img').hide();
             
         });
-        $('.project-header').focus(function()
-        {
-            
-            $('.toolpopup').addClass('hiddenalert');
-            
-        });                                                                      
+                                                                            
       /* $('.project-header').mouseover(function(){
             
               $('.toolpopup').css('display','block');
@@ -219,6 +226,7 @@
            var title=$(this).val();
             $(this).removeClass("edit-project-header");
             $(this).attr('readonly','readonly');
+            $('.edit-img').show();
             if(title=="")
             {
                 title="Untitled Project";
