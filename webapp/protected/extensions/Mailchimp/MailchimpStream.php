@@ -8,7 +8,6 @@ require_once 'Mailchimp.php';
 class MailchimpStream extends  Mailchimp {
 
     public function call($url, $params) {
-//        echo phpinfo();die;
         $params['apikey'] = $this->apikey;
         $params = json_encode($params);
 
@@ -23,8 +22,7 @@ class MailchimpStream extends  Mailchimp {
         );
         $context  = stream_context_create($opts);
         $result = file_get_contents($this->root . $url . '.json', false, $context);
-
-        print_r($result);die;
+        return $result;
         /*
         echo "xxx";
         echo  $this->root . $url . '.json';die;
