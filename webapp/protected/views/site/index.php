@@ -199,7 +199,7 @@
                 }
                 $.ajax({
                     type:'post',
-                    url:'/site/signup',
+                    url:'<?php echo Yii::app()->createUrl('site/signup');?>',
                     data:$('#signup-form-ajaxcall').serialize(),
                     beforeSend:function(){
                         $('#sign-up-btn').attr('disabled','disabled');

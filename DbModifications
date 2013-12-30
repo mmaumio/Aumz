@@ -21,7 +21,12 @@ Error Code: 1452. Cannot add or update a child row: a foreign key constraint fai
 Queries to purge data from projects and tasks table and create new foreign key in task table. (run step wise)
 
 DELETE FROM  `project`
+"OK"
+
 DELETE FROM  `task`
+OK
+
 ALTER TABLE  `task` ADD CONSTRAINT  `task_ibfk_1` FOREIGN KEY (  `projectId` ) REFERENCES  `omniscience`.`project` (
 `id`
 ) ON DELETE CASCADE ON UPDATE RESTRICT ;
+OK
