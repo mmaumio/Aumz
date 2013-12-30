@@ -63,28 +63,7 @@
          <h3>My Tasks</h3>
          <div class="detailMainContentListBor">
             <?php 
-            if(isset($tasks)){
-                foreach($tasks as $val){
-                   
-                   ?>
-                       <div class="detailMainContentList">
-                           <div class="detailMainContentList1 detailMainContentList1Sm"><?php if(isset($user->profileImageUrl)){ ?> <img src="<?php echo $user->profileImageUrl;?>" alt="Image" /><?php } ?><p><b><?php echo Yii::app()->user->name;?></b><br/><?php echo $project->title;?></p></div>
-                            <div class="detailMainContentList2">
-                                    <p><?php echo $val->description;?></p>
-                            </div>
-                        </div>
-                       
-                  <?php
-                }
-            }
-            else{
-                ?>
-                    <div class="detailMainContentList">
-                        No Result Found
-                    </div>
-                  <?php
-            }
-            ?> 
+                $this->renderPartial('_tasklist', array('user' => $modeluser,'tasks'=>$tasks)); ?>
          </div>   
          <div class="detailMainContentMainBtn">
             	<?php $this->renderPartial('_tasks', array('task' => $task)); ?>

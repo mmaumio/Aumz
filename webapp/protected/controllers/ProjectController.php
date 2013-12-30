@@ -34,8 +34,8 @@ class ProjectController extends Controller
             }
             $project = Project::model()->findByPk($_GET['id']);
             $task = new Task;
-            $user = User::model()->findByPk(Yii::app()->user->id);
-            $tasks = Task::model()->findAll(array('condition'=>"ownerId='".Yii::app()->user->id."'"));
+            $modeluser = User::model()->findByPk(Yii::app()->session['uid']);
+            $tasks = Task::model()->findAllByAttributes(array('ownerId'=>Yii::app()->session['uid'], 'projectId'=>$_GET['id']));
             
             $authers_projects = ProjectUser::model()->findAllByAttributes(array('projectId' => $_GET['id']));
             $all_users = User::model()->findAll();
@@ -44,7 +44,7 @@ class ProjectController extends Controller
             }
             if ($project)
             {
-                    $this->render('index', array('project' => $project, 'authers' => $authers, 'all_users' => $all_users,'task'=>$task, 'user'=>$user,'tasks'=>$tasks));
+                    $this->render('index', array('project' => $project, 'authers' => $authers, 'all_users' => $all_users,'task'=>$task, 'modeluser'=>$modeluser,'tasks'=>$tasks));
             }
 		}
 	}
@@ -294,6 +294,7 @@ class ProjectController extends Controller
                                     $respArray['task'] = array();
                                     $respArray['task']['subject'] = $task->subject;
                                     $respArray['task']['description'] = $task->description;
+                                    $respArray['task']['projectId'] = $_POST['Task']['projectId'];
                                     $respArray['task']['assigneeImgUrl'] = $task->owner->profileImageUrl;
                                     //$respArray['task']['assigneeImgUrl'] = $task->assignedToUser->getUserImage();
                                     ob_end_clean();
