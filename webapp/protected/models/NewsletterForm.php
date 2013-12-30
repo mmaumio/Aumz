@@ -1,6 +1,6 @@
 <?php
 Yii::import('application.extensions.*');
-require_once'Mailchimp/Mailchimp.php';
+require_once'Mailchimp/MailchimpStream.php';
 
 
 /**
@@ -36,7 +36,7 @@ class NewsletterForm extends CFormModel
     public function process()
     {
         try {
-            $this->mc = new Mailchimp(Yii::app()->params['mailChimpApiKey']);
+            $this->mc = new MailchimpStream(Yii::app()->params['mailChimpApiKey']);
             $this->mc->lists->subscribe(
                 Yii::app()->params['mailChimpListId'],
                 array('email' => $this->email)
