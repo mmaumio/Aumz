@@ -388,7 +388,7 @@
                     'action'=> $this->createUrl('site/newsletter'),
                 )); ?>
           <h3 align = "center">Stirplate Newsletter</h3>
-          <h4 align ="center"> We are currently invite only. Sign up for updates</h4>
+          <h4 align ="center"> Sign up for updates!</h4>
           <div class="signUpMain">
               <?php echo $form->error($newsLetterModel,'email'); ?>
               <?php echo Yii::app()->user->getFlash('success'); ?>

@@ -257,7 +257,7 @@ class SiteController extends Controller
         if (isset($_POST['NewsletterForm'])) {
             $model->attributes = $_POST['NewsletterForm'];
             if ($model->validate() && $model->process()) {
-                Yii::app()->user->setFlash('success', 'User subscribed successfully!');
+                Yii::app()->user->setFlash('success', 'Good news is coming your way!');
             }
         }
         $loginModel = new LoginForm;
