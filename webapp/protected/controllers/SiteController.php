@@ -279,12 +279,12 @@ class SiteController extends Controller
            {
              echo "invalid1";exit;
            }
-          $array=explode("@",$userModel->email);
+         /* $array=explode("@",$userModel->email);
           $array2=explode(".",$array[1]);
           if($array2[1]!='edu')
           {
             echo 'invalid';exit;
-          }
+          }*/
          
             $userModel->password=User::hashPassword($_POST['User']['password']);
                         $userModel->status='block';
@@ -293,6 +293,7 @@ class SiteController extends Controller
             if($userModel->save())
             {
                 echo 'success';
+                Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
                 $message = new YiiMailMessage;
                         $message->view = 'welcomemail';
                         $message->setBody(array('records'=>$userModel,'string'=>base64_encode($_POST['Users']['password'])), 'text/html');
@@ -300,8 +301,7 @@ class SiteController extends Controller
                         $message->addTo($userModel->email);
                         $message->from = Yii::app()->params['adminEmail'];
                         Yii::app()->mail->send($message);
-                        Yii::app()->user->setFlash('success', "Please check your mails to verify your email");
-
+                      
             }
         }
         exit;

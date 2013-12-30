@@ -17,7 +17,7 @@
 <!-- Form Name -->
 <legend>
 	<div class="author" style="float:left">
-		<img src="<?php echo $user->getUserImage() ?>" alt="avatar">
+		<img src="<?php //echo $user->getUserImage() ?>" alt="avatar">
 	</div>
 	<div style="padding-left:5px;float:left;">
 		<?php echo $user->getName() ?>
