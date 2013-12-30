@@ -252,6 +252,7 @@ class SiteController extends Controller
     {
         $this->layout = '//layouts/columnfull';
         $model        = new NewsletterForm;
+        $userModel=new User;
         // collect user input data
         if (isset($_POST['NewsletterForm'])) {
             $model->attributes = $_POST['NewsletterForm'];
@@ -260,7 +261,7 @@ class SiteController extends Controller
             }
         }
         $loginModel = new LoginForm;
-        $this->render('index', array('model' => $loginModel, 'newsLetterModel' => $model));
+        $this->render('index', array('model' => $loginModel, 'newsLetterModel' => $model, 'userModel'=>$userModel));
     }
     
     public function actionSignup()
