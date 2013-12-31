@@ -31,7 +31,7 @@
 //           $fp_url_elements = explode('/', $fp_url);
 //           $fp_url_elements = array_reverse($fp_url_elements);
            
-           $thumbnail = "images/sampleImg1.png";
+           //$thumbnail = "images/sampleImg1.png";
            $type = explode('/', $d->mimetype);           
            switch ($type[0]){
                case 'text':
@@ -39,7 +39,7 @@
                    break;
                case 'image':
                    $details_icon = '/img/details/greenIcon2.png';
-                   $thumbnail = $fp_url.'/convert?w=80&h=80&dl=false';
+                   //$thumbnail = $fp_url.'/convert?w=80&h=80&dl=false';
                    break;
                
                case 'audio':
@@ -61,7 +61,10 @@
                
          ?>            
             <div class="detailMainContentList">
-            	<div class="detailMainContentList1"><img src="<?php echo $thumbnail;?>" alt="Image" /><p><b><?php echo $user; ?></b><br/><?php echo $lab_title;?></p></div>
+            	<div class="detailMainContentList1">
+<!--                    <img src="<?php // echo $thumbnail;?>" alt="Image" />-->
+                    <p><b><?php echo $user; ?></b><br/><?php echo $lab_title;?></p>
+                </div>
                 <div class="detailMainContentList2" >
                 	<p>   
                             <span style="padding-left: 25px;width:100%"><a href="<?php echo $this->createUrl('file/download',array('file'=>$file_id)) ;?>" target="_blank"><img src="<?php echo $details_icon;?>" alt="Icon" /><?php echo $file_name;?></a></span>
