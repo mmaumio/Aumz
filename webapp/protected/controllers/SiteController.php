@@ -333,16 +333,18 @@ class SiteController extends Controller
             {
                 
                 Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
-                $message = new YiiMailMessage;
+                // $message = new YiiMailMessage;
                  
-                        $message->view = 'welcomemail';
-                        $message->setBody(array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password'])), 'text/html');
-                        $message->subject = 'Welcome to Stirplate';
-                        $message->addTo($userModel->email);
-                        $message->from = Yii::app()->params['adminEmail'];
-                      
-                        Yii::app()->mail->send($message);
-                   echo 'success';   
+                // $message->view = 'welcomemail';
+                // $message->setBody(array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password'])), 'text/html');
+                // $message->subject = 'Welcome to Stirplate';
+                // $message->addTo($userModel->email);
+                // $message->from = Yii::app()->params['adminEmail'];
+              
+                // Yii::app()->mail->send($message);
+                // echo 'success';   
+                $obj = array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password']));
+                Notification::sendEmail('newSignup', $userModel, $obj);
             }
         }
         exit;
