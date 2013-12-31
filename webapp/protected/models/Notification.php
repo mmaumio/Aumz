@@ -8,6 +8,7 @@ class Notification
 		'newActivity' => '_newActivity',
 		'activityReply' => '_activityReply',
 		'newTask' => '_newTask',
+		'passwordReset' => '_passwordReset',
 		'taskComplete' => '_taskComplete'
 	);
 
@@ -16,6 +17,7 @@ class Notification
 		'newActivity' => 'A new comment was posted',
 		'activityReply' => '',
 		'newTask' => '',
+		'passwordReset' => 'Password reset',
 		'taskComplete' => ''
 	);
 
@@ -41,7 +43,7 @@ class Notification
 			$data = array();
 			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('study/index', array('id' => $obj['study']->id));
 			$data['studyName'] = $obj['study']->title;
-			$data['authorName'] = $obj['author']->getShortName();
+			$data['authorName'] = $obj['author']->getName();
 			$data['comment'] = $obj['activity']->content;
 			Notification::_sendEmail($toName, $toEmail, $subject, $template, $data);	
 		}
@@ -56,6 +58,12 @@ class Notification
 		else if ($type === 'taskComplete')
 		{
 
+		}
+		else if ($type === 'passwordReset') 
+		{
+			$data = array();
+			$data['token'] =  Yii::app()->createAbsoluteUrl('site/changepass', array('k' => $obj['token']));
+			Notification::_sendEmail($toName, $toEmail, $subject, $template, $data);
 		}
 	}
 

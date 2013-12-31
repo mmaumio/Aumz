@@ -18,6 +18,18 @@ class ActivityController extends Controller
 			if ($activity->save())
 			{
 				// echo "4";
+				$obj = array();
+				$obj['study'] = Project::model()->findByPk($_POST['activity']['projectId']);
+				$obj['activity'] = $activity;
+				$obj['author'] = User::model()->findByPk($activity->userId);
+				$criteria = new CDbCriteria();
+				$criteria->condition = "projectId =:projectId";
+				$criteria->params = array(':projectId' => $_POST['activity']['projectId']);
+				$users  = ProjectUser::model()->findAll($criteria);
+				foreach ($users as $my_user) {
+					$user = User::model()->findByPk($my_user->userId);
+					Notification::sendEmail('newActivity', $user, $obj);
+				}
 				$this->redirect(array('project/index', 'id' => $activity->projectId));
 			}
 			else
