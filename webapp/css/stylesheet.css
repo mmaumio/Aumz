@@ -565,10 +565,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 .project-header{
     background:none;
     border:none;
-    width:100%;
-    padding-right: 50px;
+    width:95%;
     
 }
+.edit-img
+{
+    cursor: pointer;
+}
+
 .edit-project-header{
    background: none repeat scroll 0 0 #FFFFFF;
     border: 2px none #ADD8E6;
@@ -576,7 +580,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
     -moz-box-shadow: 0 0 1px 1px #0000FF;
     -webkit-box-shadow: 0 0 1px 1px #0000FF;
     height: 40px;
-    width: 100%;
+    width:100%;
+    margin-left: 0px;
    
 }
 .toolpopup
@@ -594,10 +599,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
     
 }
 
-.mainheader:hover  .toolpopup
-{
-    display: block;
-}
+
 .mainheader:focus .toolpopup{
     display: none;
 }

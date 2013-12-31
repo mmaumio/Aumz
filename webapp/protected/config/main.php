@@ -48,6 +48,7 @@ return array(
 			'allowAutoLogin'=>true,
                         'loginUrl'=>array('site/index'),
 		),
+       
 		
 		// uncomment the following to enable URLs in path-format
 

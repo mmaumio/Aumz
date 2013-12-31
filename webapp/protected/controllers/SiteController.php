@@ -34,6 +34,18 @@ class SiteController extends Controller
                 $this->layout='//layouts/columnfull';
                 $userModel=new User;
                 $model=new LoginForm;
+                if(isset(Yii::app()->request->cookies['authentic']) && isset(Yii::app()->request->cookies['identity']))
+                  { 
+                    $model->rememberMe=1;
+                    $model->email= base64_decode(Yii::app()->request->cookies['identity']);
+                    $model->password=base64_decode(Yii::app()->request->cookies['authentic']);
+                    
+                    if($model->validate() && $model->login())
+                     {
+                           $this->redirect('/dashboard');                                             
+                        }
+                  
+                  }               
                 $newsLetterModel = new NewsletterForm;
                 //collect user input
                 if(isset($_POST['LoginForm']))
@@ -45,15 +57,32 @@ class SiteController extends Controller
                              Yii::app()->request->cookies['user_trails'] = new CHttpCookie('user_trails', 1);
                         }
                         
-			$model->attributes=$_POST['LoginForm'];
+			                  $model->attributes=$_POST['LoginForm'];
+           
                             // validate user input
                            if($model->validate() && $model->login()){
-                                $user = User::model()->findByPk(Yii::app()->user->id);
-				{	
-                                        {
-                                            $this->redirect('/dashboard');
-                                        }
-				}
+                           //     $user = User::model()->findByPk(Yii::app()->user->id);
+				             {	
+				                 
+                                  if($model->rememberMe)
+                                  {
+                                   $cookie = new CHttpCookie('identity',base64_encode($model->email));
+                                   $cookie->expire = time()+3600*24*14;
+                                   Yii::app()->request->cookies['identity'] = $cookie;
+                                  $cookie = new CHttpCookie('authentic',base64_encode($model->password));
+                                   $cookie->expire = time()+3600*24*14;
+                                   Yii::app()->request->cookies['authentic'] = $cookie;
+                                  }
+                                  else 
+                                  {
+                                    if(isset(Yii::app()->request->cookies['authentic']))
+                                    unset(Yii::app()->request->cookies['authentic']);
+                                    if(isset(Yii::app()->request->cookies['identity']))
+                                    unset(Yii::app()->request->cookies['identity']);
+                                  }
+                                   $this->redirect('/dashboard');
+                                        
+				             }
                          }
                 }
 		$this->render('index',array('model'=>$model, 'newsLetterModel'=>$newsLetterModel,'userModel'=>$userModel));
@@ -133,8 +162,14 @@ class SiteController extends Controller
 	 */
 	public function actionLogout()
 	{
+	    if(isset(Yii::app()->request->cookies['authentic']))
+                                   Yii::app()->request->cookies['authentic']->expire;
+                                    if(isset(Yii::app()->request->cookies['identity']))
+                                    Yii::app()->request->cookies['identity']->expire;
+                                
 		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
+      
+		$this->redirect('site/index');
 	}
 
     public function actionGoogleLogin()
@@ -196,7 +231,7 @@ class SiteController extends Controller
                         $message->view = 'forgotpassmail';
                         $message->setBody(array('records'=>$records), 'text/html');
                         $message->subject = 'Request to change password';
-                        $message->addTo('arvind@sprytechies.com');
+                        $message->addTo($records->email);
                         $message->from = Yii::app()->params['adminEmail'];
                         Yii::app()->mail->send($message);
                         
@@ -213,7 +248,7 @@ class SiteController extends Controller
         /**
          * Change password 
          */
-        public function actionChangepass()
+    public function actionChangepass()
 	{       
                 $model = new User;
                 $records=  User::model()->findAll();
@@ -252,15 +287,16 @@ class SiteController extends Controller
     {
         $this->layout = '//layouts/columnfull';
         $model        = new NewsletterForm;
+        $userModel=new User;
         // collect user input data
         if (isset($_POST['NewsletterForm'])) {
             $model->attributes = $_POST['NewsletterForm'];
             if ($model->validate() && $model->process()) {
-                Yii::app()->user->setFlash('success', 'User subscribed successfully!');
+                Yii::app()->user->setFlash('success', 'Good news is coming your way!');
             }
         }
         $loginModel = new LoginForm;
-        $this->render('index', array('model' => $loginModel, 'newsLetterModel' => $model));
+        $this->render('index', array('model' => $loginModel, 'newsLetterModel' => $model, 'userModel'=>$userModel));
     }
     
     public function actionSignup()
@@ -278,21 +314,65 @@ class SiteController extends Controller
            {
              echo "invalid1";exit;
            }
-          $array=explode("@",$userModel->email);
+         /* $array=explode("@",$userModel->email);
           $array2=explode(".",$array[1]);
           if($array2[1]!='edu')
           {
             echo 'invalid';exit;
-          }
+          }*/
          
-            $userModel->password=User::hashPassword($_POST['Users']['password']);
+            $userModel->password=User::hashPassword($_POST['User']['password']);
                         $userModel->status='block';
+                        $userModel->keystring=md5($userModel->email.time());
                         
             if($userModel->save())
             {
-                echo 'success';
+                
+                Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
+                $message = new YiiMailMessage;
+                 
+                        $message->view = 'welcomemail';
+                        $message->setBody(array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password'])), 'text/html');
+                        $message->subject = 'Welcome to Stirplate';
+                        $message->addTo($userModel->email);
+                        $message->from = Yii::app()->params['adminEmail'];
+                      
+                        Yii::app()->mail->send($message);
+                   echo 'success';   
             }
         }
         exit;
+    }
+    public function actionVerifyemail()
+    {
+            $login=new LoginForm;
+           if(isset($_GET['key']) && isset($_GET['string']))
+           {
+               $userData=User::model()->findByAttributes(array('keystring'=>$_GET['key']));
+               if(!empty($userData))
+               {
+               $userData->keystring=md5($userData->id.time());
+               $userData->status='notlogged';
+               if($userData->update())
+                 {
+                    $login->email=$userData->email;
+                    $login->password=base64_decode($_GET['string']);
+                    if($login->login())
+                    {
+                       	$this->redirect(array('user/profile'));
+	
+                    }
+                        
+			      exit;
+                 }
+               }
+               else
+               {
+               echo  'invalid link'; exit;
+               }
+           }
+           else{
+              echo 'invalid link'; exit;
+           }
     }
 }

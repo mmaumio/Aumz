@@ -122,7 +122,7 @@ class Mailchimp {
      * @var  string
      */
     public $apikey;
-    public $ch;
+    public $ch = null;
     public $root = 'https://api.mailchimp.com/2.0';
     /**
      * whether debug mode is enabled
@@ -249,7 +249,8 @@ class Mailchimp {
             $this->ssl_cainfo = $opts['ssl_cainfo'];
         }
 
-
+        /*
+         * We don't use curl anymore with GAE
         $this->ch = curl_init();
         curl_setopt($this->ch, CURLOPT_USERAGENT, 'MailChimp-PHP/2.0.4');
         curl_setopt($this->ch, CURLOPT_POST, true);
@@ -258,7 +259,7 @@ class Mailchimp {
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($this->ch, CURLOPT_TIMEOUT, $opts['timeout']);
-
+        */
 
         $this->folders = new Mailchimp_Folders($this);
         $this->templates = new Mailchimp_Templates($this);
@@ -275,7 +276,7 @@ class Mailchimp {
     }
 
     public function __destruct() {
-        curl_close($this->ch);
+        //curl_close($this->ch);
     }
 
     public function call($url, $params) {

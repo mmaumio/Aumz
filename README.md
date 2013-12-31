@@ -32,5 +32,5 @@ Live version:
 -------------
 To login to stirplate.io, use the following info:
 http://1.stirplateio.appspot.com/
-userid: deleme1@omnisci.org
+userid: delme1@omnisci.org
 password: t3h1s1saw3som
