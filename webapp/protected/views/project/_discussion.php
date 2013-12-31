@@ -8,7 +8,7 @@
   	<p><?= $activity->content;?></p>
   </div>
   <div class="detailMainContentList3">
-  	<!-- <div class="listRtTime" title="<?= $activity->created;?>"><?= $activity->created;?></div> -->
+  	<div class="listRtTime" title="<?= $activity->created;?>"><?= $activity->created;?></div>
   	<a href="/project/delete_comment/<?= $activity->id;?>" onclick="return confirm('Are you sure?')">Delete</a>
 	</div>
 </div>
