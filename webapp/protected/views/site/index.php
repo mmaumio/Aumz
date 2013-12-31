@@ -342,7 +342,7 @@
 </script>
 <!--Page 1 Start-->
 <?php if(Yii::app()->user->hasFlash('success')){?>
-<div class="alert alert-info" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
+<div class="alert alert-warning" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
                         <a href="#" class="close" data-dismiss="alert">x
                         </a>
                <strong>Thank you ! </strong>         <?php echo Yii::app()->user->getFlash('success'); ?>
@@ -381,6 +381,10 @@
                             <?php echo $form->passwordField($model,'password',array('placeholder'=>'Password')); ?>
                             </div>
                     </div>
+                    <div class="clearBoth"></div>
+                    <label class="floatLft">
+                             <?php echo CHtml::checkBox('remember'); ?> Remember me
+                    </label>
                     <label class="floatRt">
                              <?php echo CHtml::link('Forgot your passssword?', 'site/ForgotPassword') ?>
                     </label>
