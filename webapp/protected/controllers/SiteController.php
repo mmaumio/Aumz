@@ -343,7 +343,7 @@ class SiteController extends Controller
               
                 // Yii::app()->mail->send($message);
                 // echo 'success';   
-                $obj = array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password']));
+                $obj = array('records'=>$userModel,'string'=>($_POST['User']['password']));
                 Notification::sendEmail('newSignup', $userModel, $obj);
             }
         }
@@ -357,12 +357,12 @@ class SiteController extends Controller
                $userData=User::model()->findByAttributes(array('keystring'=>$_GET['key']));
                if(!empty($userData))
                {
-               $userData->keystring=md5($userData->id.time());
+               $userData->keystring=$_GET['key'];
                $userData->status='notlogged';
                if($userData->update())
                  {
                     $login->email=$userData->email;
-                    $login->password=base64_decode($_GET['string']);
+                    $login->password=($_GET['string']);
                     if($login->login())
                     {
                        	$this->redirect(array('user/profile'));
