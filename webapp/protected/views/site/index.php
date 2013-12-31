@@ -388,7 +388,7 @@
                              ?> Remember me
                     </label>
                     <label class="floatRt">
-                             <?php echo CHtml::link('Forgot your passssword?', 'site/ForgotPassword') ?>
+                             <?php echo CHtml::link('Forgot your passssword?', '/site/ForgotPassword') ?>
                     </label>
                     <div class="control-group buttons">
                          <div class="controls">
