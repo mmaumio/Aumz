@@ -383,7 +383,9 @@
                     </div>
                     <div class="clearBoth"></div>
                     <label class="floatLft">
-                             <?php echo CHtml::checkBox('remember'); ?> Remember me
+                             <?php 
+                             echo $form->checkBox($model,'rememberMe');
+                             ?> Remember me
                     </label>
                     <label class="floatRt">
                              <?php echo CHtml::link('Forgot your passssword?', 'site/ForgotPassword') ?>
