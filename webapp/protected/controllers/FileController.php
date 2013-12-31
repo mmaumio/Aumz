@@ -78,27 +78,32 @@ class FileController extends Controller
 		}
 	}
 	*/
-	public function actionDownload()
+	public function actionDownload($file)
 	{
-		if (Yii::app()->session['uid'] && !empty($_GET['id']))
+
+		if (Yii::app()->session['uid'] && !empty($file))
 		{
-			$file = File::model()->findByPk($_GET['id']);
+			$file = File::model()->findByPk($file);
+                        
+                        $this->redirect($file->fpUrl.'?dl=true');
 
-			$project = Project::model()->findByPk($file->projectId);
-
-			if (!empty($file->boxId) && $project->isMemberOf())
-			{
-				$box = new Box_API(Yii::app()->params['boxclientid'], Yii::app()->params['boxclientsecret'], 'n/a');
-
-				if(!$box->load_token('protected/config/')){
-					$box->get_code();
-				}
-
-				$redirectUrl = $box->get_file_download_link($file->boxId);
-
-				$this->redirect($redirectUrl);
-			}
+//                        $project = Project::model()->findByPk($file->projectId);
+//                        var_dump($project);
+//
+//			if (!empty($file->boxId) && $project->isMemberOf())
+//			{
+//				$box = new Box_API(Yii::app()->params['boxclientid'], Yii::app()->params['boxclientsecret'], 'n/a');
+//
+//				if(!$box->load_token('protected/config/')){
+//					$box->get_code();
+//				}
+//
+//				$redirectUrl = $box->get_file_download_link($file->boxId);
+//
+//				$this->redirect($redirectUrl);
+//			}
 		}
 	}
+        
 
 }
