@@ -236,7 +236,7 @@ class SiteController extends Controller
                         // Yii::app()->mail->send($message);
                         $obj = array('token' => md5($records->id).md5(strtotime($records->created)));
                         Notification::sendEmail('passwordReset', $records, $obj);
-                        Yii::app()->user->setFlash('success', "Please check your mails");
+                        Yii::app()->user->setFlash('success', "It's ok, it happens to the best of us. Check your email to reset your password");
 
                         $this->redirect('ForgotPassword');
                     }else{

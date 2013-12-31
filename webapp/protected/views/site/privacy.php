@@ -40,4 +40,4 @@ Stirplate may periodically update this policy. We will notify you about signific
    </div>
 
 <center><b>Contact us: </b>
-If you have further questions, feel free to <a href="mailto:info@stirplate.io">Contact us</a></span>info@stirplate.io </center>
+If you have further questions, feel free to <a href="mailto:info@stirplate.io">Contact us</a></span> </center>
