@@ -4,6 +4,7 @@ class Notification
 {
 
 	private static $templates = array(
+		'newSignup' => '_newSignup',
 		'userAdded' => '_userAdded',
 		'newActivity' => '_newActivity',
 		'activityReply' => '_activityReply',
@@ -18,7 +19,8 @@ class Notification
 		'activityReply' => '',
 		'newTask' => '',
 		'passwordReset' => 'Password reset',
-		'taskComplete' => ''
+		'taskComplete' => '',
+		'newSignup' => 'Welcome to Stirplate'
 	);
 
 	public static function sendEmail($type, $toUser, $obj)
@@ -64,6 +66,11 @@ class Notification
 			$data = array();
 			$data['token'] =  Yii::app()->createAbsoluteUrl('site/changepass', array('k' => $obj['token']));
 			Notification::_sendEmail($toName, $toEmail, $subject, $template, $data);
+		}
+		else if ($type === 'newSignup') 
+		{
+			
+			Notification::_sendEmail($toName, $toEmail, $subject, $template, $obj);
 		}
 	}
 
