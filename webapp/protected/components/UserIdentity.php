@@ -20,6 +20,11 @@ class UserIdentity extends CUserIdentity
                     $this->errorCode=self::ERROR_USERNAME_INVALID;
                 elseif($record->password!== User::hashPassword($this->password))
                     $this->errorCode=self::ERROR_PASSWORD_INVALID;
+                elseif($record->status=='block')
+                      {
+                    $this->errorCode=self::ERROR_UNKNOWN_IDENTITY;
+                    
+                       }
                 else{
                     
                     $this->_id=$record->id;

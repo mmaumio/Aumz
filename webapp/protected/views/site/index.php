@@ -384,7 +384,7 @@
                     <div class="clearBoth"></div>
                     <label class="floatLft">
                              <?php 
-                             echo $form->checkBox($model,'rememberMe');
+                             echo $form->checkBox($model,'remember');
                              ?> Remember me
                     </label>
                     <label class="floatRt">

@@ -36,10 +36,9 @@ class SiteController extends Controller
                 $model=new LoginForm;
                 if(isset(Yii::app()->request->cookies['authentic']) && isset(Yii::app()->request->cookies['identity']))
                   { 
-                    $model->rememberMe=1;
+                    $model->remember=1;
                     $model->email= base64_decode(Yii::app()->request->cookies['identity']);
                     $model->password=base64_decode(Yii::app()->request->cookies['authentic']);
-                    
                     if($model->validate() && $model->login())
                      {
                            $this->redirect('/dashboard');                                             
@@ -50,6 +49,7 @@ class SiteController extends Controller
                 //collect user input
                 if(isset($_POST['LoginForm']))
                 {  
+                    
                         if(isset(Yii::app()->request->cookies['user_trails'])){
                             $val = Yii::app()->request->cookies['user_trails']->value;
                             Yii::app()->request->cookies['user_trails'] =new CHttpCookie('user_trails', (1 + $val));
@@ -58,13 +58,13 @@ class SiteController extends Controller
                         }
                         
 			                  $model->attributes=$_POST['LoginForm'];
-           
+                              $model->remember=$_POST['LoginForm']['remember'];
                             // validate user input
                            if($model->validate() && $model->login()){
                            //     $user = User::model()->findByPk(Yii::app()->user->id);
 				             {	
 				                 
-                                  if($model->rememberMe)
+                                  if($model->remember)
                                   {
                                    $cookie = new CHttpCookie('identity',base64_encode($model->email));
                                    $cookie->expire = time()+3600*24*14;
@@ -327,7 +327,7 @@ class SiteController extends Controller
             if($userModel->save())
             {
                 Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
-                $obj = array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password']));)
+                $obj = array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password']));
                 Notification::sendEmail('newSignup', $userModel, $obj);
                 echo 'success'; 
             }
