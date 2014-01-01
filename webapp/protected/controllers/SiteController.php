@@ -327,7 +327,7 @@ class SiteController extends Controller
             if($userModel->save())
             {
                 Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
-                $obj = array('records'=>$userModel,'string'=>urlencode($_POST['User']['password']));)
+                $obj = array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password']));)
                 Notification::sendEmail('newSignup', $userModel, $obj);
                 echo 'success'; 
             }
@@ -347,7 +347,7 @@ class SiteController extends Controller
                    if($userData->update())
                      {
                         $login->email=$userData->email;
-                        $login->password=urldecode($_GET['string']);
+                        $login->password=base64_decode($_GET['string']);
                         if($login->login())
                         {
                            	$this->redirect(array('user/profile'));
