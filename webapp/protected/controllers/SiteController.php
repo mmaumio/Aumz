@@ -134,16 +134,12 @@ class SiteController extends Controller
 	public function actionLogin()
 	{
         $model=new LoginForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+     	if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
+     	if(isset($_POST['LoginForm']))
 		{
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
@@ -308,42 +304,30 @@ class SiteController extends Controller
         $userModel=new User;
         if(isset($_POST['User']))
         {
-           
-            $userModel->attributes=$_POST['User'];
+           $userModel->attributes=$_POST['User'];
            if(User::model()->exists('email=:email',array(":email"=>$userModel->email)))
            {
-            echo 'exits';exit;
+            echo 'exits'; exit;
            }
            if(!filter_var($userModel->email, FILTER_VALIDATE_EMAIL))
            {
              echo "invalid1";exit;
            }
-         /* $array=explode("@",$userModel->email);
-          $array2=explode(".",$array[1]);
-          if($array2[1]!='edu')
-          {
-            echo 'invalid';exit;
-          }*/
-         
+             /* $array=explode("@",$userModel->email);
+              $array2=expl ode(".",$array[1]);
+              if($array2[1]!='edu')
+              {
+                echo 'invalid';exit;
+              }*/
+             
             $userModel->password=User::hashPassword($_POST['User']['password']);
                         $userModel->status='block';
                         $userModel->keystring=md5($userModel->email.time());
                         
             if($userModel->save())
             {
-                
                 Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
-                // $message = new YiiMailMessage;
-                 
-                // $message->view = 'welcomemail';
-                // $message->setBody(array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password'])), 'text/html');
-                // $message->subject = 'Welcome to Stirplate';
-                // $message->addTo($userModel->email);
-                // $message->from = Yii::app()->params['adminEmail'];
-              
-                // Yii::app()->mail->send($message);
-               
-                $obj = array('records'=>$userModel,'string'=>($_POST['User']['password']));
+                $obj = array('records'=>$userModel,'string'=>urlencode($_POST['User']['password']));)
                 Notification::sendEmail('newSignup', $userModel, $obj);
                 echo 'success'; 
             }
@@ -358,20 +342,18 @@ class SiteController extends Controller
                $userData=User::model()->findByAttributes(array('keystring'=>$_GET['key']));
                if(!empty($userData))
                {
-               $userData->keystring=$_GET['key'];
-               $userData->status='notlogged';
-               if($userData->update())
-                 {
-                    $login->email=$userData->email;
-                    $login->password=($_GET['string']);
-                    if($login->login())
-                    {
-                       	$this->redirect(array('user/profile'));
-	
-                    }
-                        
-			      exit;
-                 }
+                   $userData->keystring=$_GET['key'];
+                   $userData->status='notlogged';
+                   if($userData->update())
+                     {
+                        $login->email=$userData->email;
+                        $login->password=urldecode($_GET['string']);
+                        if($login->login())
+                        {
+                           	$this->redirect(array('user/profile'));
+    	                }
+                      exit;
+                     }
                }
                else
                {
