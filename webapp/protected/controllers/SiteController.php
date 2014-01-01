@@ -342,9 +342,10 @@ class SiteController extends Controller
                 // $message->from = Yii::app()->params['adminEmail'];
               
                 // Yii::app()->mail->send($message);
-                // echo 'success';   
+               
                 $obj = array('records'=>$userModel,'string'=>($_POST['User']['password']));
                 Notification::sendEmail('newSignup', $userModel, $obj);
+                echo 'success'; 
             }
         }
         exit;
