@@ -27,7 +27,7 @@ return array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'stirplateio',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
+//			'ipFilters'=>array('127.0.0.1','::1'),
 		),
         //'demo' // Yii on Google App Engine demo module
 	),
@@ -71,12 +71,12 @@ return array(
 //		),
 		'db'=>array(
 	//		KG comment: The following line connects the app w/ the cloudsql database, does not work w/ local copy
-			'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
+//			'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
 		// Uncomment the following to use a local copy of the DB(located in the repo)
-		//	'connectionString' => 'mysql:host=localhost;dbname=omniscience',
+			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
             'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => '',
+			'password' => 'root',
 			'charset' => 'utf8',
 		),
 		
@@ -138,6 +138,11 @@ return array(
 		'boxclientid' => '58l43p0xw5nv4vqpakexbg4iajqsadfh',
 		'boxclientsecret' => 'NwDCRMooJATY9pFv5ROl3bWRjcEGpqvZ',
 		'mailChimpApiKey' => 'dff5a7e5f0ef8a7c5b2d077b4c525def-us7',
-		'mailChimpListId' => '64a24c221c'
-	),
+		'mailChimpListId' => '64a24c221c',
+
+        //constants
+        'FAILURE' => 0,
+        'SUCCESS' => 1,
+        'ERROR' => 2,
+    ),
 );
