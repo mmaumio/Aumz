@@ -230,7 +230,7 @@ class User extends CActiveRecord
         parent::afterFind();
         $this->selectedLabs = array_keys($this->labs);
         $this->selectedTechs = array_keys($this->techs);
-        $this->otherLabName = $this->otherLab->name;
-        $this->otherTechName = $this->otherTech->name;
+        if(!empty($this->otherLab)) $this->otherLabName = $this->otherLab->name;
+        if(!empty($this->otherTech)) $this->otherTechName = $this->otherTech->name;
     }
 }
