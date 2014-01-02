@@ -34,3 +34,8 @@ To login to stirplate.io, use the following info:
 http://1.stirplateio.appspot.com/
 userid: delme1@omnisci.org
 password: t3h1s1saw3som
+
+Notes for those trying to use curl. 
+---------------------------------
+GAE doesn't allow curl on their servers, instead you can use URLfetch. See more information here
+https://developers.google.com/appengine/docs/php/urlfetch/
