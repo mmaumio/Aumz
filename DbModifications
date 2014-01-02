@@ -40,6 +40,10 @@ CREATE TABLE `lab` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+KG comment- Error Code: 1050. Table 'lab' already exists
+
+
+
 
 CREATE TABLE `lab_user` (
   `labId` int(11) NOT NULL,
@@ -51,6 +55,8 @@ CREATE TABLE `lab_user` (
   CONSTRAINT `labUser_lab_fk` FOREIGN KEY (`labId`) REFERENCES `lab` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `labUser_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+KG comment: Error Code: 1050. Table 'lab_user' already exists
+
 
 CREATE TABLE `lab_user_other` (
   `userId` int(11) NOT NULL,
@@ -61,6 +67,9 @@ CREATE TABLE `lab_user_other` (
   KEY `lab_user_other_user_idx` (`userId`),
   CONSTRAINT `lab_user_other_user` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+KG- OK
+
+
 
 CREATE TABLE `tech` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -69,6 +78,9 @@ CREATE TABLE `tech` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+KG-OK
+
+
 
 CREATE TABLE `tech_user` (
   `techId` int(11) NOT NULL,
@@ -81,6 +93,10 @@ CREATE TABLE `tech_user` (
   CONSTRAINT `fk_tech_user_user_id` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
+KG: OK
+
+
+
 CREATE TABLE `tech_user_other` (
   `userId` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -89,7 +105,9 @@ CREATE TABLE `tech_user_other` (
   PRIMARY KEY (`userId`),
   CONSTRAINT `tech_user_other_user` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+KG: OK
 
 ALTER TABLE `user` ADD `contactEmail` varchar(128);
+kg: ok
 -- Kasun
 
