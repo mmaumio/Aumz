@@ -33,30 +33,30 @@ OK
 
 --
 01/12/2013 -- Kasun
-CREATE TABLE `lab` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+#CREATE TABLE `lab` (
+#  `id` int(11) NOT NULL AUTO_INCREMENT,
+#  `name` varchar(255) DEFAULT NULL,
+#  `created` datetime DEFAULT NULL,
+#  `modified` datetime DEFAULT NULL,
+#  PRIMARY KEY (`id`)
+#) ENGINE=InnoDB;
 KG comment- Error Code: 1050. Table 'lab' already exists
+Kasun comment - do not use this. (sorry, already available table)
 
 
 
-
-CREATE TABLE `lab_user` (
-  `labId` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`labId`,`userId`),
-  KEY `labUser_user_fk` (`userId`),
-  CONSTRAINT `labUser_lab_fk` FOREIGN KEY (`labId`) REFERENCES `lab` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `labUser_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
+#CREATE TABLE `lab_user` (
+#  `labId` int(11) NOT NULL,
+#  `userId` int(11) NOT NULL,
+# `created` datetime NOT NULL,
+# `modified` datetime NOT NULL,
+#  PRIMARY KEY (`labId`,`userId`),
+# KEY `labUser_user_fk` (`userId`),
+#  CONSTRAINT `labUser_lab_fk` FOREIGN KEY (`labId`) REFERENCES `lab` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+#  CONSTRAINT `labUser_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+#) ENGINE=InnoDB;
 KG comment: Error Code: 1050. Table 'lab_user' already exists
-
+Kasun comment - do not use this. (sorry, already available table)
 
 CREATE TABLE `lab_user_other` (
   `userId` int(11) NOT NULL,
