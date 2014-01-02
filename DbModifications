@@ -30,3 +30,66 @@ ALTER TABLE  `task` ADD CONSTRAINT  `task_ibfk_1` FOREIGN KEY (  `projectId` ) R
 `id`
 ) ON DELETE CASCADE ON UPDATE RESTRICT ;
 OK
+
+--
+01/12/2013 -- Kasun
+CREATE TABLE `lab` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `lab_user` (
+  `labId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`labId`,`userId`),
+  KEY `labUser_user_fk` (`userId`),
+  CONSTRAINT `labUser_lab_fk` FOREIGN KEY (`labId`) REFERENCES `lab` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `labUser_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `lab_user_other` (
+  `userId` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  KEY `lab_user_other_user_idx` (`userId`),
+  CONSTRAINT `lab_user_other_user` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `tech` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `tech_user` (
+  `techId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`techId`,`userId`),
+  KEY `fk_tech_user_user_id_idx` (`userId`),
+  CONSTRAINT `fk_tech_user_tech_id` FOREIGN KEY (`techId`) REFERENCES `tech` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_tech_user_user_id` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `tech_user_other` (
+  `userId` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  CONSTRAINT `tech_user_other_user` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+ALTER TABLE `user` ADD `contactEmail` varchar(128);
+-- Kasun
+
