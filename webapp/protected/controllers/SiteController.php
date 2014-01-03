@@ -247,11 +247,11 @@ class SiteController extends Controller
          */
     public function actionChangepass()
 	{       
-                // $model = new User;
+                $model = new User;
                 $records=  User::model()->findAll();
                 if(isset($_POST) && isset($_POST['k'])){
                     foreach ($records as $value) {
-                            if(md5($value->id).md5(strtotime($value->created))==$_POST['k']){
+                            if(md5($value->id).md5(strtotime($value->created)) == $_POST['k']){
                                 $pass1 = trim($_POST['newpassword']);
                                 $pass2 = trim($_POST['confirmpassword']);
                                 if(isset($_POST['newpassword']) && isset($_POST['confirmpassword']) && !empty($pass1) && !empty($pass2)){
