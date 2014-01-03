@@ -275,7 +275,6 @@ class ProjectController extends Controller
 			//TODO: check to make sure user is a member of study before letting them create a task
                         $task->attributes = $_POST['Task'];
 			$task->ownerId = Yii::app()->user->id;
-			$task->status = empty($task->status) ? 'Pending' : $task->status;
                         
 			$respArray = array();
                         if ( $task->validate() && $task->save())
@@ -285,18 +284,10 @@ class ProjectController extends Controller
 				$activity->relatedObjectId = $task->id;
 				$activity->relatedObjectType = 'task';
 				$activity->type = 'task';
+                                $activity->projectId = $_POST['Task']['projectId'];
 				$activity->content = $task->owner->firstName . ' added a new task: "' . $task->subject . '"';
 
 				if($activity->save()){
-
-                                    $respArray['status'] = 'OK';
-                                    $respArray['id'] = $task->id;
-                                    $respArray['task'] = array();
-                                    $respArray['task']['subject'] = $task->subject;
-                                    $respArray['task']['description'] = $task->description;
-                                    $respArray['task']['projectId'] = $_POST['Task']['projectId'];
-                                    $respArray['task']['assigneeImgUrl'] = $task->owner->profileImageUrl;
-                                    //$respArray['task']['assigneeImgUrl'] = $task->assignedToUser->getUserImage();
                                     ob_end_clean();
                                     echo CJSON::encode(array(
                                        'status'=>'success',

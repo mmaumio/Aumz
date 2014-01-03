@@ -36,8 +36,8 @@ return array(
 	'components'=>array(
                 'assetManager'=>array(
                     'class'=>'application.components.CGAssetManager',
-                    'basePath'=>'gs://temp__dev',
-                    'baseUrl'=> 'http://commondatastorage.googleapis.com/temp__dev'
+                    'basePath'=>Yii::getPathOfAlias('assets'),
+                    'baseUrl'=> '/assets'
                 ),
                 'request'=>array(
                     'baseUrl' => '/',
@@ -115,12 +115,7 @@ return array(
  			'dryRun' => false
  		),
             
-		'clientScript'=>array(
-			'class' => 'CClientScript',
-			'scriptMap' => array(
-				'jquery.min.js' => false
-			)
-		)
+		
 	),
 
 	// application-level parameters that can be accessed
