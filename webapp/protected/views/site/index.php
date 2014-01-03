@@ -372,7 +372,7 @@
       
       <div class="homeRt">
         <div class="signIn">
-          <h3>SignIn to stirplate</h3>
+          <h3>Sign In to stirplate</h3>
           <div class="signInMain">
             <?php $form=$this->beginWidget('CActiveForm', array(
                     'id'=>'login-form-ajaxcall',
