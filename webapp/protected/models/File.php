@@ -135,4 +135,14 @@ class File extends CActiveRecord
                     )
             );
         }
+  public function beforeSave()
+    {   
+    
+    		$activity = new Activity();
+        $activity->projectId = $this->projectId;
+        $activity->type      = "file_added";
+        $activity->userId    = $this->userId;
+        $activity->save();
+        return parent::beforeSave();
+    }      
 }

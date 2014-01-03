@@ -100,10 +100,13 @@ class ProjectController extends Controller
 	{
             $uid=Yii::app()->session['uid'];
 			$projects = array();
-            $projects=Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
-            $this->render('dashboard', array('projects' => $projects,));
+            $projects = Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
+            $activities  = Activity::model()->findAllBySql("SELECT * FROM `activity` WHERE projectId in (SELECT projectId FROM `project_user` WHERE userId = ".Yii::app()->session['uid']." ) ORDER BY created DESC LIMIT 10");
+            $this->render('dashboard', array('projects' => $projects, 'activities' => $activities));
 		
 	}
+
+
 
 	public function actionCreate()
 	{

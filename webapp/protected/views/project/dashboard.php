@@ -73,64 +73,15 @@
 
                     <?php } ?>
                 </div>	
+        </div>
                 <div class="dashBoxMainRt">
                 	<div class="dashBoxMainRtList">
-                        <!--
-                    	<ul>
-                        	<li>
-                            	<img src="images/sampleImg1.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>Albert E</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">5 minutes ago</div>
-                                </div>	
-                            </li>
-                            <li>
-                            	<img src="images/sampleImg2.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>Simon H</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">12 minutes ago</div>
-                                </div>	
-                            </li>
-                            <li>
-                            	<img src="images/sampleImg3.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>David H</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">27 minutes ago</div>
-                                </div>	
-                            </li>
-                            <li>
-                            	<img src="images/sampleImg4.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>Mona L</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">46 minutes ago</div>
-                                </div>	
-                            </li>
-                            <li>
-                            	<img src="images/sampleImg5.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>Oprah W</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">1 minutes ago</div>
-                                </div>	
-                            </li>
-                            <li>
-                            	<img src="images/sampleImg6.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>Peter M</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">1 minutes ago</div>
-                                </div>	
-                            </li>
-                        </ul>
-                        -->
+                        
+                    	<?php $this->renderPartial('//activity/_activity_streams', array('activities' => $activities)); ?>
+                        
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </section>
 
