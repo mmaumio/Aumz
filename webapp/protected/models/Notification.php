@@ -84,8 +84,8 @@ class Notification
         		'html' => Yii::app()->controller->renderPartial('//email/' . $template . 'Html', $data, true),
         		'text' => Yii::app()->controller->renderPartial('//email/' . $template, $data, true),
         		'subject' => $subject,
-        		'from_email' => 'admin@omnisci.org',
-        		'from_name' => 'OmniScience',
+        		'from_email' => 'info@stirplate.io',
+        		'from_name' => 'Stirplate.IO',
         		'to' => array(
         			array(
         				'email' => $toEmail,

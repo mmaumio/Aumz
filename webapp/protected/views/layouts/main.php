@@ -24,20 +24,17 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script type="text/javascript" src="/css/select2.min.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 
-	<script type="text/javascript">   
+	<script type="text/javascript">  
+            function downloadFile(path){
+                    //alert(path);
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-
-<script>
-function downloadFile(path){
-	//alert(path);
-	
-	var a = $("<a>").attr("href", path).attr("download", "").appendTo("body");
-	a[0].click();
-	a.remove();
-}
-  </script>	
+                    var a = $("<a>").attr("href", path).attr("download", "").appendTo("body");
+                    a[0].click();
+                    a.remove();
+            }
+        </script>	
 
 </head> 
 <body> 
