@@ -205,6 +205,7 @@ class User extends CActiveRecord
             $project = Project::model()->find(array('condition' => 'id=:id', 'params' => array(':id' => $projectId)));
             if ($project_user->save()) {
                 Notification::sendEmail('userAdded', $this, $project_user);
+                
             }
         }
 

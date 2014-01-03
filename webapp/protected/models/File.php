@@ -135,4 +135,10 @@ class File extends CActiveRecord
                     )
             );
         }
+  public function beforeSave()
+    {   
+    
+    		
+        return parent::beforeSave();
+    }      
 }

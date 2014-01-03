@@ -60,6 +60,7 @@ class Activity extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'user' => array(self::BELONGS_TO, 'User', 'userId'),
+			'inviter_user' => array(self::BELONGS_TO, 'User', 'relatedObjectId'),
 			'project' => array(self::BELONGS_TO, 'Project', 'projectId'),
 			'file' => array(self::BELONGS_TO, 'File', 'fileId'),
 			'task' => array(self::BELONGS_TO, 'Task', 'taskId'),
