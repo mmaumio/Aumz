@@ -15,7 +15,7 @@ class ProjectController extends Controller
 	{
 		return array(
 			array('allow', 
-				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask'),
+				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask', 'Updateactivity'),
 				'users'=>array('@'),
 			),
 			array('deny','users'=>array('*'),),
@@ -106,7 +106,12 @@ class ProjectController extends Controller
 		
 	}
 
-
+    public function actionUpdateactivity()
+    {
+        $lastId = $_POST['last_id'];
+        $activities  = Activity::model()->findAllBySql('SELECT * FROM `activity` WHERE id > '.$lastId.' AND  projectId in (SELECT projectId FROM `project_user` WHERE userId = '.Yii::app()->session["uid"].' ) ORDER BY created DESC LIMIT 10');
+        $this->renderPartial('/activity/_activity_streams', array('activities' => $activities));
+    }
 
 	public function actionCreate()
 	{

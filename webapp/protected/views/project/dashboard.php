@@ -76,16 +76,41 @@
         </div>
                 <div class="dashBoxMainRt">
                 	<div class="dashBoxMainRtList">
-                        
-                    	<?php $this->renderPartial('//activity/_activity_streams', array('activities' => $activities)); ?>
-                        
+                        <ul id="activity_stream">
+                    	   <?php $this->renderPartial('//activity/_activity_streams', array('activities' => $activities)); ?>
+                        </ul>
                     </div>
                 </div>
             </div>
     </div>
 </section>
 
-
+<script type="text/javascript">
+    function ajax_updater () {
+        var biggest_id = 0 ;
+        $.each($(".activity"), function(b, a){
+            var num = parseInt($(a).attr("activity_id"));
+            if(num > biggest_id)
+                biggest_id = num;
+        });
+        $.ajax({
+            url    : "project/updateactivity",
+            data   : "last_id="+biggest_id,
+            type   : "POST",
+            success: function(result){
+                if(result != ""){
+                    $("#activity_stream").prepend(result);
+                    $(".activity:first").hide().fadeIn(2000);
+                }
+                setTimeout(function(){ajax_updater();}, 2000);
+            }
+        });
+    }
+    $(document).ready(function() {
+        ajax_updater ();
+        
+    });
+</script>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -111,8 +136,4 @@
       </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->	
-
-   <!-------------------------Success / Failure Notification ----------------------------------------> 
-
-   <!------------------------------------------------------------------------------------------------->
+</div><!-- /.modal -->  
