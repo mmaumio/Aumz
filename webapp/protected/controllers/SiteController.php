@@ -29,9 +29,7 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-                $this->layout='//layouts/columnfull';
+		        $this->layout='//layouts/columnfull';
                 $userModel=new User;
                 $model=new LoginForm;
                 if(isset(Yii::app()->request->cookies['authentic']) && isset(Yii::app()->request->cookies['identity']))
@@ -40,17 +38,15 @@ class SiteController extends Controller
                     $model->email= base64_decode(Yii::app()->request->cookies['identity']);
                     $model->password=base64_decode(Yii::app()->request->cookies['authentic']);
                     if($model->validate() && $model->login())
-                     {
+                      {
                            $this->redirect('/dashboard');                                             
                         }
                   
                   }               
                 $newsLetterModel = new NewsletterForm;
-                //collect user input
-                if(isset($_POST['LoginForm']))
+               if(isset($_POST['LoginForm']))
                 {  
-                    
-                        if(isset(Yii::app()->request->cookies['user_trails'])){
+                       if(isset(Yii::app()->request->cookies['user_trails'])){
                             $val = Yii::app()->request->cookies['user_trails']->value;
                             Yii::app()->request->cookies['user_trails'] =new CHttpCookie('user_trails', (1 + $val));
                         }else{
@@ -59,17 +55,13 @@ class SiteController extends Controller
                         
 			                  $model->attributes=$_POST['LoginForm'];
                               $model->remember=$_POST['LoginForm']['remember'];
-                            // validate user input
-                           if($model->validate() && $model->login()){
-                           //     $user = User::model()->findByPk(Yii::app()->user->id);
-				             {	
-				                 
-                                  if($model->remember)
+                               if($model->validate() && $model->login()){
+                                 if($model->remember)
                                   {
                                    $cookie = new CHttpCookie('identity',base64_encode($model->email));
                                    $cookie->expire = time()+3600*24*14;
                                    Yii::app()->request->cookies['identity'] = $cookie;
-                                  $cookie = new CHttpCookie('authentic',base64_encode($model->password));
+                                   $cookie = new CHttpCookie('authentic',base64_encode($model->password));
                                    $cookie->expire = time()+3600*24*14;
                                    Yii::app()->request->cookies['authentic'] = $cookie;
                                   }
@@ -82,7 +74,7 @@ class SiteController extends Controller
                                   }
                                    $this->redirect('/dashboard');
                                         
-				             }
+				            
                          }
                 }
 		$this->render('index',array('model'=>$model, 'newsLetterModel'=>$newsLetterModel,'userModel'=>$userModel));
@@ -323,13 +315,14 @@ class SiteController extends Controller
             $userModel->password=User::hashPassword($_POST['User']['password']);
                         $userModel->status='block';
                         $userModel->keystring=md5($userModel->email.time());
-                        
-            if($userModel->save())
+                  
+            if($userModel->save(false))
             {
                 Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
                 $obj = array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password']));
                 Notification::sendEmail('newSignup', $userModel, $obj);
                 echo 'success'; 
+                
             }
         }
         exit;

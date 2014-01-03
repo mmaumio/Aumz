@@ -22,7 +22,7 @@ class UserIdentity extends CUserIdentity
                     $this->errorCode=self::ERROR_PASSWORD_INVALID;
                 elseif($record->status=='block')
                       {
-                    $this->errorCode=self::ERROR_UNKNOWN_IDENTITY;
+                    $this->errorCode=self::ERROR_USERNAME_INVALID;
                     
                        }
                 else{
