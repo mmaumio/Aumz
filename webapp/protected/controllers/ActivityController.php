@@ -38,10 +38,11 @@ class ActivityController extends Controller
 					}
 				}else{
 					$users  = ProjectUser::model()->findAll($criteria);
-					foreach ($users as $my_user) {
-						$user = User::model()->findByPk($my_user->userId);
-						Notification::sendEmail('newActivity', $user, $obj);
+					$my_users  = array();
+					foreach ($users as $user) {
+						array_push($my_users, User::model()->findByPk($user->userId));
 					}
+					Notification::sendEmailBluk('newActivity', $my_users, $obj);
 					
 				}
 				$this->redirect(array('project/index', 'id' => $activity->projectId));
