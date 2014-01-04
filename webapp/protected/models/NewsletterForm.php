@@ -15,7 +15,7 @@ class NewsletterForm extends CFormModel
      * @var Mailchimp
      */
     private $mc;
-
+    public $spamblocker; 
     /**
      * Declares the validation rules.
      * The rules state that email is required,
@@ -25,7 +25,8 @@ class NewsletterForm extends CFormModel
     {
         return array(
             // username and password are required
-            array('email', 'required'),
+            array('email,spamblocker', 'required'),
+            
             array('email', 'email')
         );
     }

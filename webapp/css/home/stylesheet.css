@@ -642,3 +642,9 @@ vertical-align:top;
     font-size: 10px;
     
 }
+#blocker,#blocker2,#blocker3
+{
+    font-size: 19px;
+    letter-spacing: 6px;
+    padding: 10px 38px 10px 33px;
+}

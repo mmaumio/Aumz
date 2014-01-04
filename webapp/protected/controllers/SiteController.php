@@ -55,7 +55,8 @@ class SiteController extends Controller
                         
 			                  $model->attributes=$_POST['LoginForm'];
                               $model->remember=$_POST['LoginForm']['remember'];
-                               if($model->validate() && $model->login()){
+                               if($model->validate() && $model->login())
+                               {
                                  if($model->remember)
                                   {
                                    $cookie = new CHttpCookie('identity',base64_encode($model->email));
@@ -282,10 +283,30 @@ class SiteController extends Controller
         $userModel=new User;
         // collect user input data
         if (isset($_POST['NewsletterForm'])) {
-            $model->attributes = $_POST['NewsletterForm'];
-            if ($model->validate() && $model->process()) {
-                Yii::app()->user->setFlash('success', 'Good news is coming your way!');
-            }
+            
+           if(isset(Yii::app()->session['key1']) && isset(Yii::app()->session['key2']))
+           {
+             
+             
+                $model->attributes = $_POST['NewsletterForm'];
+                if ($model->validate())
+                {
+                    if($_POST['NewsletterForm']['spamblocker']!=Yii::app()->session['key1']+Yii::app()->session['key2'])
+                    {
+                       $model->addError('spamblocker','Invalid Captcha');
+                    }
+                    else
+                    {
+                    
+                    if($model->process())
+                    {
+                      Yii::app()->user->setFlash('success', 'Good news is coming your way!');
+                       $model->unsetAttributes();
+                    }
+                    }
+                }
+             
+           }
         }
         $loginModel = new LoginForm;
         $this->render('index', array('model' => $loginModel, 'newsLetterModel' => $model, 'userModel'=>$userModel));
@@ -294,12 +315,21 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $userModel=new User;
-        if(isset($_POST['User']))
+        if(isset($_POST['User']) && isset($_POST['spanblocker']))
         {
+           if(empty($_POST['spanblocker']))  { echo 'emptybot'; exit; }
+           if(isset(Yii::app()->session['key1']) && isset(Yii::app()->session['key2']))
+           {
+             if($_POST['spanblocker']!=Yii::app()->session['key1']+Yii::app()->session['key2'])
+             {
+                echo 'robot';exit;
+             }
+           }
+          
            $userModel->attributes=$_POST['User'];
            if(User::model()->exists('email=:email',array(":email"=>$userModel->email)))
            {
-            echo 'exits'; exit;
+              echo 'exits'; exit;
            }
            if(!filter_var($userModel->email, FILTER_VALIDATE_EMAIL))
            {
@@ -337,7 +367,7 @@ class SiteController extends Controller
                {
                    $userData->keystring=$_GET['key'];
                    $userData->status='notlogged';
-                   if($userData->update())
+                   if($userData->update(false))
                      {
                         $login->email=$userData->email;
                         $login->password=base64_decode($_GET['string']);
@@ -357,4 +387,17 @@ class SiteController extends Controller
               echo 'invalid link'; exit;
            }
     }
+    public function getRandommatch()
+    {
+        return rand(1,9);
+    }
+    public function actionGetcaptcha()
+    {
+        $first=$this->getRandommatch();
+        $second=$this->getRandommatch();
+        Yii::app()->session['key1']=$first;
+        Yii::app()->session['key2']=$second;
+        echo $first.'+'.$second.'=?';exit;
+    }
+    
 }
