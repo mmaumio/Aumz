@@ -30,7 +30,7 @@
 		                <div class="col-md-11">
 						<input type="hidden" name="activity[projectId]" value="<?php echo $project->id ?>">
 				<input type="hidden" name="activity[type]" value="comment">
-				<textarea id="newComment" name="activity[content]" class="diss-form" placeholder="Add comment here" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 40px;" required=""></textarea>
+				<textarea id="newComment" name="activity[content]" class="diss-form" placeholder="Add comment here" rows="7" cols="70" required=""></textarea>
 				<div class="clear"></div>
 				<button class="btn btn-primary" type="submit" style="float:right" id="submitCommentBtn">Submit Comment</button>
 		                   <!-- <textarea id="textarea" name="textarea">default text</textarea>-->
@@ -77,3 +77,23 @@
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
+
+		<script type="text/javascript">
+		$(document).ready(function(){
+                var mentions = ['yuku_t'];
+                $('#newComment').textcomplete([
+                    { // html
+                        match: /\B@(\w*)$/,
+                        search: function (term, callback) {
+                            callback($.map(mentions, function (mention) {
+                                return mention.indexOf(term) === 0 ? mention : null;
+                            }));
+                        },
+                        index: 1,
+                        replace: function (mention) {
+                            return '@' + mention + ' ';
+                        }
+                    }
+                ]).overlay([{match: /\B@\w+/g,css: {'background-color': '#d8dfea'}}]);
+            });
+		</script>
