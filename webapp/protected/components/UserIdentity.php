@@ -22,6 +22,7 @@ class UserIdentity extends CUserIdentity
                     $this->errorCode=self::ERROR_PASSWORD_INVALID;
                 elseif($record->status=='block')
                       {
+                        Yii::app()->user->setFlash('error','Your email not verified');
                     $this->errorCode=self::ERROR_USERNAME_INVALID;
                     
                        }

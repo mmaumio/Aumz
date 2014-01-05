@@ -13,6 +13,8 @@ class LoginForm extends CFormModel
     public $remember;
     public $spamblocker;
 	private $_identity;
+    public $verified;
+   
     /**
 	 * Declares the validation rules.
 	 * The rules state that username and password are required,
