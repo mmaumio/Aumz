@@ -40,8 +40,8 @@
         </script>	
 
 </head> 
-<body> 
-
+<body>
+<?$this->widget('ext.AnalyticsTrackingWidget');?>
 <?php echo $content; ?>
 <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>  
 </body>
