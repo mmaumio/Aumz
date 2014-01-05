@@ -36,8 +36,11 @@ return array(
 	'components'=>array(
                 'assetManager'=>array(
                     'class'=>'application.components.CGAssetManager',
-                    'basePath'=>Yii::getPathOfAlias('assets'),
-                    'baseUrl'=> '/assets'
+         			'basePath'=>'gs://temp__dev',
+                    'baseUrl'=> 'http://commondatastorage.googleapis.com/temp__dev'
+		// KG edited out on 1/4/13. Changes from f2fce44b001c4ec5dde1b76c84bd0345606eb751 commit  
+        //            'basePath'=>Yii::getPathOfAlias('assets'),
+        //           'baseUrl'=> '/assets'
                 ),
                 'request'=>array(
                     'baseUrl' => '/',
@@ -71,9 +74,9 @@ return array(
 //		),
 		'db'=>array(
 	//		KG comment: The following line connects the app w/ the cloudsql database, does not work w/ local copy
-			'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
+		//	'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
 		// Uncomment the following to use a local copy of the DB(located in the repo)
-		//	'connectionString' => 'mysql:host=localhost;dbname=omniscience',
+			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
             'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
@@ -114,7 +117,13 @@ return array(
  			'logging' => true,
  			'dryRun' => false
  		),
-            
+       //added by KG 1/4/13
+            'clientScript'=>array(
+       'class' => 'CClientScript',
+       'scriptMap' => array(
+         'jquery.min.js' => false
+       )
+    )
 		
 	),
 
