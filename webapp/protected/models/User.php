@@ -41,7 +41,6 @@ class User extends CActiveRecord
     public $selectedTechs;
     public $otherLabName;
     public $otherTechName;
-
     /**
      * @return string the associated database table name
      */
@@ -121,6 +120,7 @@ class User extends CActiveRecord
             'created' => 'Created',
             'modified' => 'Modified',
             'keystring' => 'Keystring',
+            
         );
     }
 
