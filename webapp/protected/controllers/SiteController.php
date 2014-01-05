@@ -40,12 +40,17 @@ class SiteController extends Controller
                     if($model->validate() && $model->login())
                       {
                            $this->redirect('/dashboard');                                             
-                        }
+                      }
                   
                   }               
                 $newsLetterModel = new NewsletterForm;
                if(isset($_POST['LoginForm']))
                 {  
+                       if(!empty($_POST['confirm-password']))
+                       {
+                           Yii::app()->user->setFlash('error','Stirplate not permitting you to perform this action');
+                           $this->redirect(Yii::app()->createUrl('/'));
+                       }
                        if(isset(Yii::app()->request->cookies['user_trails'])){
                             $val = Yii::app()->request->cookies['user_trails']->value;
                             Yii::app()->request->cookies['user_trails'] =new CHttpCookie('user_trails', (1 + $val));
@@ -284,29 +289,22 @@ class SiteController extends Controller
         // collect user input data
         if (isset($_POST['NewsletterForm'])) {
             
-           if(isset(Yii::app()->session['key1']) && isset(Yii::app()->session['key2']))
-           {
-             
+            if(!empty($_POST['confirmemail']))
+                       {
+                           Yii::app()->user->setFlash('error','Stirplate not permitting you to perform this action');
+                           $this->redirect(Yii::app()->createUrl('/'));
+             }
              
                 $model->attributes = $_POST['NewsletterForm'];
-                if ($model->validate())
+                if ($model->validate() && $model->process())
                 {
-                    if($_POST['NewsletterForm']['spamblocker']!=Yii::app()->session['key1']+Yii::app()->session['key2'])
-                    {
-                       $model->addError('spamblocker','Invalid Captcha');
-                    }
-                    else
-                    {
                     
-                    if($model->process())
-                    {
                       Yii::app()->user->setFlash('success', 'Good news is coming your way!');
                        $model->unsetAttributes();
-                    }
-                    }
+                    
                 }
              
-           }
+           
         }
         $loginModel = new LoginForm;
         $this->render('index', array('model' => $loginModel, 'newsLetterModel' => $model, 'userModel'=>$userModel));
@@ -315,15 +313,11 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $userModel=new User;
-        if(isset($_POST['User']) && isset($_POST['spanblocker']))
+        if(isset($_POST['User']))
         {
-           if(empty($_POST['spanblocker']))  { echo 'emptybot'; exit; }
-           if(isset(Yii::app()->session['key1']) && isset(Yii::app()->session['key2']))
+           if(!empty($_POST['confirmemail']))
            {
-             if($_POST['spanblocker']!=Yii::app()->session['key1']+Yii::app()->session['key2'])
-             {
-                echo 'robot';exit;
-             }
+             echo 'Access Denied'; exit;
            }
           
            $userModel->attributes=$_POST['User'];

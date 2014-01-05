@@ -122,17 +122,8 @@
                     </div>
                        </td>
                    </tr>
-                    <tr><td class="form-label" style="vertical-align:middle;">Are you human ?</td>
-                       <td>
-                            <div class="control-group">
-                        <div class="controls">
-                        <span id="blocker" style="float:left;">4+4=</span><input type="text" name="spanblocker" style="width: 200px;"/>
-                          <p class="errorMessage" id="spanchecker" style="clear: both;"></p>
-                     
-                        </div>
-                    </div>
-                       </td>
-                   </tr>
+                   <?php echo CHtml::hiddenField('confirmemail'); ?>)
+         
                    </table>
                <?php $this->endWidget();?> 
                <div class="clearBoth"></div>
@@ -149,30 +140,11 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 	
- <script>
- function loadcaptcha(element)
- {
-    $.ajax({
-                    type:'GET',
-                    url:'<?php echo Yii::app()->createUrl('site/getcaptcha');?>',
-                    beforeSend:function(){
-                        $(element).html('<img class="load-image" style="" src="<?php echo Yii::app()->createUrl('/');?>/img/home/loading.gif"/>');
-                    },
-                    success:function(response){
-                      $(element).html(response);
-                     },
-                    complete:function(){}
-                });
- }
  
- 
- </script> 
 <script>
         $(document).ready(function(){
             
-            $('.btn-signup').click(function(){
-                loadcaptcha($('#blocker'));
-            });
+            
             
             $('#sign-up-btn').click(function(){
                /* if($('#User_firstName').val()=="")
@@ -252,16 +224,6 @@
                         else if(response=='invalid')
                         {
                             $('#emailerror').text("Email should be end with .edu !");
-                        }
-                        else if(response=='emptybot')
-                        {
-                            $('#spanchecker').text('Please fill captcha');
-                            loadcaptcha($('#blocker'));
-                        }
-                        else if(response=='robot')
-                        {
-                            $('#spanchecker').text('Please fill correct captcha');
-                            loadcaptcha($('#blocker'));
                         }
                         else if(response=='success')
                         {
@@ -388,6 +350,13 @@
                <strong>Thank you ! </strong>         <?php echo Yii::app()->user->getFlash('success'); ?>
 </div>
 <?php } ?>
+<?php if(Yii::app()->user->hasFlash('error')){?>
+<div class="alert alert-warning" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
+                        <a href="#" class="close" data-dismiss="alert">x
+                        </a>
+               <strong>Error ! </strong>         <?php echo Yii::app()->user->getFlash('error'); ?>
+</div>
+<?php } ?>
 <section class="homePage1">
   <div class="homePage1Main">
     <div class="wrapper">
@@ -439,6 +408,7 @@
                          
                             </div>
                     </div>
+                    <?php echo CHtml::hiddenField('confirm-password'); ?>
             <?php $this->endWidget(); ?>
           </div>
         </div>
@@ -453,7 +423,8 @@
               <?php echo $form->error($newsLetterModel,'email'); ?>
               <?php echo Yii::app()->user->getFlash('success'); ?>
               <?php echo $form->textField($newsLetterModel, 'email', array('placeholder' => 'Email Address')); ?>
-              <span id="blocker2" style="float:left;">4+4=?</span><?php echo $form->textField($newsLetterModel, 'spamblocker', array('placeholder' => '','style'=>'width:180px')); ?>
+               <?php echo CHtml::hiddenField('confirmemail'); ?>
+         
               <?php echo CHtml::submitButton('Subscribe'); ?>
           </div>
             <?php $this->endWidget(); ?>
@@ -509,7 +480,8 @@
 <section class="page3">
   <div class="wrapper">
    <div class="page3Main">
-                  <iframe src="//player.vimeo.com/video/75926086?title=0&amp;byline=0&amp;portrait=0" width="1020" height="640" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+   
+   <iframe src="//player.vimeo.com/video/75926086?title=0&amp;byline=0&amp;portrait=0" width="1020" height="640" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
   
    </div>
    </div>
@@ -582,7 +554,3 @@
     </div>
   </div>
 </section>
-<script>
-loadcaptcha($('#blocker2'));
-
-</script>
