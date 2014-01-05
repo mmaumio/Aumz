@@ -24,6 +24,8 @@
         <?php } ?>
 
         <script type="text/javascript" src="/css/select2.min.js"></script>
+        <script type="text/javascript" src="/css/jquery.textcomplete.min.js"></script>
+        <script type="text/javascript" src="/css/jquery.overlay.min.js"></script>
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 
 	<script type="text/javascript">  
@@ -34,6 +36,7 @@
                     a[0].click();
                     a.remove();
             }
+            
         </script>	
 
 </head> 
