@@ -121,7 +121,7 @@ class UserIdentity extends CUserIdentity
                             $activity->relatedObjectType = 'task';
                             $activity->type = 'task';
                             $activity->projectId = $projectId;
-                            $activity->content = $task->owner->firstName . ' added a new task: "' . $task->subject . '"';
+                            $activity->content = $task->subject;
                             $activity->save(false);
                                 
                         }

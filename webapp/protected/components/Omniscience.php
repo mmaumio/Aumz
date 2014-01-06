@@ -23,6 +23,7 @@ class Omniscience extends CController
                $user->email = 'keith@stirplate.io';
                $user->firstName = 'Keith';
                $user->lastName = 'Gonzales';
+               $user->contactEmail = 'keith@stirplate.io';
                if($user->save()){
                    return $user->id;
                }
