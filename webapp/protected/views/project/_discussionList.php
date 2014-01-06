@@ -45,7 +45,7 @@
 		                <div class="col-md-11">
 						<input type="hidden" name="activity[projectId]" value="<?php echo $project->id ?>">
 				<input type="hidden" name="activity[type]" value="comment">
-				<textarea id="newComment" name="activity[content]" class="diss-form" placeholder="Add comment here" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 40px;" required=""></textarea>
+				<textarea id="newComment" name="activity[content]" class="diss-form" placeholder="Add comment here" rows="7" cols="70" required=""></textarea>
 				<div class="clear"></div>
 				<button class="btn btn-primary" type="submit" style="float:right" id="submitCommentBtn">Submit Comment</button>
 		                   <!-- <textarea id="textarea" name="textarea">default text</textarea>-->
@@ -92,3 +92,5 @@
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
+
+		

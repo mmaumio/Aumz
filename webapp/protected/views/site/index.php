@@ -1,5 +1,8 @@
 <script type='text/javascript'>
     $(document).ready(function() {
+        $('.close').click(function(){
+            $(this).parent('.alert').fadeOut(1000);
+        });
         $('#LoginForm_password').val("");
         $('#login-form-ajaxcall').submit(function(e){
             if(parseInt("<?php if(isset(Yii::app()->request->cookies['user_trails'])){echo Yii::app()->request->cookies['user_trails']->value;}else{echo 0;} ?>") > parseInt("2")){
@@ -78,7 +81,7 @@
                         <div class="controls">
                             <?php echo $form->textField($userModel,'email',array('placeholder'=>'eg : example@site.edu')); ?>
                           <?php //echo $form->error($userModel,'email'); ?>
-                          <p class="labelclass2">Only email address with .edu valid</p>
+                         <!-- <p class="labelclass2">Only email address with .edu valid</p>-->
                            <p class="errorMessage" id="emailerror"></p>
                         </div>
                     </div>
@@ -119,6 +122,8 @@
                     </div>
                        </td>
                    </tr>
+                   <?php echo CHtml::hiddenField('confirmemail'); ?>)
+         
                    </table>
                <?php $this->endWidget();?> 
                <div class="clearBoth"></div>
@@ -127,6 +132,7 @@
         <p class="alert alert-success msg">An email verification link sent on your email , Please check your email</p>  
     
       <div class="modal-footer">
+      <img class="load-image" style="display: none;" src="<?php echo Yii::app()->createUrl('/');?>/img/home/loading.gif"/>
         <button class="btn btn-primary" id="sign-up-btn"> Submit </button>
         <button type="button" class="btn btn-danger" data-dismiss="modal" id="forgot-close">Cancel</button>
       </div>
@@ -134,7 +140,7 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 	
-  
+ 
 <script>
         $(document).ready(function(){
             
@@ -199,10 +205,11 @@
                 }
                 $.ajax({
                     type:'post',
-                    url:'/site/signup',
+                    url:'<?php echo Yii::app()->createUrl('site/signup');?>',
                     data:$('#signup-form-ajaxcall').serialize(),
                     beforeSend:function(){
                         $('#sign-up-btn').attr('disabled','disabled');
+                        $('.load-image').show();
                     },
                     success:function(response){
                         
@@ -230,9 +237,10 @@
                             
                         }
                              $('#sign-up-btn').removeAttr('disabled');
+                              $('.load-image').hide();
                   
                     },
-                    complte:function(){},
+                    complete:function(){},
                     
                 });
                 
@@ -335,6 +343,20 @@
         });
 </script>
 <!--Page 1 Start-->
+<?php if(Yii::app()->user->hasFlash('success')){?>
+<div class="alert alert-warning" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
+                        <a href="#" class="close" data-dismiss="alert">x
+                        </a>
+               <strong>Thank you ! </strong>         <?php echo Yii::app()->user->getFlash('success'); ?>
+</div>
+<?php } ?>
+<?php if(Yii::app()->user->hasFlash('error')){?>
+<div class="alert alert-warning" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
+                        <a href="#" class="close" data-dismiss="alert">x
+                        </a>
+               <strong>Error ! </strong>         <?php echo Yii::app()->user->getFlash('error'); ?>
+</div>
+<?php } ?>
 <section class="homePage1">
   <div class="homePage1Main">
     <div class="wrapper">
@@ -350,7 +372,7 @@
       
       <div class="homeRt">
         <div class="signIn">
-          <h3>SignIn to stirplate</h3>
+          <h3>Sign In to stirplate</h3>
           <div class="signInMain">
             <?php $form=$this->beginWidget('CActiveForm', array(
                     'id'=>'login-form-ajaxcall',
@@ -368,8 +390,15 @@
                             <?php echo $form->passwordField($model,'password',array('placeholder'=>'Password')); ?>
                             </div>
                     </div>
+                    
+                    <div class="clearBoth"></div>
+                    <label class="floatLft">
+                             <?php 
+                             echo $form->checkBox($model,'remember');
+                             ?> Remember me
+                    </label>
                     <label class="floatRt">
-                             <?php echo CHtml::link('Forgot your passssword?', 'site/ForgotPassword') ?>
+                             <?php echo CHtml::link('Forgot your passssword?', '/site/ForgotPassword') ?>
                     </label>
                     <div class="control-group buttons">
                          <div class="controls">
@@ -380,6 +409,7 @@
                          
                             </div>
                     </div>
+                    <?php echo CHtml::hiddenField('confirm-password'); ?>
             <?php $this->endWidget(); ?>
           </div>
         </div>
@@ -389,11 +419,13 @@
                     'action'=> $this->createUrl('site/newsletter'),
                 )); ?>
           <h3 align = "center">Stirplate Newsletter</h3>
-          <h4 align ="center"> We are currently invite only. Sign up for updates</h4>
+          <h4 align ="center"> Sign up for updates!</h4>
           <div class="signUpMain">
               <?php echo $form->error($newsLetterModel,'email'); ?>
               <?php echo Yii::app()->user->getFlash('success'); ?>
               <?php echo $form->textField($newsLetterModel, 'email', array('placeholder' => 'Email Address')); ?>
+               <?php echo CHtml::hiddenField('confirmemail'); ?>
+         
               <?php echo CHtml::submitButton('Subscribe'); ?>
           </div>
             <?php $this->endWidget(); ?>
@@ -523,4 +555,3 @@
     </div>
   </div>
 </section>
-

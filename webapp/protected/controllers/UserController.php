@@ -3,191 +3,246 @@
 class UserController extends Controller
 {
 
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
+    /**
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
+    public function actionView($id)
+    {
+        $this->render('view', array(
+            'model' => $this->loadModel($id),
+        ));
+    }
 
-	public function actionProfile()
-	{
-		if (!Yii::app()->user->isGuest)
-		{
-			$user = User::model()->findByPk(Yii::app()->user->id);
+    public function actionProfile()
+    {
+        if (!Yii::app()->user->isGuest) {
+            $user = User::model()->findByPk(Yii::app()->user->id);
 
-			if ($user)
-			{
-				$this->render('profile', array('user' => $user, 'readonly' => false));
-				return;
-			}
-		}
+            if ($user) {
+                $this->render('profile', array('user' => $user, 'readonly' => false));
+                return;
+            }
+        }
 
-		$this->redirect('/');
-	}
+        $this->redirect('/');
+    }
 
-	public function actionPublicProfile()
-	{
+    public function actionPublicProfile()
+    {
 
-		if (!Yii::app()->user->isGuest && !empty($_GET['id']))
-		{
+        if (!Yii::app()->user->isGuest && !empty($_GET['id'])) {
 
-			$user = User::model()->findByPk($_GET['id']);
+            $user = User::model()->findByPk($_GET['id']);
 
-			if ($user)
-			{
-				$this->render('profile', array('user' => $user, 'readonly' => true));
-				return;
-			}
-		}
+            if ($user) {
+                $this->render('profile', array('user' => $user, 'readonly' => true));
+                return;
+            }
+        }
 
-		//todo: render user not found
-		$this->render('notfound');
-	}
+        //todo: render user not found
+        $this->render('notfound');
+    }
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
-	{
-		$model=new User;
+    /**
+     * Creates a new model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     */
+    public function actionCreate()
+    {
+        /* @var $model User */
+        $model = new User;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+        // Loads user model if signed in.
+        if (isset(Yii::app()->session['uid'])) {
+            $model = User::model()->findByPk(Yii::app()->session['uid']);
+        }
 
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
+        // Uncomment the following line if AJAX validation is needed
+        $this->performAjaxValidation($model);
 
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
+        if (isset($_POST['User'])) {
+            // Set attributes from 'POST'
+            $model->attributes = $_POST['User'];
+            $model->selectedLabs = $_POST['User']['selectedLabs'];
+            $model->selectedTechs = $_POST['User']['selectedTechs'];
+            $model->otherLabName = $_POST['User']['otherLabName'];
+            $model->otherTechName = $_POST['User']['otherTechName'];
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
+            // Saves model and then labs and techniques are saved.
+            if ($model->save()) {
+                // Delete old labs and save new ones
+                if (!empty($model->selectedLabs)) {
+                    $labs = LabUser::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
+                    foreach ($labs as $lab) {
+                        $lab->delete();
+                    }
+                    foreach ($model->selectedLabs as $lab) {
+                        $labUser = new LabUser();
+                        $labUser->userId = Yii::app()->session['uid'];
+                        $labUser->labId = $lab;
+                        $labUser->save();
+                    }
+                }
 
-		if (!Yii::app()->user->isGuest && $id === Yii::app()->user->id)
-		{
-			$model=$this->loadModel($id);
+                // Delete old other lab name and save the new one
+                if (!empty($model->otherLabName)) {
+                    /* @var $otherLabs LabUserOther */
+                    $otherLabs = LabUserOther::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
+                    if (!empty($otherLabs)) foreach ($otherLabs as $otherLab) $otherLab->delete();
+                    $otherLab = new LabUserOther();
+                    $otherLab->userId = Yii::app()->session['uid'];
+                    $otherLab->name = $model->otherLabName;
+                    $otherLab->save();
+                }
 
-			// Uncomment the following line if AJAX validation is needed
-			// $this->performAjaxValidation($model);
+                // Delete older techniques and save new ones
+                if (!empty($model->selectedTechs)) {
+                    $techs = TechUser::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
+                    foreach ($techs as $tech) {
+                        $tech->delete();
+                    }
+                    foreach ($model->selectedTechs as $tech) {
+                        $techUser = new TechUser();
+                        $techUser->userId = Yii::app()->session['uid'];
+                        $techUser->techId = $tech;
+                        $techUser->save();
+                    }
+                }
 
-			if(isset($_POST['User']))
-			{
-				$model->attributes=$_POST['User'];
-				Yii::log(json_encode($_POST['User']), 'error');
+                // Delete old other technique and save new one
+                if (!empty($model->otherTechName)) {
+                    /* @var $otherTechs TechUserOther */
+                    $otherTechs = TechUserOther::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
+                    if (!empty($otherTechs)) foreach ($otherTechs as $otherTech) $otherTech->delete();
+                    $otherTech = new TechUserOther();
+                    $otherTech->userId = Yii::app()->session['uid'];
+                    $otherTech->name = $model->otherTechName;
+                    $otherTech->save();
+                }
 
-				if(!empty($_POST['currentPassword']) || empty($model->password))
-				{ 
-					if(User::hashPassword($_POST['currentPassword']) != $model->password && !empty($model->password))
-					{
-						$msg = 'Current Password is incorrect';
-						$this->render('profile', array('user' => $model, 'errorMsg' => $msg, 'readonly'=>false));
-						return;
-					}
+//                $this->redirect(array('create', 'id' => $model->id));
+                Yii::app()->user->setFlash('update', Yii::app()->params['SUCCESS']);
+            } else {
+                Yii::app()->user->setFlash('update', Yii::app()->params['FAILURE']);
+            }
+        }
 
-					if($_POST['newPassword'] != $_POST['repeatPassword'])
-					{
-						$msg = 'New and Repeat passwords don\'t match';
-						$this->render('profile', array('user' => $model, 'errorMsg' => $msg, 'readonly'=>false));
-						return;
-					}
+        $this->render('create', array(
+            'model' => $model,
+        ));
+    }
 
-					$model->password = User::hashPassword($_POST['newPassword']);
-				}
-				if($model->save())
-				{
-					$msg = 'Your updates have been saved successfully';
+    /**
+     * Updates a particular model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionUpdate($id)
+    {
 
-					$this->render('profile', array('user' => $model, 'alertMsg' => $msg, 'readonly'=>false));
-					return;
-				}
-			}
-			$msg = 'Error saving profile';
-			$this->render('profile', array('user' => $model, 'errorMsg' => $msg, 'readonly'=>false));
-		}
-	}
+        if (!Yii::app()->user->isGuest && $id === Yii::app()->user->id) {
+            $model = $this->loadModel($id);
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
+            // Uncomment the following line if AJAX validation is needed
+            // $this->performAjaxValidation($model);
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
+            if (isset($_POST['User'])) {
+                $model->attributes = $_POST['User'];
+                Yii::log(json_encode($_POST['User']), 'error');
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('User');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+                if (!empty($_POST['currentPassword']) || empty($model->password)) {
+                    if (User::hashPassword($_POST['currentPassword']) != $model->password && !empty($model->password)) {
+                        $msg = 'Current Password is incorrect';
+                        $this->render('profile', array('user' => $model, 'errorMsg' => $msg, 'readonly' => false));
+                        return;
+                    }
 
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new User('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['User']))
-			$model->attributes=$_GET['User'];
+                    if ($_POST['newPassword'] != $_POST['repeatPassword']) {
+                        $msg = 'New and Repeat passwords don\'t match';
+                        $this->render('profile', array('user' => $model, 'errorMsg' => $msg, 'readonly' => false));
+                        return;
+                    }
 
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
+                    $model->password = User::hashPassword($_POST['newPassword']);
+                }
+                if ($model->save()) {
+                    $msg = 'Your updates have been saved successfully';
 
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return User the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel($id)
-	{
-		$model=User::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
-	}
+                    $this->render('profile', array('user' => $model, 'alertMsg' => $msg, 'readonly' => false));
+                    return;
+                }
+            }
+            $msg = 'Error saving profile';
+            $this->render('profile', array('user' => $model, 'errorMsg' => $msg, 'readonly' => false));
+        }
+    }
 
-	/**
-	 * Performs the AJAX validation.
-	 * @param User $model the model to be validated
-	 */
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='user-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
+    /**
+     * Deletes a particular model.
+     * If deletion is successful, the browser will be redirected to the 'admin' page.
+     * @param integer $id the ID of the model to be deleted
+     */
+    public function actionDelete($id)
+    {
+        $this->loadModel($id)->delete();
+
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+    }
+
+    /**
+     * Lists all models.
+     */
+    public function actionIndex()
+    {
+        $dataProvider = new CActiveDataProvider('User');
+        $this->render('index', array(
+            'dataProvider' => $dataProvider,
+        ));
+    }
+
+    /**
+     * Manages all models.
+     */
+    public function actionAdmin()
+    {
+        $model = new User('search');
+        $model->unsetAttributes(); // clear any default values
+        if (isset($_GET['User']))
+            $model->attributes = $_GET['User'];
+
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
+
+    /**
+     * Returns the data model based on the primary key given in the GET variable.
+     * If the data model is not found, an HTTP exception will be raised.
+     * @param integer $id the ID of the model to be loaded
+     * @return User the loaded model
+     * @throws CHttpException
+     */
+    public function loadModel($id)
+    {
+        $model = User::model()->findByPk($id);
+        if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        return $model;
+    }
+
+    /**
+     * Performs the AJAX validation.
+     * @param User $model the model to be validated
+     */
+    protected function performAjaxValidation($model)
+    {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'user-form') {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
 }

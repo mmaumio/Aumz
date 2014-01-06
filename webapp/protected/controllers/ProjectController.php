@@ -15,7 +15,7 @@ class ProjectController extends Controller
 	{
 		return array(
 			array('allow', 
-				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask'),
+				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask', 'Updateactivity'),
 				'users'=>array('@'),
 			),
 			array('deny','users'=>array('*'),),
@@ -100,10 +100,18 @@ class ProjectController extends Controller
 	{
             $uid=Yii::app()->session['uid'];
 			$projects = array();
-            $projects=Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
-            $this->render('dashboard', array('projects' => $projects,));
+            $projects = Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
+            $activities  = Activity::model()->findAllBySql("SELECT * FROM `activity` WHERE projectId in (SELECT projectId FROM `project_user` WHERE userId = ".Yii::app()->session['uid']." ) ORDER BY created DESC LIMIT 10");
+            $this->render('dashboard', array('projects' => $projects, 'activities' => $activities));
 		
 	}
+
+    public function actionUpdateactivity()
+    {
+        $lastId = $_POST['last_id'];
+        $activities  = Activity::model()->findAllBySql('SELECT * FROM `activity` WHERE id > '.$lastId.' AND  projectId in (SELECT projectId FROM `project_user` WHERE userId = '.Yii::app()->session["uid"].' ) ORDER BY created DESC LIMIT 10');
+        $this->renderPartial('/activity/_activity_streams', array('activities' => $activities));
+    }
 
 	public function actionCreate()
 	{
@@ -275,7 +283,6 @@ class ProjectController extends Controller
 			//TODO: check to make sure user is a member of study before letting them create a task
                         $task->attributes = $_POST['Task'];
 			$task->ownerId = Yii::app()->user->id;
-			$task->status = empty($task->status) ? 'Pending' : $task->status;
                         
 			$respArray = array();
                         if ( $task->validate() && $task->save())
@@ -285,18 +292,10 @@ class ProjectController extends Controller
 				$activity->relatedObjectId = $task->id;
 				$activity->relatedObjectType = 'task';
 				$activity->type = 'task';
+                                $activity->projectId = $_POST['Task']['projectId'];
 				$activity->content = $task->owner->firstName . ' added a new task: "' . $task->subject . '"';
 
 				if($activity->save()){
-
-                                    $respArray['status'] = 'OK';
-                                    $respArray['id'] = $task->id;
-                                    $respArray['task'] = array();
-                                    $respArray['task']['subject'] = $task->subject;
-                                    $respArray['task']['description'] = $task->description;
-                                    $respArray['task']['projectId'] = $_POST['Task']['projectId'];
-                                    $respArray['task']['assigneeImgUrl'] = $task->owner->profileImageUrl;
-                                    //$respArray['task']['assigneeImgUrl'] = $task->assignedToUser->getUserImage();
                                     ob_end_clean();
                                     echo CJSON::encode(array(
                                        'status'=>'success',

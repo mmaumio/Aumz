@@ -110,7 +110,13 @@ class ProjectUser extends CActiveRecord
         }   
     
         $this->modified = new CDbExpression('UTC_TIMESTAMP()');
-    
+    	$activity = new Activity();
+        $activity->projectId = $this->projectId;
+        $activity->content = 'Member added to the project.';
+        $activity->type      = "user_added";
+        $activity->userId    = $this->userId;
+        $activity->relatedObjectId    = Yii::app()->session['uid'];
+        $activity->save();
         return parent::beforeSave();
     }
 }

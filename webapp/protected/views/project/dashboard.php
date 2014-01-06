@@ -73,68 +73,44 @@
 
                     <?php } ?>
                 </div>	
+        </div>
                 <div class="dashBoxMainRt">
                 	<div class="dashBoxMainRtList">
-                        <!--
-                    	<ul>
-                        	<li>
-                            	<img src="images/sampleImg1.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>Albert E</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">5 minutes ago</div>
-                                </div>	
-                            </li>
-                            <li>
-                            	<img src="images/sampleImg2.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>Simon H</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">12 minutes ago</div>
-                                </div>	
-                            </li>
-                            <li>
-                            	<img src="images/sampleImg3.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>David H</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">27 minutes ago</div>
-                                </div>	
-                            </li>
-                            <li>
-                            	<img src="images/sampleImg4.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>Mona L</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">46 minutes ago</div>
-                                </div>	
-                            </li>
-                            <li>
-                            	<img src="images/sampleImg5.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>Oprah W</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">1 minutes ago</div>
-                                </div>	
-                            </li>
-                            <li>
-                            	<img src="images/sampleImg6.png" alt="Sample Image" />
-                                <div class="listRt">
-                                	<h6>Peter M</h6>
-                                    <p>Vestibulum laoreet tellus velit, convallis egestas arcu tincidunt et.</p>
-                                    <div class="listRtTime">1 minutes ago</div>
-                                </div>	
-                            </li>
+                        <ul id="activity_stream">
+                    	   <?php $this->renderPartial('//activity/_activity_streams', array('activities' => $activities)); ?>
                         </ul>
-                        -->
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </section>
 
-
+<script type="text/javascript">
+    function ajax_updater () {
+        var biggest_id = 0 ;
+        $.each($(".activity"), function(b, a){
+            var num = parseInt($(a).attr("activity_id"));
+            if(num > biggest_id)
+                biggest_id = num;
+        });
+        $.ajax({
+            url    : "project/updateactivity",
+            data   : "last_id="+biggest_id,
+            type   : "POST",
+            success: function(result){
+                if(result != ""){
+                    $("#activity_stream").prepend(result);
+                    $(".activity:first").hide().fadeIn(2000);
+                }
+                setTimeout(function(){ajax_updater();}, 2000);
+            }
+        });
+    }
+    $(document).ready(function() {
+        ajax_updater ();
+        
+    });
+</script>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -160,8 +136,4 @@
       </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->	
-
-   <!-------------------------Success / Failure Notification ----------------------------------------> 
-
-   <!------------------------------------------------------------------------------------------------->
+</div><!-- /.modal -->  

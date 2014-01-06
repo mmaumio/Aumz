@@ -710,3 +710,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 	margin: 10px 0 0 0;
 	cursor: pointer;
 }
+
+
+#activity_stream{
+	height: 600px;
+	overflow-y: scroll;
+
+}

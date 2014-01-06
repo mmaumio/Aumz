@@ -250,6 +250,20 @@
       
             
        
-            
+    var mentions = [<?php foreach ($project->users as $user) { echo '"' . $user->firstName . '" ,';}?>];
+                $('#newComment').textcomplete([
+                    { // html
+                        match: /\B@(\w*)$/,
+                        search: function (term, callback) {
+                            callback($.map(mentions, function (mention) {
+                                return mention.toLowerCase().indexOf(term.toLowerCase()) === 0 ? mention : null;
+                            }));
+                        },
+                        index: 1,
+                        replace: function (mention) {
+                            return '@' + mention + ' ';
+                        }
+                    }
+                ]).overlay([{match: /\B@\w+/g,css: {'background-color': '#d8dfea'}}]);        
     });
 </script>

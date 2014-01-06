@@ -12,3 +12,102 @@ ALTER TABLE  `task` ADD CONSTRAINT  `task_ibfk_1` FOREIGN KEY (  `projectId` ) R
 ) ON DELETE CASCADE ON UPDATE RESTRICT ;
 
 Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`omniscience`.`#sql-f35_1f`, CONSTRAINT `task_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`) ON DELETE CASCADE)
+
+
+
+
+12/30/2013
+
+Queries to purge data from projects and tasks table and create new foreign key in task table. (run step wise)
+
+DELETE FROM  `project`
+"OK"
+
+DELETE FROM  `task`
+OK
+
+ALTER TABLE  `task` ADD CONSTRAINT  `task_ibfk_1` FOREIGN KEY (  `projectId` ) REFERENCES  `omniscience`.`project` (
+`id`
+) ON DELETE CASCADE ON UPDATE RESTRICT ;
+OK
+
+--
+01/12/2013 -- Kasun
+#CREATE TABLE `lab` (
+#  `id` int(11) NOT NULL AUTO_INCREMENT,
+#  `name` varchar(255) DEFAULT NULL,
+#  `created` datetime DEFAULT NULL,
+#  `modified` datetime DEFAULT NULL,
+#  PRIMARY KEY (`id`)
+#) ENGINE=InnoDB;
+KG comment- Error Code: 1050. Table 'lab' already exists
+Kasun comment - do not use this. (sorry, already available table)
+
+
+
+#CREATE TABLE `lab_user` (
+#  `labId` int(11) NOT NULL,
+#  `userId` int(11) NOT NULL,
+# `created` datetime NOT NULL,
+# `modified` datetime NOT NULL,
+#  PRIMARY KEY (`labId`,`userId`),
+# KEY `labUser_user_fk` (`userId`),
+#  CONSTRAINT `labUser_lab_fk` FOREIGN KEY (`labId`) REFERENCES `lab` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+#  CONSTRAINT `labUser_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+#) ENGINE=InnoDB;
+KG comment: Error Code: 1050. Table 'lab_user' already exists
+Kasun comment - do not use this. (sorry, already available table)
+
+CREATE TABLE `lab_user_other` (
+  `userId` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  KEY `lab_user_other_user_idx` (`userId`),
+  CONSTRAINT `lab_user_other_user` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+KG- OK
+
+
+
+CREATE TABLE `tech` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+KG-OK
+
+
+
+CREATE TABLE `tech_user` (
+  `techId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`techId`,`userId`),
+  KEY `fk_tech_user_user_id_idx` (`userId`),
+  CONSTRAINT `fk_tech_user_tech_id` FOREIGN KEY (`techId`) REFERENCES `tech` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_tech_user_user_id` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+KG: OK
+
+
+
+CREATE TABLE `tech_user_other` (
+  `userId` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  CONSTRAINT `tech_user_other_user` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+KG: OK
+
+ALTER TABLE `user` ADD `contactEmail` varchar(128);
+kg: ok
+-- Kasun
+

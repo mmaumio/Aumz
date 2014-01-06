@@ -17,7 +17,34 @@ class ActivityController extends Controller
 			// print_r($activity);
 			if ($activity->save())
 			{
-				// echo "4";
+				$obj = array();
+				$obj['study'] = Project::model()->findByPk($_POST['activity']['projectId']);
+				$obj['activity'] = $activity;
+				$obj['author'] = User::model()->findByPk($activity->userId);
+				$criteria = new CDbCriteria();
+				$criteria->condition = "projectId =:projectId";
+				$criteria->params = array(':projectId' => $_POST['activity']['projectId']);
+				if (strpos($_POST['activity']['content'],'@') !== false) {
+					$pattern = '/@([a-zA-Z]+)/';
+					preg_match_all ($pattern, $_POST['activity']['content'], $matches);
+					foreach ($matches[1] as $firstName) {
+						$user = User::model()->findByAttributes(array('firstName' => $firstName));
+						if ($user) {
+							Notification::sendEmail('newActivity', $user, $obj);
+							$activity->content =  str_replace("@$firstName", "<a href='#'>@$firstName</a>", $_POST['activity']['content']);
+							$activity->save();
+							// echo str_replace($firstName, '<a href="#">'.$firstName.'</a>', $_POST['activity']['content']);
+						}
+					}
+				}else{
+					$users  = ProjectUser::model()->findAll($criteria);
+					$my_users  = array();
+					foreach ($users as $user) {
+						array_push($my_users, User::model()->findByPk($user->userId));
+					}
+					Notification::sendEmailBluk('newActivity', $my_users, $obj);
+					
+				}
 				$this->redirect(array('project/index', 'id' => $activity->projectId));
 			}
 			else

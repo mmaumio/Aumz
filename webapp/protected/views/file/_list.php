@@ -21,13 +21,17 @@
          foreach($file as $d):
 
            $user = ucfirst($d->user->firstName).' '.ucfirst($d->user->lastName);   
-           $lab_title = 'Job Title '.ucfirst($d->user->labTitle);
+           $lab_title = ucfirst($d->user->labTitle);
            $time = GeneralFunctions::getPrettyTime($d->created);          
            
            $file_name = $d->name;
-           $fp_url= $d['fpUrl'];      
+           $file_id = $d->id;
+//           $fp_url= $d['fpUrl'];      
+//           
+//           $fp_url_elements = explode('/', $fp_url);
+//           $fp_url_elements = array_reverse($fp_url_elements);
            
-           $thumbnail = "images/sampleImg1.png";
+           //$thumbnail = "images/sampleImg1.png";
            $type = explode('/', $d->mimetype);           
            switch ($type[0]){
                case 'text':
@@ -35,7 +39,7 @@
                    break;
                case 'image':
                    $details_icon = '/img/details/greenIcon2.png';
-                   $thumbnail = $fp_url.'/convert?w=80&h=80&dl=false';
+                   //$thumbnail = $fp_url.'/convert?w=80&h=80&dl=false';
                    break;
                
                case 'audio':
@@ -57,10 +61,13 @@
                
          ?>            
             <div class="detailMainContentList">
-            	<div class="detailMainContentList1"><img src="<?php echo $thumbnail;?>" alt="Image" /><p><b><?php echo $user; ?></b><br/><?php echo $lab_title;?></p></div>
+            	<div class="detailMainContentList1">
+<!--                    <img src="<?php // echo $thumbnail;?>" alt="Image" />-->
+                    <p><b><?php echo $user; ?></b><br/><?php echo $lab_title;?></p>
+                </div>
                 <div class="detailMainContentList2" >
                 	<p>   
-                            <span style="padding-left: 25px;width:100%"><a href="<?php echo $fp_url;?>?dl=true" target="_blank"><img src="<?php echo $details_icon;?>" alt="Icon" /><?php echo $file_name;?></a></span>
+                            <span style="padding-left: 25px;width:100%"><a href="<?php echo $this->createUrl('file/download',array('file'=>$file_id)) ;?>" target="_blank"><img src="<?php echo $details_icon;?>" alt="Icon" /><?php echo $file_name;?></a></span>
                         </p>
                 </div>
                 <div class="detailMainContentList3"><div class="listRtTime"><?php echo $time; ?></div></div>
@@ -86,6 +93,9 @@
 		data-fp-multiple="true" 
 		data-fp-services="COMPUTER,BOX,DROPBOX"
 		data-fp-button-text="Add Files" 
+                data-fp-store-location="BOX"
+                data-fp-store-path="<?php echo Yii::app()->params['boxfolderid'] ?>"
+                
 		onchange="processFpResponse(event);"
 		class="btn btn-success fpaddfiles" >
 		
@@ -95,7 +105,7 @@
 <script>
 
 var processFpResponse = function(event) {
-	// console.log(event);
+	 console.log(event);
 
 	// file uploaded successfully
 
@@ -136,11 +146,14 @@ var processFpResponse = function(event) {
 	    },
 			error:function (e){
 		//		alert(JSON.stringify(e));
-						location.reload();
+						//location.reload();
 
 			}
 			});
+                        
 }
+
+
 </script>
 		<style>
 
@@ -281,7 +294,7 @@ var processFpResponse = function(event) {
 		margin:0;
 		}
 		.discussions ul.children li {
-		//border-top:1px solid #e4e6eb;
+		/*border-top:1px solid #e4e6eb;*/
 		}
 
 		.discussions ul li ul li .author {

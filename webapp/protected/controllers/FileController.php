@@ -40,8 +40,12 @@ class FileController extends Controller
 				$sql = "insert into file (userId, projectId,name,mimetype,fpUrl,created) values (:userId, :projectId,:name,:mimetype,:fpUrl,UTC_TIMESTAMP())";
 				$parameters = array(":userId"=>$file->userId, ':projectId' => $file->projectId, ':name' => $file->name, ':mimetype' => $file->mimetype, ':fpUrl' => $file->fpUrl);
 				//var_dump($parameters);
-                                
                                 Yii::app()->db->createCommand($sql)->execute($parameters);
+                                $activity = new Activity();
+        $activity->projectId = $a['projectId'];
+        $activity->type      = "file_added";
+        $activity->userId    = Yii::app()->session['uid'];
+        $activity->save();
                                 //var_dump(Yii::app()->db->createCommand($sql));
                                 
 			/*	if ($file->save())
@@ -78,27 +82,32 @@ class FileController extends Controller
 		}
 	}
 	*/
-	public function actionDownload()
+	public function actionDownload($file)
 	{
-		if (Yii::app()->session['uid'] && !empty($_GET['id']))
+
+		if (Yii::app()->session['uid'] && !empty($file))
 		{
-			$file = File::model()->findByPk($_GET['id']);
+			$file = File::model()->findByPk($file);
+                        
+                        $this->redirect($file->fpUrl.'?dl=true');
 
-			$project = Project::model()->findByPk($file->projectId);
-
-			if (!empty($file->boxId) && $project->isMemberOf())
-			{
-				$box = new Box_API(Yii::app()->params['boxclientid'], Yii::app()->params['boxclientsecret'], 'n/a');
-
-				if(!$box->load_token('protected/config/')){
-					$box->get_code();
-				}
-
-				$redirectUrl = $box->get_file_download_link($file->boxId);
-
-				$this->redirect($redirectUrl);
-			}
+//                        $project = Project::model()->findByPk($file->projectId);
+//                        var_dump($project);
+//
+//			if (!empty($file->boxId) && $project->isMemberOf())
+//			{
+//				$box = new Box_API(Yii::app()->params['boxclientid'], Yii::app()->params['boxclientsecret'], 'n/a');
+//
+//				if(!$box->load_token('protected/config/')){
+//					$box->get_code();
+//				}
+//
+//				$redirectUrl = $box->get_file_download_link($file->boxId);
+//
+//				$this->redirect($redirectUrl);
+//			}
 		}
 	}
+        
 
 }
