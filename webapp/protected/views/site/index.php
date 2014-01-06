@@ -413,7 +413,7 @@
             <?php $this->endWidget(); ?>
           </div>
         </div>
-        <div class="signUp">
+      <!-- <div class="signUp">
             <?php $form=$this->beginWidget('CActiveForm', array(
                     'id'=>'newsletter-form',
                     'action'=> $this->createUrl('site/newsletter'),
@@ -429,8 +429,7 @@
               <?php echo CHtml::submitButton('Subscribe'); ?>
           </div>
             <?php $this->endWidget(); ?>
-        </div>
-
+        </div>-->
       </div>
     </div>
   </div>
@@ -519,6 +518,26 @@
 <!--Page 4 End--> 
 
 <!--Page 5 Start-->
+
+  <section class="homePage1">
+        <div class="signUp">
+            <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'newsletter-form',
+                    'action'=> $this->createUrl('site/newsletter'),
+                )); ?>
+          <h3 align = "center">Stirplate Newsletter, sign up for updates.</h3>
+          <div class="signUpMain">
+              <?php echo $form->error($newsLetterModel,'email'); ?>
+              <?php echo Yii::app()->user->getFlash('success'); ?>
+              <?php echo $form->textField($newsLetterModel, 'email', array('placeholder' => 'Enter email address')); ?>
+               <?php echo CHtml::hiddenField('confirmemail'); ?>
+              <?php echo CHtml::submitButton('Subscribe'); ?>
+          </div>
+            <?php $this->endWidget(); ?>
+        </div>
+  </section>
+
+
 <section class="contact">
   <div class="wrapper">
     <div class="contactMain">
