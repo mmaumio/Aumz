@@ -413,7 +413,7 @@
             <?php $this->endWidget(); ?>
           </div>
         </div>
-        <div class="signUp">
+      <!-- <div class="signUp">
             <?php $form=$this->beginWidget('CActiveForm', array(
                     'id'=>'newsletter-form',
                     'action'=> $this->createUrl('site/newsletter'),
@@ -429,8 +429,7 @@
               <?php echo CHtml::submitButton('Subscribe'); ?>
           </div>
             <?php $this->endWidget(); ?>
-        </div>
-
+        </div>-->
       </div>
     </div>
   </div>
@@ -519,39 +518,45 @@
 <!--Page 4 End--> 
 
 <!--Page 5 Start-->
+
+  <section class="homePage1">
+        <div class="signUp">
+            <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'newsletter-form',
+                    'action'=> $this->createUrl('site/newsletter'),
+                )); ?>
+          <h3 align = "center">Stirplate Newsletter, sign up for updates.</h3>
+          <div class="signUpMain">
+              <?php echo $form->error($newsLetterModel,'email'); ?>
+              <?php echo Yii::app()->user->getFlash('success'); ?>
+              <?php echo $form->textField($newsLetterModel, 'email', array('placeholder' => 'Enter email address')); ?>
+               <?php echo CHtml::hiddenField('confirmemail'); ?>
+              <?php echo CHtml::submitButton('Subscribe'); ?>
+          </div>
+            <?php $this->endWidget(); ?>
+        </div>
+  </section>
+
+
 <section class="contact">
   <div class="wrapper">
     <div class="contactMain">
       <div class="contactMainHead">
         <div class="contactMainHeadBox">
-          <!--<h2>Contact us</h2>-->
 		  <p class="homelinks">
-			<span><a href="site/aboutus">About us</a></span>
-			<span><a href="site/privacy">Privacy and terms of service</a></span>
-			<span><a href="site/faq">FAQ</a></span>
+			<span><a href="<?php echo $this->createUrl('site/aboutus'); ?>">About us</a></span>
+			<span><a href="<?php echo $this->createUrl('site/privacy'); ?>">Privacy and terms of service</a></span>
+			<span><a href="<?php echo $this->createUrl('site/faq'); ?>">FAQ</a></span>
 			<span><a href="mailto:info@stirplate.io">Contact us</a></span>
-			<span><a href="site/blog">Blog</a></span>
+			<span><a href="<?php echo $this->createUrl('site/blog'); ?>">Blog</a></span>
 			<span class="">Follow us :</a> 
 			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
 				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
 			</span> 		
-		<p>
-<!--<h3>Want to know more about what we are up to? Send us a message </h3> -->       
+		<p>    
       </div>
       </div>
-      <!--<div class="contactForm">
-        <div class="contactFormMain">
-          <div class="contactFormMainLft">
-            <input type="text" value="" name="" placeholder="NAME" />
-            <input type="text" value="" name="" placeholder="COMPANY" />
-            <input type="text" value="" name="" placeholder="EMAIL" />
-          </div>
-          <div class="contactFormMainRt">
-            <textarea></textarea>
-            <input type="submit" value="SEND" name="" />
-          </div>
-        </div>
-      </div>-->
+     
     </div>
   </div>
 </section>
