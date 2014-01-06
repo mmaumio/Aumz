@@ -1,4 +1,13 @@
-<?php if (isset($alertMsg)) { ?>
+<div class="clearfix"></div>
+<?php ?>
+<?php if(Yii::app()->user->hasFlash('success')){ ?>
+<div class="alert alert-success" style="width:90%; margin:10px 0px 0px 5%">
+  <button data-dismiss="alert" class="close" type="button">x</button>
+  <?php echo Yii::app()->user->getFlash('success');?>
+</div>
+<?php } ?>
+<?php 
+ if (isset($alertMsg)) { ?>
 <div class="alert alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <?php echo $alertMsg ?>
@@ -10,6 +19,8 @@
   <?php echo $errorMsg ?>
 </div>
 <?php } ?>
+<br />
+<div style="width: 300px; margin: 0px auto;clear: both;" >
 
 <?php echo CHtml::beginForm('/user/update/' . $user->id, 'post', array('class' => 'form-horizontal')); ?>
 <fieldset>
@@ -29,7 +40,7 @@
 <div class="control-group">
   <label class="control-label" for="textinput">First Name</label>
   <div class="controls">
-    <?php echo CHtml::activeTextField($user,'firstName', array('class' => 'input-xlarge', 'required' => true, 'readonly' => $readonly)) ?>
+    <?php echo CHtml::activeTextField($user,'firstName', array('class' => 'input-xarge', 'required' => true, 'readonly' => $readonly)) ?>
   </div>
 </div>
 
@@ -37,7 +48,7 @@
 <div class="control-group">
   <label class="control-label" for="textinput">Last Name</label>
   <div class="controls">
-    <?php echo CHtml::activeTextField($user,'lastName', array('class' => 'input-xlarge', 'required' => true, 'readonly' => $readonly)) ?>
+    <?php echo CHtml::activeTextField($user,'lastName', array('class' => 'input-xarge', 'required' => true, 'readonly' => $readonly)) ?>
   </div>
 </div>
 
@@ -46,7 +57,7 @@
 <div class="control-group">
   <label class="control-label" for="textinput">Email</label>
   <div class="controls">
-    <?php echo CHtml::activeTextField($user,'email', array('class' => 'input-xlarge', 'required' => true, 'readonly' => $readonly)) ?>
+    <?php echo CHtml::activeTextField($user,'email', array('class' => 'input-xarge', 'required' => true, 'readonly' => $readonly)) ?>
   </div>
 </div>
 <?php } ?>
@@ -55,7 +66,7 @@
 <div class="control-group">
   <label class="control-label" for="textinput">Position</label>
   <div class="controls">
-    <?php echo CHtml::activeTextField($user,'position', array('class' => 'input-xlarge', 'readonly' => $readonly)) ?>
+    <?php echo CHtml::activeTextField($user,'position', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
   </div>
 </div>
 
@@ -63,7 +74,7 @@
 <div class="control-group">
   <label class="control-label" for="textinput">Affiliation</label>
   <div class="controls">
-    <?php echo CHtml::activeTextField($user,'affiliation', array('class' => 'input-xlarge', 'readonly' => $readonly)) ?>
+    <?php echo CHtml::activeTextField($user,'affiliation', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
   </div>
 </div>
 
@@ -71,7 +82,7 @@
 <div class="control-group">
   <label class="control-label" for="textinput">Department</label>
   <div class="controls">
-    <?php echo CHtml::activeTextField($user,'department', array('class' => 'input-xlarge', 'readonly' => $readonly)) ?>
+    <?php echo CHtml::activeTextField($user,'department', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
   </div>
 </div>
 
@@ -79,7 +90,7 @@
 <div class="control-group">
   <label class="control-label" for="textinput">Field of Study</label>
   <div class="controls">
-    <?php echo CHtml::activeTextField($user,'fieldOfStudy', array('class' => 'input-xlarge', 'readonly' => $readonly)) ?>
+    <?php echo CHtml::activeTextField($user,'fieldOfStudy', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
   </div>
 </div>
 
@@ -88,7 +99,7 @@
 <div class="control-group">
   <label class="control-label" for="textinput">Lab Title</label>
   <div class="controls">
-    <?php echo CHtml::activeTextField($user,'labTitle', array('class' => 'input-xlarge', 'readonly' => $readonly)) ?>
+    <?php echo CHtml::activeTextField($user,'labTitle', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
   </div>
 </div>
 -->
@@ -97,7 +108,7 @@
 <div class="control-group">
   <label class="control-label" for="textinput">Lab Web Page</label>
   <div class="controls">
-    <?php echo CHtml::activeTextField($user,'labUrl', array('class' => 'input-xlarge', 'readonly' => $readonly)) ?>
+    <?php echo CHtml::activeTextField($user,'labUrl', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
   </div>
 </div>
 
@@ -110,19 +121,19 @@
     <div class="control-group">
       <label class="control-label" for="currentPassword">Current Password</label>
       <div class="controls">
-        <?php echo CHtml::passwordField('currentPassword','', array('class' => 'input-xlarge', 'readonly' => $readonly)) ?>
+        <?php echo CHtml::passwordField('currentPassword','', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="newPassword">New Password</label>
       <div class="controls">
-        <?php echo CHtml::passwordField('newPassword','', array('class' => 'input-xlarge', 'readonly' => $readonly)) ?>
+        <?php echo CHtml::passwordField('newPassword','', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="repeatPassword">Repeat Password</label>
       <div class="controls">
-        <?php echo CHtml::passwordField('repeatPassword','', array('class' => 'input-xlarge', 'readonly' => $readonly)) ?>
+        <?php echo CHtml::passwordField('repeatPassword','', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
       </div>
     </div>
   <?php //} ?>
@@ -138,7 +149,8 @@
 
 </fieldset>
 <?php echo CHtml::endForm(); ?>
-
+<div class="clearfix"></div>
+</div>
 <script>
 $(document).ready(function() {
   $('#singlebutton').click(function() {

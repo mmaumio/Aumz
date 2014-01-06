@@ -16,9 +16,11 @@ class UserController extends Controller
 
     public function actionProfile()
     {
+       
         if (!Yii::app()->user->isGuest) {
-            $user = User::model()->findByPk(Yii::app()->user->id);
-
+             
+             $user = User::model()->findByPk(Yii::app()->user->id);
+        
             if ($user) {
                 $this->render('profile', array('user' => $user, 'readonly' => false));
                 return;

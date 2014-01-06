@@ -717,3 +717,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 	overflow-y: scroll;
 
 }
+.input-xarge
+{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    font-size: 19px;
+    height: 34px;
+    padding: 3px 26px;
+    width: 200px;
+}

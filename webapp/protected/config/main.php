@@ -79,7 +79,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
             'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'root',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		

@@ -54,7 +54,9 @@ class SiteController extends Controller
                        if(isset(Yii::app()->request->cookies['user_trails'])){
                             $val = Yii::app()->request->cookies['user_trails']->value;
                             Yii::app()->request->cookies['user_trails'] =new CHttpCookie('user_trails', (1 + $val));
-                        }else{
+                        }
+                        else
+                        {
                              Yii::app()->request->cookies['user_trails'] = new CHttpCookie('user_trails', 1);
                         }
                         
@@ -351,8 +353,8 @@ class SiteController extends Controller
         }
         exit;
     }
-    public function actionVerifyemail()
-    {
+     public function actionVerifyemail()
+     {
             $login=new LoginForm;
            if(isset($_GET['key']) && isset($_GET['string']))
            {
@@ -367,6 +369,8 @@ class SiteController extends Controller
                         $login->password=base64_decode($_GET['string']);
                         if($login->login())
                         {
+                             Yii::app()->user->setFlash('success','<b>Welcome ! </b> You are all set to use stipulate, please fill in your first/last name and your preferred contact email address to get started');
+            
                            	$this->redirect(array('user/profile'));
     	                }
                       exit;
@@ -381,17 +385,28 @@ class SiteController extends Controller
               echo 'invalid link'; exit;
            }
     }
-    public function getRandommatch()
+    
+    public function actionResentemaillink()
     {
-        return rand(1,9);
+         
+         
+         $userModel=User::model()->findByAttributes(array('email'=>$_GET['email']));
+          if($userModel)
+          {
+         Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
+                $obj = array('records'=>$userModel,'string'=>$_GET['key']);
+                Notification::sendEmail('newSignup', $userModel, $obj);
+          Yii::app()->user->setFlash('success','Email verification sent successfully');
+          }
+          else
+          {
+            Yii::app()->user->setFlash('error','Fails to sent email verification link , Please check your email');
+          
+          } 
+          $this->redirect(array('site/index'));                
     }
-    public function actionGetcaptcha()
-    {
-        $first=$this->getRandommatch();
-        $second=$this->getRandommatch();
-        Yii::app()->session['key1']=$first;
-        Yii::app()->session['key2']=$second;
-        echo $first.'+'.$second.'=?';exit;
-    }
+    
+   
+    
     
 }
