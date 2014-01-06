@@ -526,11 +526,11 @@
         <div class="contactMainHeadBox">
           <!--<h2>Contact us</h2>-->
 		  <p class="homelinks">
-			<span><a href="site/aboutus">About us</a></span>
-			<span><a href="site/privacy">Privacy and terms of service</a></span>
-			<span><a href="site/faq">FAQ</a></span>
+			<span><a href="<?php echo $this->createUrl('site/aboutus'); ?>">About us</a></span>
+			<span><a href="<?php echo $this->createUrl('site/privacy'); ?>">Privacy and terms of service</a></span>
+			<span><a href="<?php echo $this->createUrl('site/faq'); ?>">FAQ</a></span>
 			<span><a href="mailto:info@stirplate.io">Contact us</a></span>
-			<span><a href="site/blog">Blog</a></span>
+			<span><a href="<?php echo $this->createUrl('site/blog'); ?>">Blog</a></span>
 			<span class="">Follow us :</a> 
 			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
 				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
