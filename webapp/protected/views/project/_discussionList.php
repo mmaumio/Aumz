@@ -8,10 +8,25 @@
          	</div>
          	
 	        <div class="detailMainContentMainBtn">
-	        	<a href="#" data-toggle="modal" data-target="#discussionModal"><img src="/img/details/btnAdd.png" alt="Add comment" /><span>Add Comment</span></a>
+	        	<!--a href="#" data-toggle="modal" data-target="#discussionModal"><img src="/img/details/btnAdd.png" alt="Add comment" /><span>Add Comment</span></a-->
 	        	<!--
 	            <a href="javascript:void(0);"><img src="/img/details/btnMore.png" alt="More Discussions" /><span>More Discussions</span></a>
 	        	-->
+				
+				 <form action="/activity/create" id="newCommentForm" method="POST">			
+		        <fieldset>
+		            <div class="form-group">
+		                <div class="col-md-11">
+						<input type="hidden" name="activity[projectId]" value="<?php echo $project->id ?>">
+				<input type="hidden" name="activity[type]" value="comment">
+				<textarea id="newComment" name="activity[content]" class="diss-form col-md-8" placeholder="Add comment here" style="word-wrap: break-word;  height: 80px;" required=""></textarea>
+				<div class="clear"></div>
+				<button class="btn btn-primary" type="submit" style="float:right;margin-top:45px;" id="submitCommentBtn">Submit Comment</button>
+		                   <!-- <textarea id="textarea" name="textarea">default text</textarea>-->
+		                </div>
+		            </div>
+		        </fieldset>		      
+			  </form>
 	        </div>
         </div>
 

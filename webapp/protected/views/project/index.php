@@ -3,16 +3,24 @@
         <div class="detailMainGreen">
             <h3 class="mainheader">
             <div class="toolpopup"><img src="/img/dashboard/file_edit2.png" style="margin:-3px 5px;">Click on title to edit</div>
-            <img class="edit-img" src="/img/dashboard/file_edit.png" style="height:30px"/>
+            <img class="edit-img" src="/img/dashboard/file_edit.png" style="height:23px"/>
              <input value="<?php echo $project->title ?>" type="text" style="" class="project-header"/><img class="loadclass" src="/img/dashboard/loadimage.gif"/></h3>
             <div class="detailMainGreenImg">
             	<h3> Project members: </h3> 
                     
                 <?php foreach ($project->users as $user) { ?>            		
-            		<h3><?php echo $user->firstName  ?>
-                    <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">x</a>
-                    <br />
-            	<?php } ?> </h3>
+            		<div class="name-block" style="width: -moz-max-content !important;">
+					<span style="font-weight:bold"><?php echo $user->firstName  ?></span>
+					<span class="delete-icon">
+                    <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">
+					  <b>
+					  x
+					  </b>
+					</a>                    
+					</span>
+					</div>
+					
+            	<?php } ?> 
                 <script type="text/javascript">
                     var names_array = [ <?php foreach ($all_users as $user) {
 
@@ -21,10 +29,21 @@
                     } ?> ]
                  
                 $(document).ready(function() {
+				    $(".delete-icon").hide();
                     $("#names").select2({tags:names_array, width: "400"});
                     $("#names").on("change", function(e) {
                       $("#mynames").val($("#names").select2("val").join(","));
                     });
+					
+					$(".name-block").on("mouseover", function(){
+					  $(this).children(".delete-icon").show();
+					  $(this).css("border","1px solid grey");
+					});
+					
+					$(".name-block").on("mouseout", function(){
+					  $(this).children(".delete-icon").hide();
+					  $(this).css("border","none");
+					});
                     
                 });
             </script>
