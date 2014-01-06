@@ -64,7 +64,7 @@
              <li class="dropdown " style="" >
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img height="40px" src="/img/details/dashNav5.png" alt="Files"><span>Settings</span> <b class="caret" style=""></b></a>
               <ul class="dropdown-menu " style="background: #FFFFFF;width: 116%;">
-                <li style="background: none;" class="dropdownli"><a href="javascript:void(0);" rel="<?php echo $project->id;?>" id="del-btn"><img src="/img/dashboard/remove.png"  width="30px"/><b>Delete Study</b></a></li>
+                <li style="background: none;" class="dropdownli"><a href="javascript:void(0);" rel="<?php echo $project->id;?>" id="del-btn"><img src="/img/dashboard/remove.png"  width="30px"/><b>Delete Project</b></a></li>
                 <li style="background: none;" class="dropdownli"><a href="#"><img src="/img/dashboard/move.png"  width="25px"/> <b>Move Project to Study Board</b></a></li>
                 
               </ul>

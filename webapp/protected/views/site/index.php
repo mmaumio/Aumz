@@ -347,7 +347,7 @@
 <div class="alert alert-warning" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
                         <a href="#" class="close" data-dismiss="alert">x
                         </a>
-               <strong>Thank you ! </strong>         <?php echo Yii::app()->user->getFlash('success'); ?>
+               <strong>Thanks!</strong>         <?php echo Yii::app()->user->getFlash('success'); ?>
 </div>
 <?php } ?>
 <?php if(Yii::app()->user->hasFlash('error')){?>
