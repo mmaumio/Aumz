@@ -543,7 +543,6 @@
     <div class="contactMain">
       <div class="contactMainHead">
         <div class="contactMainHeadBox">
-          <!--<h2>Contact us</h2>-->
 		  <p class="homelinks">
 			<span><a href="<?php echo $this->createUrl('site/aboutus'); ?>">About us</a></span>
 			<span><a href="<?php echo $this->createUrl('site/privacy'); ?>">Privacy and terms of service</a></span>
@@ -554,23 +553,10 @@
 			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
 				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
 			</span> 		
-		<p>
-<!--<h3>Want to know more about what we are up to? Send us a message </h3> -->       
+		<p>    
       </div>
       </div>
-      <!--<div class="contactForm">
-        <div class="contactFormMain">
-          <div class="contactFormMainLft">
-            <input type="text" value="" name="" placeholder="NAME" />
-            <input type="text" value="" name="" placeholder="COMPANY" />
-            <input type="text" value="" name="" placeholder="EMAIL" />
-          </div>
-          <div class="contactFormMainRt">
-            <textarea></textarea>
-            <input type="submit" value="SEND" name="" />
-          </div>
-        </div>
-      </div>-->
+     
     </div>
   </div>
 </section>
