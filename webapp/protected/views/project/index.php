@@ -37,12 +37,12 @@
 					
 					$(".name-block").on("mouseover", function(){
 					  $(this).children(".delete-icon").show();
-					  $(this).css("border","1px solid grey");
+					  $(this).children("border","1px solid grey");
 					});
 					
 					$(".name-block").on("mouseout", function(){
 					  $(this).children(".delete-icon").hide();
-					  $(this).css("border","none");
+					  $(this).children("border","none");
 					});
                     
                 });
