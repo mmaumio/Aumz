@@ -8,7 +8,7 @@
   	<p><?= $activity->content;?></p>
   </div>
   <div class="detailMainContentList3">
-  	<!-- <div class="listRtTime" title="<?= $activity->created;?>"><?= $activity->created;?></div> -->
+  	<div class="listRtTime" title="<?= $activity->created;?>" style="float: none;"><?=  GeneralFunctions::getPrettyTime($activity->created);?></div>
   	<a href="#" data-toggle="modal" data-target="#discussionModal">Delete</a>
 	</div>
 </div>

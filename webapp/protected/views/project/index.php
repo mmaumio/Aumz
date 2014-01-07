@@ -76,7 +76,7 @@
 </section>
 <section class="detailMainContent"> 
 	<div class="wrapper"> 
-    	<?php $this->renderPartial('_discussionList', array('activities' => $project->activities,'project'=>$project)); ?>
+    	<?php $this->renderPartial('_discussionList', array('activities' => $project->comments,'project'=>$project)); ?>
         
         <div class="detailMainContentMain detailMainContentMainLft">
          <a id="tasks"></a>
