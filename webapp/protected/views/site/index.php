@@ -525,7 +525,7 @@
                     'id'=>'newsletter-form',
                     'action'=> $this->createUrl('site/newsletter'),
                 )); ?>
-          <h3 align = "center">Stirplate Newsletter, sign up for updates.</h3>
+          <h3 align = "center" class="newsletter-head">Stirplate Newsletter, sign up for updates.</h3>
           <div class="signUpMain">
               <?php echo $form->error($newsLetterModel,'email'); ?>
               <?php echo Yii::app()->user->getFlash('success'); ?>
