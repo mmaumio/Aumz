@@ -14,7 +14,7 @@
               <li><a href="javascript:void(o);" title="" ><img src="/img/nav/iconNav2.png" alt="icon" /></a></li>
               -->
               <li><a href="<?php echo $this->createUrl('user/profile') ?>" title="" ><img src="/img/nav/iconNav3.png" alt="icon" /></a></li>
-			  <li><a href="javascript:void(o);" title="" ><img src="/img/nav/help.png" alt="icon" /></a></li>
+			  <!--li><a href="javascript:void(o);" title="" ><img src="/img/nav/help.png" alt="icon" /></a></li-->
               <?php if(!Yii::app()->user->isGuest){ ?>
               <li class="logout-button"><a href="<?php echo $this->createUrl('auth/logout') ?>" title=""  class="btn btn-primary">Logout</a></li>
               <?php } ?>

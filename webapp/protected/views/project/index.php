@@ -45,6 +45,7 @@
 					  $(this).children("border","none");
 					});
                     
+					
                 });
             </script>
             <br><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"> Add new project member  </a>
@@ -149,6 +150,7 @@
             
             $('.toolpopup').show();
         });
+	
          $('.edit-img').mouseout(function(){
             
             $('.toolpopup').hide();
