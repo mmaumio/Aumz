@@ -6,7 +6,7 @@
 ?>
 <section>
     <div class="wrapper">
-        <div id="user-profile-title" class="page-header clearBoth"><h3>User Profile</h3></div>
+        <div id="user-profile-title" class="clearBoth"><h3>User Profile</h3></div>
         <?php
         // if a flash exists as 'update' then show the message according to the value of the 'update'
         if (Yii::app()->user->hasFlash('update')): {

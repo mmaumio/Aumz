@@ -733,5 +733,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 }
 
 div#user-profile-title h3 {
-    padding-top: 0.5em;
+    padding: 0.5em 0;
 }
