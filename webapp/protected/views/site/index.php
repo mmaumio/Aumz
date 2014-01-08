@@ -402,12 +402,9 @@
                     </label>
                     <div class="control-group buttons">
                          <div class="controls">
-                            
                             <?php echo CHtml::submitButton('SIGN IN',array('class'=>'btn-submit')); ?>
-							
-                             <a class="btn btn-success btn-signup" data-toggle="modal" data-target="#signup-dialog" style="font-family:'HelveticaNeueLT Pro';font-size: 20px;">SIGN UP</a>
-                         
-                            </div>
+                            <a class="btn-signup" data-toggle="modal" data-target="#signup-dialog" style="font-family:'HelveticaNeueLT Pro';font-size: 20px;">SIGN UP</a>
+                         </div>
                     </div>
                     <?php echo CHtml::hiddenField('confirm-password'); ?>
             <?php $this->endWidget(); ?>

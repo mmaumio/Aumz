@@ -606,20 +606,29 @@ vertical-align:top;
 #forgot-modal .modal-header {border-bottom: none;}
 
 .btn-signup{
-    background: none repeat scroll 0 0 #00ACFD;
-    border: 0 none;
-    border-radius: 4px;
+    background-color: #5CB85C;
+    border-color: #4CAE4C;
     color: #FFFFFF;
-    cursor: pointer;
-    float: right;
+    float: left;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 0px;
+    font-size: 20px;
+    color: #fff;
     font-family: "HelveticaNeueLT Pro";
-    font-size: 20px !important;
-    margin: 10px -206px 2px 2px !important;
-    padding: 4px 15px 0px !important;
+    padding: 7px 20px 2px 20px;
+    margin: 10px 0 0 0;
+    cursor: pointer;
+    line-height: normal;
 }
 .btn-submit
 {
-    margin-right: 96px !important;
+    margin-left:212px !important;
+    margin-right:7px !important;
+
+    float: left !important;
 }
 #signup-dialog .modal-header {
     background-color: #428BCA;
