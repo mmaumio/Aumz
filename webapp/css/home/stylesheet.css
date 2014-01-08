@@ -622,6 +622,10 @@ vertical-align:top;
     margin: 10px 0 0 0;
     cursor: pointer;
     line-height: normal;
+    text-decoration: none !important;
+}
+a.btn-signup:hover{
+    color: #FFFFFF !important;
 }
 .btn-submit
 {
