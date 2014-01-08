@@ -75,6 +75,7 @@ return array(
 //		),
 		'db'=>array(
 	//		KG comment: The following line connects the app w/ the cloudsql database, does not work w/ local copy
+<<<<<<< HEAD
 		//	'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
 		// Uncomment the following to use a local copy of the DB(located in the repo)
 <<<<<<< HEAD
@@ -84,6 +85,12 @@ return array(
 //			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
 >>>>>>> 73dedeb4ddbce26ef91f149df2089c7e6cdb9ea8
             'emulatePrepare' => true,
+=======
+	//		'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
+		// Uncomment the following to use a local copy of the DB(located in the repo)
+			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
+			'emulatePrepare' => true,
+>>>>>>> 68d8371d6ec00dbc513df68ebf17f13d123cfd46
 			'username' => 'root',
 			'password' => 'newpassword11',
 			'charset' => 'utf8',
