@@ -469,6 +469,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	float: left;
 	background: #fff;
 	opacity: 0.9;
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    box-shadow: 0 2px 3px #666;
+    -moz-box-shadow: 0 2px 3px #666;
+    -ms-box-shadow: 0 2px 3px #666;
+    -webkit-box-shadow: 0 2px 3px #666;
 }
 .contactMainHeadBox {
 	float: left;
@@ -688,6 +696,14 @@ a.btn-signup:hover{
     background-color: #E0B8E0;
     color: #563A94;
     font-family: "HelveticaNeueLT Pro";
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    box-shadow: 0 2px 3px #666;
+    -moz-box-shadow: 0 2px 3px #666;
+    -ms-box-shadow: 0 2px 3px #666;
+    -webkit-box-shadow: 0 2px 3px #666;
 }
 .video-head h2{
     font-size: 27px;
