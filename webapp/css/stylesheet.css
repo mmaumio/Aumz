@@ -735,3 +735,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 div#user-profile-title h3 {
     padding: 0.5em 0;
 }
+.headerNav .dropdown-toggle{
+    margin: 10px 0;
+}
