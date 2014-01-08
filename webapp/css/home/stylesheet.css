@@ -36,13 +36,6 @@ ul li {
 	font-weight: normal;
 	font-style: normal;
 }
-@font-face {
-	font-family: "Times";
-	src: url('/css/fonts/Times Italic.eot');
-	src: url('/css/fonts/Times Italic.eot?#iefix') format('embedded-opentype'), url('/css/fonts/Times Italic.woff') format('woff'), url('/css/fonts/Times Italic.ttf') format('truetype'), url('/css/fonts/Times Italic.svg#quartzregular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
 a {
 	color: #696e71;
 	-webkit-transition: color 0.2s;
@@ -53,9 +46,10 @@ a {
 GENERAL STYLING
 *************************************************************************************/
 body {
-	margin: 0px;
-	padding: 0px;
-	font-family: "HelveticaNeueLT Pro";
+    margin: 0px;
+    padding: 0px;
+    font-family: "HelveticaNeueLT Pro";
+    font-size: 100%;
 }
 .bodyNoBg {
 	background: none;
@@ -84,7 +78,7 @@ h6 {
 	font-size: 1em;
 }
 p {
-	font-family: "Times";
+    font-family: 'Exo 2', sans-serif;
 }
 .clearfix:after {
 	/*content: ".";
@@ -261,14 +255,14 @@ html[xmlns] .clearfix {
 	font-family: "HelveticaNeueLT Pro";
 	color: #0099cc;
 	text-transform: uppercase;
-	font-size: 55px;
+    font-size: 6em;
 	width: 100%;
 	margin: 23px 0 7px 0;
 }
 .page2Main h3 {
 	float: left;
 	text-align: center;
-	font-family: "Times";
+	font-family: 'Exo 2', sans-serif;
 	color: #000;
 	font-size: 24px;
 	width: 100%;
@@ -312,7 +306,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	text-transform: uppercase;
 }
 .homeBox p {
-	font-size: 14px;
+	font-size: 15px;
 	color: #000;
 	margin: 5px 0 15px 0;
 	float: left;
@@ -386,7 +380,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 .page4Main h3 {
 	float: left;
 	text-align: center;
-	font-family: "Times";
+	font-family: 'Exo 2', sans-serif;
 	color: #000;
 	font-size: 24px;
 	width: 100%;
@@ -474,7 +468,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 .contactMainHeadBox h3 {
 	float: left;
 	text-align: center;
-	font-family: "Times";
+	font-family: 'Exo 2', sans-serif;
 	color: #000;
 	font-size: 16px;
 	width: 100%;
@@ -648,4 +642,7 @@ vertical-align:top;
     font-size: 19px;
     letter-spacing: 6px;
     padding: 10px 38px 10px 33px;
+}
+.signUp h3.newsletter-head{
+    color: #FFFFFF;
 }

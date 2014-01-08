@@ -144,16 +144,16 @@ header {
 }
 .headerNav ul {
 	float: left;
-	background: url(../img/nav/iconNavStrip.png) left top repeat-y;
+
 }
 .headerNav ul li {
 	display: inline;
-	background: url(../img/nav/iconNavStrip.png) top right repeat-y;
+    width: 100%;
 	float: left;
-	padding: 16px 24px;
 }
+
 .headerNav ul li a {
-	float: left;
+
 }
 .middle {
 	width: 100%;

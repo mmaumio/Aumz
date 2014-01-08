@@ -177,5 +177,25 @@ class Project extends CActiveRecord
     */
         return parent::afterSave();
     }
-	
+
+    public function isMemberOf()
+    {
+    	if (!Yii::app()->user->isGuest)
+    	{
+    		$member = ProjectUser::model()->findByAttributes(array('projectId' => $this->id, 'userId' => Yii::app()->user->id));
+
+    		if ($member)
+    		{
+    			return true;
+    		}
+    		else
+    		{
+    			return false;
+    		}
+    	}
+    	else
+    	{
+    		return false;
+    	}
+    }	    
 }

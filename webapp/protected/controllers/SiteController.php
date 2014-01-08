@@ -344,7 +344,7 @@ class SiteController extends Controller
                   
             if($userModel->save(false))
             {
-                Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
+                Yii::app()->user->setFlash('success','Please check your email '.$userModel->email.'</i> for a verification link');
                 $obj = array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password']));
                 Notification::sendEmail('newSignup', $userModel, $obj);
                 echo 'success'; 
