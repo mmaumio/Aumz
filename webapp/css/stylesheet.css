@@ -738,3 +738,10 @@ div#user-profile-title h3 {
 .headerNav .dropdown-toggle{
     margin: 10px 0;
 }
+.detailMainContentMainBtn #newComment{
+    background-color: white;
+    width: 90%;
+}
+.detailMainContentMainBtn .discussion-submit{
+    margin-right: 7%;
+}
