@@ -25,7 +25,7 @@
 							<i class="icon-paper-clip"></i><i class="icon-globe"></i><i class="icon-bar-chart"></i>
 							</div>
 							-->
-							<button class="btn btn-primary" type="submit" style="float:right" id="submitCommentBtn">Submit Comment</button>
+							<button class="btn btn-success" type="submit" style="float:right" id="submitCommentBtn">Submit Comment</button>
 						</form>
 					</ul>
 					<div class="clear"></div>

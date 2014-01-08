@@ -30,6 +30,11 @@ class Notification
 		$toName = $toUser->getName();
 		$toEmail = $toUser->email;
 
+        $contactEmail = trim($toUser->contactEmail);
+        if(!empty($contactEmail)) {
+            $toEmail = $contactEmail;
+        }
+
 		if ($type === 'userAdded')
 		{
 			$data = array();
@@ -189,7 +194,12 @@ public static function sendEmailBluk($type, $toUsers, $obj)
 	{
 		$to = array();
 		foreach ($toUsers as $user) {
-			$to[] =  array('email' => $user->email, 'name' => $user->getName(), 'type' => 'to');
+            $email = $user->email;
+            $contactEmail = trim($user->contactEmail);
+            if(!empty($contactEmail)) {
+                $email = $contactEmail;
+            }
+			$to[] =  array('email' => $email, 'name' => $user->getName(), 'type' => 'to');
 		}
 		if (!Yii::app()->params['emailNotifications']) return;
         $emailJson = array(

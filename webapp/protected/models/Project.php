@@ -59,6 +59,7 @@ class Project extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'activities' => array(self::HAS_MANY, 'Activity', 'projectId'),
+			'comments' => array(self::HAS_MANY, 'Activity', 'projectId', 'condition' => 'type="comment"'),
 			'files' => array(self::HAS_MANY, 'File', 'projectId'),
 			'discussions' => array(self::HAS_MANY, 'Discussion', 'projectId', 'order'=>'created DESC'),
 			'user' => array(self::BELONGS_TO, 'User', 'userId'),

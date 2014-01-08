@@ -16,11 +16,11 @@ class UserController extends Controller
 
     public function actionProfile()
     {
-       
+
         if (!Yii::app()->user->isGuest) {
-             
-             $user = User::model()->findByPk(Yii::app()->user->id);
-        
+
+            $user = User::model()->findByPk(Yii::app()->user->id);
+
             if ($user) {
                 $this->render('profile', array('user' => $user, 'readonly' => false));
                 return;
@@ -53,87 +53,93 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        /* @var $model User */
-        $model = new User;
+        if (!Yii::app()->user->isGuest) {
+            /* @var $model User */
+            $model = new User;
 
-        // Loads user model if signed in.
-        if (isset(Yii::app()->session['uid'])) {
-            $model = User::model()->findByPk(Yii::app()->session['uid']);
-        }
+            // Loads user model if signed in.
+            if (isset(Yii::app()->session['uid'])) {
+                $model = User::model()->findByPk(Yii::app()->session['uid']);
+            }
 
-        // Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation($model);
+            // Uncomment the following line if AJAX validation is needed
+            $this->performAjaxValidation($model);
 
-        if (isset($_POST['User'])) {
-            // Set attributes from 'POST'
-            $model->attributes = $_POST['User'];
-            $model->selectedLabs = $_POST['User']['selectedLabs'];
-            $model->selectedTechs = $_POST['User']['selectedTechs'];
-            $model->otherLabName = $_POST['User']['otherLabName'];
-            $model->otherTechName = $_POST['User']['otherTechName'];
+            if (isset($_POST['User'])) {
+                // Set attributes from 'POST'
+                $model->attributes = $_POST['User'];
+                $model->selectedLabs = $_POST['User']['selectedLabs'];
+                $model->selectedTechs = $_POST['User']['selectedTechs'];
+                $model->otherLabName = $_POST['User']['otherLabName'];
+                $model->otherTechName = $_POST['User']['otherTechName'];
 
-            // Saves model and then labs and techniques are saved.
-            if ($model->save()) {
-                // Delete old labs and save new ones
-                if (!empty($model->selectedLabs)) {
-                    $labs = LabUser::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
-                    foreach ($labs as $lab) {
-                        $lab->delete();
+                // Saves model and then labs and techniques are saved.
+                if ($model->save()) {
+                    // Delete old labs and save new ones
+                    if (!empty($model->selectedLabs)) {
+                        $labs = LabUser::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
+                        foreach ($labs as $lab) {
+                            $lab->delete();
+                        }
+                        foreach ($model->selectedLabs as $lab) {
+                            $labUser = new LabUser();
+                            $labUser->userId = Yii::app()->session['uid'];
+                            $labUser->labId = $lab;
+                            $labUser->save();
+                        }
                     }
-                    foreach ($model->selectedLabs as $lab) {
-                        $labUser = new LabUser();
-                        $labUser->userId = Yii::app()->session['uid'];
-                        $labUser->labId = $lab;
-                        $labUser->save();
-                    }
-                }
 
-                // Delete old other lab name and save the new one
-                if (!empty($model->otherLabName)) {
-                    /* @var $otherLabs LabUserOther */
-                    $otherLabs = LabUserOther::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
-                    if (!empty($otherLabs)) foreach ($otherLabs as $otherLab) $otherLab->delete();
-                    $otherLab = new LabUserOther();
-                    $otherLab->userId = Yii::app()->session['uid'];
-                    $otherLab->name = $model->otherLabName;
-                    $otherLab->save();
-                }
-
-                // Delete older techniques and save new ones
-                if (!empty($model->selectedTechs)) {
-                    $techs = TechUser::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
-                    foreach ($techs as $tech) {
-                        $tech->delete();
+                    // Delete old other lab name and save the new one
+                    if (!empty($model->otherLabName)) {
+                        /* @var $otherLabs LabUserOther */
+                        $otherLabs = LabUserOther::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
+                        if (!empty($otherLabs)) foreach ($otherLabs as $otherLab) $otherLab->delete();
+                        $otherLab = new LabUserOther();
+                        $otherLab->userId = Yii::app()->session['uid'];
+                        $otherLab->name = $model->otherLabName;
+                        $otherLab->save();
                     }
-                    foreach ($model->selectedTechs as $tech) {
-                        $techUser = new TechUser();
-                        $techUser->userId = Yii::app()->session['uid'];
-                        $techUser->techId = $tech;
-                        $techUser->save();
-                    }
-                }
 
-                // Delete old other technique and save new one
-                if (!empty($model->otherTechName)) {
-                    /* @var $otherTechs TechUserOther */
-                    $otherTechs = TechUserOther::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
-                    if (!empty($otherTechs)) foreach ($otherTechs as $otherTech) $otherTech->delete();
-                    $otherTech = new TechUserOther();
-                    $otherTech->userId = Yii::app()->session['uid'];
-                    $otherTech->name = $model->otherTechName;
-                    $otherTech->save();
-                }
+                    // Delete older techniques and save new ones
+                    if (!empty($model->selectedTechs)) {
+                        $techs = TechUser::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
+                        foreach ($techs as $tech) {
+                            $tech->delete();
+                        }
+                        foreach ($model->selectedTechs as $tech) {
+                            $techUser = new TechUser();
+                            $techUser->userId = Yii::app()->session['uid'];
+                            $techUser->techId = $tech;
+                            $techUser->save();
+                        }
+                    }
+
+                    // Delete old other technique and save new one
+                    if (!empty($model->otherTechName)) {
+                        /* @var $otherTechs TechUserOther */
+                        $otherTechs = TechUserOther::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
+                        if (!empty($otherTechs)) foreach ($otherTechs as $otherTech) $otherTech->delete();
+                        $otherTech = new TechUserOther();
+                        $otherTech->userId = Yii::app()->session['uid'];
+                        $otherTech->name = $model->otherTechName;
+                        $otherTech->save();
+                    }
 
 //                $this->redirect(array('create', 'id' => $model->id));
-                Yii::app()->user->setFlash('update', Yii::app()->params['SUCCESS']);
-            } else {
-                Yii::app()->user->setFlash('update', Yii::app()->params['FAILURE']);
+                    // sets success flash named 'update'
+                    Yii::app()->user->setFlash('update', Yii::app()->params['SUCCESS']);
+                } else {
+                    // sets failure flash named 'update'
+                    Yii::app()->user->setFlash('update', Yii::app()->params['FAILURE']);
+                }
             }
+            $this->render('create', array(
+                'model' => $model,
+                'readonly' => false,
+            ));
+        } else {
+            $this->redirect(array('site/index'));
         }
-
-        $this->render('create', array(
-            'model' => $model,
-        ));
     }
 
     /**
