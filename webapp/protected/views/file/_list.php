@@ -84,22 +84,29 @@
 		</div>
 
 		<div class="clear">&nbsp;</div>
-
-		
+                
+                <?php 
+                $store_path = $project->title.'/'.GeneralFunctions::getUsername().'/'.date("Y-m-d").'/'; 
+                
+                $policy = base64_encode(json_encode(array('expiry'=>strtotime("+5 minutes"), 'call'=>array('pick','store'))));
+                $signature = hash_hmac('sha256', $policy, Yii::app()->params['filepicker']['app_secret']);
+                ?>
+                
 		<input type="filepicker" 
-		data-fp-apikey="<?php echo Yii::app()->params['filepickerioapikey'] ?>" 
+                data-fp-policy="<?php echo $policy ?>"       
+                data-fp-signature ="<?php echo $signature; ?>"       
+                data-fp-store-container="filepicker_elance"       
+		data-fp-apikey="<?php echo Yii::app()->params['filepicker']['api_key'] ?>" 
 		data-fp-mimetypes="*/*" 
 		data-fp-container="modal"
 		data-fp-multiple="true" 
 		data-fp-services="COMPUTER,BOX,DROPBOX"
 		data-fp-button-text="Add Files" 
-                data-fp-store-location="BOX"
-                data-fp-store-path="<?php echo Yii::app()->params['boxfolderid'] ?>"
-                
+                data-fp-store-location="S3"
+                data-fp-store-path="<?php echo $store_path?>"                    
 		onchange="processFpResponse(event);"
 		class="btn btn-success fpaddfiles" >
-		
-			
+
 	</div>
 
 <script>
@@ -144,12 +151,11 @@ var processFpResponse = function(event) {
             success: function (result) {
 		location.reload();
 	    },
-			error:function (e){
-		//		alert(JSON.stringify(e));
-						//location.reload();
-
-			}
-			});
+            error:function (e){
+                    //alert(JSON.stringify(e));
+                    location.reload();
+                }
+            });
                         
 }
 
@@ -399,4 +405,4 @@ var processFpResponse = function(event) {
 
 	<script type="text/javascript" src="/js/clickheat.js"></script><noscript><p><a href="http://www.dugwood.com/index.html">Open Source Sofware</a></p></noscript>-->
 
-	<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+<script src="//api.filepicker.io/v1/filepicker.js" type="text/javascript"></script>

@@ -525,14 +525,22 @@
                     'id'=>'newsletter-form',
                     'action'=> $this->createUrl('site/newsletter'),
                 )); ?>
-          <h3 align = "center">Stirplate Newsletter, sign up for updates.</h3>
-          <div class="signUpMain">
-              <?php echo $form->error($newsLetterModel,'email'); ?>
-              <?php echo Yii::app()->user->getFlash('success'); ?>
-              <?php echo $form->textField($newsLetterModel, 'email', array('placeholder' => 'Enter email address')); ?>
-               <?php echo CHtml::hiddenField('confirmemail'); ?>
-              <?php echo CHtml::submitButton('Subscribe'); ?>
-          </div>
+          <h3 align = "center" class="newsletter-head">Stirplate Newsletter, sign up for updates.</h3>
+
+            <div class="newsletter-holder">
+                <div class="signUpMain">
+                    <?php echo $form->error($newsLetterModel, 'email'); ?>
+                    <?php echo Yii::app()->user->getFlash('success'); ?>
+                    <?php echo $form->textField(
+                        $newsLetterModel,
+                        'email',
+                        array('placeholder' => 'Enter email address')
+                    ); ?>
+                    <?php echo CHtml::hiddenField('confirmemail'); ?>
+
+                </div>
+                <?php echo CHtml::submitButton('Subscribe'); ?>
+            </div>
             <?php $this->endWidget(); ?>
         </div>
   </section>
@@ -549,7 +557,6 @@
 			<span><a href="<?php echo $this->createUrl('site/faq'); ?>">FAQ</a></span>
 			<span><a href="mailto:info@stirplate.io">Contact us</a></span>
 			<span><a href="<?php echo $this->createUrl('site/blog'); ?>">Blog</a></span>
-			<span class="">Follow us :</a> 
 			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
 				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
 			</span> 		

@@ -37,14 +37,15 @@
 					
 					$(".name-block").on("mouseover", function(){
 					  $(this).children(".delete-icon").show();
-					  $(this).css("border","1px solid grey");
+					  $(this).children("border","1px solid grey");
 					});
 					
 					$(".name-block").on("mouseout", function(){
 					  $(this).children(".delete-icon").hide();
-					  $(this).css("border","none");
+					  $(this).children("border","none");
 					});
                     
+					
                 });
             </script>
             <br><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"> Add new project member  </a>
@@ -75,7 +76,7 @@
 </section>
 <section class="detailMainContent"> 
 	<div class="wrapper"> 
-    	<?php $this->renderPartial('_discussionList', array('activities' => $project->activities,'project'=>$project)); ?>
+    	<?php $this->renderPartial('_discussionList', array('activities' => $project->comments,'project'=>$project)); ?>
         
         <div class="detailMainContentMain detailMainContentMainLft">
          <a id="tasks"></a>
@@ -149,6 +150,7 @@
             
             $('.toolpopup').show();
         });
+	
          $('.edit-img').mouseout(function(){
             
             $('.toolpopup').hide();

@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 	<link rel="stylesheet" type="text/css" href="/css/layout.css">
+    <link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <?php 
@@ -25,7 +26,6 @@
 
         <script type="text/javascript" src="/css/select2.min.js"></script>
         <script type="text/javascript" src="/css/jquery.textcomplete.min.js"></script>
-        <script type="text/javascript" src="/css/jquery.overlay.min.js"></script>
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 
 	<script type="text/javascript">  
@@ -41,6 +41,7 @@
 
 </head> 
 <body>
+
 <?php $this->widget('ext.AnalyticsTrackingWidget');?>
 <?php echo $content; ?>
 <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>  
