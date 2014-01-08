@@ -556,8 +556,7 @@
 			<span><a href="<?php echo $this->createUrl('site/blog'); ?>">Blog</a></span>
 			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
 				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
-			</span> 		
-		<p>    
+		<p>
       </div>
       </div>
      
