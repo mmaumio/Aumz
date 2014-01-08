@@ -1,6 +1,8 @@
 <?php foreach ($activities as $activity) {?>
 	<li activity_id="<?= $activity->id ?>" class="activity">
   <!-- <img src="http://placehold.it/150x150" alt="Sample Image" /> -->
+  <a href="/project/index/<?= $activity->projectId?>">
+    
     <div class="listRt" style="width: 95%;">
       <?php if ($activity->type == "comment") { ?>
         <h6><?= $activity->user->firstName ?></h6>
@@ -14,5 +16,6 @@
       <?php } ?>
       <div class="listRtTime"><?= GeneralFunctions::getPrettyTime($activity->created);?></div>
     </div>  
+  </a>
 </li>
 <?php }?>
