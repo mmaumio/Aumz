@@ -111,3 +111,31 @@ ALTER TABLE `user` ADD `contactEmail` varchar(128);
 kg: ok
 -- Kasun
 
+-- 01/07/2013 -- start -- Kasun
+CREATE TABLE `user_position` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARSET=utf8;
+
+INSERT INTO user_position (name) values ('PI'), ('Lab Tech'), ('Grad Student'), ('Post-Doc'), ('Undergrad');
+
+ALTER TABLE `user` 
+
+CHANGE COLUMN `position` `position` INT UNSIGNED NULL DEFAULT NULL ,
+
+ADD INDEX `fk_user_position_idx` (`position` ASC);
+
+
+ALTER TABLE `user` 
+
+ADD CONSTRAINT `fk_user_position`
+  
+FOREIGN KEY (`position`)
+  REFERENCES `user_position` (`id`)
+  
+ON DELETE CASCADE
+  ON UPDATE CASCADE;
+-- 01/07/2013 -- end -- Kasun

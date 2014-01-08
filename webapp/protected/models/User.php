@@ -19,6 +19,15 @@
  * @property string $password
  * @property string $created
  * @property string $modified
+ * @property string $affiliation
+ * @property string $department
+ * @property string $fieldOfStudy
+ * @property string $labTitle
+ * @property string $labUrl
+ * @property string $researchInterests
+ * @property string $socialMediaFacebook
+ * @property string $socialMediaTwitter
+ * @property string $socialMediaLinkedIn
  *
  * The followings are the available model relations:
  * @property Activity[] $activities
@@ -33,6 +42,7 @@
  * @property Tech[] $techs
  * @property TechUserOther $otherTech
  * @property LabUserOther $otherLab
+ * @property Integer $position
  *
  */
 class User extends CActiveRecord
@@ -71,7 +81,10 @@ class User extends CActiveRecord
             array('password,keystring', 'length', 'max' => 255),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, firstName, lastName, email, gender, link, timezone, locale, type, status, profileImageUrl, password, created, modified', 'safe', 'on' => 'search'),
+            array('id, firstName, lastName, email, gender, link, timezone, locale, type, status, profileImageUrl,
+            password, created, modified, position, affiliation, department, fieldOfStudy, labTitle, labUrl,
+            researchInterests, socialMediaFacebook, socialMediaTwitter, socialMediaLinkedIn, labs, techs, otherLab,
+            otherTech', 'safe'),
         );
     }
 
@@ -95,6 +108,7 @@ class User extends CActiveRecord
             'techs' => array(self::MANY_MANY, 'TechUser', 'tech_user(userId, techId)', 'index' => 'techId'),
             'otherLab' => array(self::HAS_ONE, 'LabUserOther', 'userId'),
             'otherTech' => array(self::HAS_ONE, 'TechUserOther', 'userId'),
+            'position' => array(self::BELONGS_TO, 'UserPosition', 'id'),
         );
     }
 
@@ -158,6 +172,16 @@ class User extends CActiveRecord
         $criteria->compare('created', $this->created, true);
         $criteria->compare('modified', $this->modified, true);
         $criteria->compare('tech', $this->tech, true);
+        $criteria->compare('position', $this->position, true);
+        $criteria->compare('affiliation', $this->affiliation, true);
+        $criteria->compare('department', $this->department, true);
+        $criteria->compare('fieldOfStudy', $this->fieldOfStudy, true);
+        $criteria->compare('labTitle', $this->labTitle, true);
+        $criteria->compare('labUrl', $this->labUrl, true);
+        $criteria->compare('researchInterests', $this->researchInterests, true);
+        $criteria->compare('socialMediaFacebook', $this->socialMediaFacebook, true);
+        $criteria->compare('socialMediaTwitter', $this->socialMediaTwitter, true);
+        $criteria->compare('socialMediaLinkedIn', $this->socialMediaLinkedIn, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

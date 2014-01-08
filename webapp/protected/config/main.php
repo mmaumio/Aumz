@@ -64,6 +64,7 @@ return array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+                '<user:\w+>'=>'user/profile',
 			),
 		),
 
@@ -74,12 +75,13 @@ return array(
 //		),
 		'db'=>array(
 	//		KG comment: The following line connects the app w/ the cloudsql database, does not work w/ local copy
-			'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
+//			'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
 		// Uncomment the following to use a local copy of the DB(located in the repo)
 		//	'connectionString' => 'mysql:host=localhost;dbname=omniscience',
+			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
             'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => '',
+			'password' => 'root',
 			'charset' => 'utf8',
 		),
 		
