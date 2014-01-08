@@ -44,12 +44,7 @@
 					  $(this).children(".delete-icon").hide();
 					  $(this).children("border","none");
 					});
-<<<<<<< HEAD
-                    
-					
-=======
 
->>>>>>> 73dedeb4ddbce26ef91f149df2089c7e6cdb9ea8
                 });
             </script>
             <br><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"> Add new project member  </a>
