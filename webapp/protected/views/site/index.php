@@ -476,8 +476,10 @@
 <!--Page 3 Start-->
 <section class="page3">
   <div class="wrapper">
-  <h2 style="color:white">Watch this video to see what Stirplate.io can do for your lab</h2>
-   <div class="page3Main">		
+      <div class="video-head">
+          <h2 >Watch this video to see what Stirplate.io can do for your lab</h2>
+      </div>
+   <div class="page3Main">
                   <iframe src="//player.vimeo.com/video/75926086?title=0&amp;byline=0&amp;portrait=0" width="1020" height="640" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
   
    </div>
@@ -556,8 +558,7 @@
 			<span><a href="<?php echo $this->createUrl('site/blog'); ?>">Blog</a></span>
 			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
 				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
-			</span> 		
-		<p>    
+		<p>
       </div>
       </div>
      

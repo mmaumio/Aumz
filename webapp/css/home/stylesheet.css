@@ -622,6 +622,10 @@ vertical-align:top;
     margin: 10px 0 0 0;
     cursor: pointer;
     line-height: normal;
+    text-decoration: none !important;
+}
+a.btn-signup:hover{
+    color: #FFFFFF !important;
 }
 .btn-submit
 {
@@ -678,4 +682,15 @@ vertical-align:top;
 }
 .signUpMain #NewsletterForm_email{
     float: left;
+}
+.video-head{
+    text-align: center;
+    background-color: #E0B8E0;
+    color: #563A94;
+    font-family: "HelveticaNeueLT Pro";
+}
+.video-head h2{
+    font-size: 27px;
+    font-weight: bold;
+    padding: 5px;
 }
