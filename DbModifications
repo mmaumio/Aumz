@@ -163,7 +163,7 @@ CREATE TABLE `position` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB CHARSET=utf8;
 
-INSERT INTO user_position (name, created, modified) values
+INSERT INTO position (name, created, modified) values
 ('PI', '0000-00-00', '0000-00-00'),
 ('Lab Tech', '0000-00-00', '0000-00-00'),
 ('Grad Student', '0000-00-00', '0000-00-00'),
