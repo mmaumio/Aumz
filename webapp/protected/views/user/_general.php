@@ -51,8 +51,7 @@
     <label class="control-label" for="textinput">Position</label>
 
     <div class="controls margin-left-3em">
-        <?php echo CHtml::activeRadioButtonList($model, 'position',
-            CHtml::listData(UserPosition::model()->findAll(), 'id', 'name'),
+        <?php echo CHtml::activeRadioButtonList($model, 'selectedPositions[0]', CHtml::listData(Position::model()->findAll(), 'id', 'name'),
             array('class' => 'input-xlarge', 'readonly' => $readonly)) ?>
     </div>
 </div>

@@ -68,10 +68,6 @@ class UserController extends Controller
             if (isset($_POST['User'])) {
                 // Set attributes from 'POST'
                 $model->attributes = $_POST['User'];
-                $model->selectedLabs = $_POST['User']['selectedLabs'];
-                $model->selectedTechs = $_POST['User']['selectedTechs'];
-                $model->otherLabName = $_POST['User']['otherLabName'];
-                $model->otherTechName = $_POST['User']['otherTechName'];
 
                 // Saves model and then labs and techniques are saved.
                 if ($model->save()) {
@@ -123,6 +119,20 @@ class UserController extends Controller
                         $otherTech->userId = Yii::app()->session['uid'];
                         $otherTech->name = $model->otherTechName;
                         $otherTech->save();
+                    }
+
+                    // Delete older user positions and save new ones
+                    if (!empty($model->selectedPositions)) {
+                        $positions = UserPosition::model()->findAllByAttributes(array('userId' => Yii::app()->session['uid']));
+                        foreach ($positions as $position) {
+                            $position->delete();
+                        }
+                        foreach ($model->selectedPositions as $position) {
+                            $userPosition = new UserPosition();
+                            $userPosition->userId = Yii::app()->session['uid'];
+                            $userPosition->positionId = $position;
+                            $userPosition->save();
+                        }
                     }
 
 //                $this->redirect(array('create', 'id' => $model->id));

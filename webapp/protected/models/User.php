@@ -14,6 +14,7 @@
  * @property string $timezone
  * @property string $locale
  * @property string $type
+ * @property string $position
  * @property string $status
  * @property string $profileImageUrl
  * @property string $password
@@ -42,21 +43,21 @@
  * @property Tech[] $techs
  * @property TechUserOther $otherTech
  * @property LabUserOther $otherLab
- * @property Integer $position
+ * @property Position[] $positions
  *
  */
 class User extends CActiveRecord
 {
+    public $confirmpassword;
     public $selectedLabs;
     public $selectedTechs;
     public $otherLabName;
     public $otherTechName;
+    public $selectedPositions;
+
     /**
      * @return string the associated database table name
      */
-
-    public $confirmpassword;
-
     public function tableName()
     {
         return 'user';
@@ -82,7 +83,8 @@ class User extends CActiveRecord
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, firstName, lastName, email, gender, link, timezone, locale, type, status, profileImageUrl,
-            password, created, modified, position, affiliation, department, fieldOfStudy, labTitle, labUrl,
+            password, created, modified, position, positions, affiliation, department, fieldOfStudy, labTitle, labUrl,
+            selectedLabs, selectedTechs, otherLabName, otherTechName, selectedPositions,
             researchInterests, socialMediaFacebook, socialMediaTwitter, socialMediaLinkedIn, labs, techs, otherLab,
             otherTech', 'safe'),
         );
@@ -108,7 +110,8 @@ class User extends CActiveRecord
             'techs' => array(self::MANY_MANY, 'TechUser', 'tech_user(userId, techId)', 'index' => 'techId'),
             'otherLab' => array(self::HAS_ONE, 'LabUserOther', 'userId'),
             'otherTech' => array(self::HAS_ONE, 'TechUserOther', 'userId'),
-            'position' => array(self::BELONGS_TO, 'UserPosition', 'id'),
+            'positions' => array(self::MANY_MANY, 'UserPosition', 'user_position(userId, positionId)', 'index' => 'positionId'),
+
         );
     }
 
@@ -133,8 +136,18 @@ class User extends CActiveRecord
             'password' => 'Password',
             'created' => 'Created',
             'modified' => 'Modified',
+			'position' => 'Position',
+			'affiliation' => 'Affiliation',
+			'department' => 'Department',
+			'fieldOfStudy' => 'Field Of Study',
+			'labTitle' => 'Lab Title',
+			'labUrl' => 'Lab Url',
+			'researchInterests' => 'Research Interests',
+			'socialMediaFacebook' => 'Social Media Facebook',
+			'socialMediaTwitter' => 'Social Media Twitter',
+			'socialMediaLinkedIn' => 'Social Media Linked In',
             'keystring' => 'Keystring',
-            
+
         );
     }
 
@@ -171,7 +184,6 @@ class User extends CActiveRecord
         $criteria->compare('password', $this->password, true);
         $criteria->compare('created', $this->created, true);
         $criteria->compare('modified', $this->modified, true);
-        $criteria->compare('tech', $this->tech, true);
         $criteria->compare('position', $this->position, true);
         $criteria->compare('affiliation', $this->affiliation, true);
         $criteria->compare('department', $this->department, true);
@@ -229,7 +241,7 @@ class User extends CActiveRecord
             $project = Project::model()->find(array('condition' => 'id=:id', 'params' => array(':id' => $projectId)));
             if ($project_user->save()) {
                 Notification::sendEmail('userAdded', $this, $project_user);
-                
+
             }
         }
 
@@ -255,7 +267,11 @@ class User extends CActiveRecord
         parent::afterFind();
         $this->selectedLabs = array_keys($this->labs);
         $this->selectedTechs = array_keys($this->techs);
-        if(!empty($this->otherLab)) $this->otherLabName = $this->otherLab->name;
-        if(!empty($this->otherTech)) $this->otherTechName = $this->otherTech->name;
+        if(!empty($this->positions)) {
+            $selPos = $this->positions;
+            $this->selectedPositions = array_keys($selPos);
+        }
+        if (!empty($this->otherLab)) $this->otherLabName = $this->otherLab->name;
+        if (!empty($this->otherTech)) $this->otherTechName = $this->otherTech->name;
     }
 }
