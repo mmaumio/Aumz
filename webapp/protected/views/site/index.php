@@ -402,12 +402,9 @@
                     </label>
                     <div class="control-group buttons">
                          <div class="controls">
-                            
                             <?php echo CHtml::submitButton('SIGN IN',array('class'=>'btn-submit')); ?>
-							
-                             <a class="btn btn-success btn-signup" data-toggle="modal" data-target="#signup-dialog" style="font-family:'HelveticaNeueLT Pro';font-size: 20px;">SIGN UP</a>
-                         
-                            </div>
+                            <a class="btn-signup" data-toggle="modal" data-target="#signup-dialog" style="font-family:'HelveticaNeueLT Pro';font-size: 20px;">SIGN UP</a>
+                         </div>
                     </div>
                     <?php echo CHtml::hiddenField('confirm-password'); ?>
             <?php $this->endWidget(); ?>
@@ -479,8 +476,10 @@
 <!--Page 3 Start-->
 <section class="page3">
   <div class="wrapper">
-  <h2 style="color:white">Watch this video to see what Stirplate.io can do for your lab</h2>
-   <div class="page3Main">		
+      <div class="video-head">
+          <h2 >Watch this video to see what Stirplate.io can do for your lab</h2>
+      </div>
+   <div class="page3Main">
                   <iframe src="//player.vimeo.com/video/75926086?title=0&amp;byline=0&amp;portrait=0" width="1020" height="640" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
   
    </div>
@@ -526,7 +525,6 @@
                     'action'=> $this->createUrl('site/newsletter'),
                 )); ?>
           <h3 align = "center" class="newsletter-head">Stirplate Newsletter, sign up for updates.</h3>
-
             <div class="newsletter-holder">
                 <div class="signUpMain">
                     <?php echo $form->error($newsLetterModel, 'email'); ?>
@@ -537,15 +535,13 @@
                         array('placeholder' => 'Enter email address')
                     ); ?>
                     <?php echo CHtml::hiddenField('confirmemail'); ?>
-
                 </div>
                 <?php echo CHtml::submitButton('Subscribe'); ?>
             </div>
             <?php $this->endWidget(); ?>
         </div>
   </section>
-
-
+  <!--Footer section-->
 <section class="contact">
   <div class="wrapper">
     <div class="contactMain">
@@ -559,8 +555,7 @@
 			<span><a href="<?php echo $this->createUrl('site/blog'); ?>">Blog</a></span>
 			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
 				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
-			</span> 		
-		<p>    
+		<p>
       </div>
       </div>
      

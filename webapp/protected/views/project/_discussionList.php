@@ -22,7 +22,9 @@
 				<input type="hidden" name="activity[type]" value="comment">
 				<textarea id="newComment" name="activity[content]" class="diss-form col-md-8" placeholder="Add to the discussion. Direct a comment to an individual by typing @(their name)." style="word-wrap: break-word;  height: 80px;" required=""></textarea>
 				<div class="clear"></div>
+
 				<button class="btn btn-primary" type="submit" style="float:right;margin-top:45px;margin-right: 30%;" id="submitCommentBtn">Submit Comment</button>
+
 		                   <!-- <textarea id="textarea" name="textarea">default text</textarea>-->
 		                </div>
 		            </div>

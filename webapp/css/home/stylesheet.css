@@ -469,6 +469,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	float: left;
 	background: #fff;
 	opacity: 0.9;
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    box-shadow: 0 2px 3px #666;
+    -moz-box-shadow: 0 2px 3px #666;
+    -ms-box-shadow: 0 2px 3px #666;
+    -webkit-box-shadow: 0 2px 3px #666;
 }
 .contactMainHeadBox {
 	float: left;
@@ -606,20 +614,33 @@ vertical-align:top;
 #forgot-modal .modal-header {border-bottom: none;}
 
 .btn-signup{
-    background: none repeat scroll 0 0 #00ACFD;
-    border: 0 none;
-    border-radius: 4px;
+    background-color: #5CB85C;
+    border-color: #4CAE4C;
     color: #FFFFFF;
-    cursor: pointer;
-    float: right;
+    float: left;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 0px;
+    font-size: 20px;
+    color: #fff;
     font-family: "HelveticaNeueLT Pro";
-    font-size: 20px !important;
-    margin: 10px -206px 2px 2px !important;
-    padding: 4px 15px 0px !important;
+    padding: 7px 20px 2px 20px;
+    margin: 10px 0 0 0;
+    cursor: pointer;
+    line-height: normal;
+    text-decoration: none !important;
+}
+a.btn-signup:hover{
+    color: #FFFFFF !important;
 }
 .btn-submit
 {
-    margin-right: 96px !important;
+    margin-left:212px !important;
+    margin-right:7px !important;
+
+    float: left !important;
 }
 #signup-dialog .modal-header {
     background-color: #428BCA;
@@ -666,7 +687,29 @@ vertical-align:top;
 }
 .signUp h3.newsletter-head{
     color: #FFFFFF;
+<<<<<<< HEAD
+=======
 }
 .signUpMain #NewsletterForm_email{
     float: left;
+}
+.video-head{
+    text-align: center;
+    background-color: #E0B8E0;
+    color: #563A94;
+    font-family: "HelveticaNeueLT Pro";
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    box-shadow: 0 2px 3px #666;
+    -moz-box-shadow: 0 2px 3px #666;
+    -ms-box-shadow: 0 2px 3px #666;
+    -webkit-box-shadow: 0 2px 3px #666;
+}
+.video-head h2{
+    font-size: 27px;
+    font-weight: bold;
+    padding: 5px;
+>>>>>>> 73dedeb4ddbce26ef91f149df2089c7e6cdb9ea8
 }
