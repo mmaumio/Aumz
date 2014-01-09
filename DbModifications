@@ -184,7 +184,7 @@ CREATE TABLE `user_position` (
   CONSTRAINT `userPos_position_fk` FOREIGN KEY (`positionId`) REFERENCES `position` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `userPos_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB CHARSET=utf8;
-KG --Error Code: 1050. Table 'user_position' already exists
+Kg-ok
 
 -- End new create
 -- 01/08/2014

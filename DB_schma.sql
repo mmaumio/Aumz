@@ -1790,12 +1790,15 @@ DROP TABLE IF EXISTS `user_position`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_position` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
+  `positionId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
   `created` datetime NOT NULL,
-  `updated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`positionId`,`userId`),
+  KEY `fk_user_pos_user` (`userId`),
+  CONSTRAINT `userPos_position_fk` FOREIGN KEY (`positionId`) REFERENCES `position` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `userPos_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1811,4 +1814,4 @@ CREATE TABLE `user_position` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-08 21:33:30
+-- Dump completed on 2014-01-08 22:14:02
