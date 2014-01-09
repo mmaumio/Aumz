@@ -95,7 +95,12 @@ class FileController extends Controller
                                 
                                 Yii::app()->db->createCommand($sql)->execute($parameters);
                                 //var_dump(Yii::app()->db->createCommand($sql));
-                                
+       $activity = new Activity;
+				$activity->userId = Yii::app()->user->id;
+				$activity->type = 'file_added';
+                                $activity->projectId = $file->projectId;
+                                $activity->save();
+                         
 			/*	if ($file->save())
 				{
 					echo "success";
