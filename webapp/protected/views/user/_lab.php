@@ -14,7 +14,7 @@
             array('class' => 'input-xlarge',)) ?>
     </div>
     <div class="controls">
-        <?php echo 'Other: ' . CHtml::activeTextField($model, 'otherLabName', array('class' => 'input-xlarge')); ?>
+        <?php echo 'Other: ' . CHtml::activeTextField($model, 'otherLabName', array('class' => 'input-xarge')); ?>
     </div>
 </div>
 <div class="control-group">
@@ -25,6 +25,6 @@
             array('class' => 'input-xlarge',)) ?>
     </div>
     <div class="controls">
-        <?php echo 'Other: ' . CHtml::activeTextField($model, 'otherTechName', array('class' => 'input-xlarge')); ?>
+        <?php echo 'Other: ' . CHtml::activeTextField($model, 'otherTechName', array('class' => 'input-xarge')); ?>
     </div>
 </div>

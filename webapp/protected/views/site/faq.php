@@ -1,6 +1,7 @@
 
   <center> <h1>Frequently asked questions</h1> </center>
-<div class="panel panel-default">
+<div class="container">
+<div class="panel panel-success">
   <div class="panel-heading">
     <h3 class="panel-title">Is my data safe?</h3>
   </div>
@@ -14,7 +15,8 @@
 		<li> All files stored on Stirplate are encrypted, sent security via SSL and are even guarded by armed guards. </li>
   	  </div>
    </div>
-<div class= "panel panel-default">
+
+<div class= "panel panel-success">
   <div class="panel-heading">
     <h3 class="panel-title">What happens to my data if stirplate.io closes?</h3>
   </div>
@@ -23,7 +25,7 @@
   </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-success">
 	  <div class="panel-heading">
 	    <h3 class="panel-title">Is my scientific data shared with the public?</h3>
 	  </div>
@@ -32,7 +34,7 @@
   </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-success">
 	  <div class="panel-heading">
 	    <h3 class="panel-title">I use dropbox or my own servers, why is this better?</h3>
 	  </div>
@@ -45,7 +47,7 @@
   </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-success">
 	  <div class="panel-heading">
 	    <h3 class="panel-title">I'm still a little apprehensive...</h3>
 	  </div>
@@ -53,4 +55,5 @@
 No problem and we understand. We’ve dealt with some really bad science software! Stirplate was founded by someone who has been told “This is the new best thing” hundreds of times, only to be let down when the product was implemented. This is frustrating and wastes time, but we are confident that you will love Stirplate once you give a shot. Any of our paid features have a 30 day free trial, no credit card needed. All of our other services are free so put up a few projects and give it a shot. If you don’t like it, simply delete your account. Want more infomation? Send the CEO an <a href="mailto:info@stirplate.io?Subject=More info">
 email</a>, he would love to hear from you.
   </div>
+</div>
 </div>

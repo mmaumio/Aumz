@@ -212,6 +212,25 @@ html[xmlns] .clearfix {
 	margin: 10px 0 0 0;
 	cursor: pointer;
 }
+.newsletter-holder input[type="submit"]{
+    float: left;
+    background: #00acfd;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 0px;
+    font-size: 20px;
+    color: #fff;
+    font-family: "HelveticaNeueLT Pro";
+    padding: 7px 20px 2px 20px;
+    margin: 5px 0 0 0;
+    cursor: pointer;
+
+}
+.newsletter-holder{
+    display: block;
+}
 .signUp {
 	background: #00e700;
 	width: 100%;
@@ -220,7 +239,6 @@ html[xmlns] .clearfix {
 	-moz-border-radius: 7px;
 	-ms-border-radius: 7px;
 	-webkit-border-radius: 7px;
-	margin: 15px 0 0 0;
 	box-shadow: 0 2px 3px #666;
 	-moz-box-shadow: 0 2px 3px #666;
 	-ms-box-shadow: 0 2px 3px #666;
@@ -238,7 +256,10 @@ html[xmlns] .clearfix {
 .signUpMain {
 	width: 84%;
 	float: left;
-	padding: 0% 8% 2% 8%;
+    padding: 0 0 2% 16%;
+}
+.signUpMain .errorMessage, .signInMain .errorMessage {
+    font-size: 17px;
 }
 .signUpMain input[type="submit"] {
 	margin: 0px !important;
@@ -448,6 +469,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	float: left;
 	background: #fff;
 	opacity: 0.9;
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    box-shadow: 0 2px 3px #666;
+    -moz-box-shadow: 0 2px 3px #666;
+    -ms-box-shadow: 0 2px 3px #666;
+    -webkit-box-shadow: 0 2px 3px #666;
 }
 .contactMainHeadBox {
 	float: left;
@@ -585,20 +614,33 @@ vertical-align:top;
 #forgot-modal .modal-header {border-bottom: none;}
 
 .btn-signup{
-    background: none repeat scroll 0 0 #00ACFD;
-    border: 0 none;
-    border-radius: 4px;
+    background-color: #5CB85C;
+    border-color: #4CAE4C;
     color: #FFFFFF;
-    cursor: pointer;
-    float: right;
+    float: left;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 0px;
+    font-size: 20px;
+    color: #fff;
     font-family: "HelveticaNeueLT Pro";
-    font-size: 20px !important;
-    margin: 10px -206px 2px 2px !important;
-    padding: 4px 15px 0px !important;
+    padding: 7px 20px 2px 20px;
+    margin: 10px 0 0 0;
+    cursor: pointer;
+    line-height: normal;
+    text-decoration: none !important;
+}
+a.btn-signup:hover{
+    color: #FFFFFF !important;
 }
 .btn-submit
 {
-    margin-right: 96px !important;
+    margin-left:212px !important;
+    margin-right:7px !important;
+
+    float: left !important;
 }
 #signup-dialog .modal-header {
     background-color: #428BCA;
@@ -646,7 +688,31 @@ vertical-align:top;
 .signUp h3.newsletter-head{
     color: #FFFFFF;
 }
+<<<<<<< HEAD
 .info-line
 {
     font-size:17px;
+=======
+.signUpMain #NewsletterForm_email{
+    float: left;
+}
+.video-head{
+    text-align: center;
+    background-color: #E0B8E0;
+    color: #563A94;
+    font-family: "HelveticaNeueLT Pro";
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    box-shadow: 0 2px 3px #666;
+    -moz-box-shadow: 0 2px 3px #666;
+    -ms-box-shadow: 0 2px 3px #666;
+    -webkit-box-shadow: 0 2px 3px #666;
+}
+.video-head h2{
+    font-size: 27px;
+    font-weight: bold;
+    padding: 5px;
+>>>>>>> 19979dd4be65063eecdb3dcd332f19fb117803b2
 }

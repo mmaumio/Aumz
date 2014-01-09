@@ -44,8 +44,7 @@
 					  $(this).children(".delete-icon").hide();
 					  $(this).children("border","none");
 					});
-                    
-					
+
                 });
             </script>
             <br><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"> Add new project member  </a>
@@ -76,7 +75,7 @@
 </section>
 <section class="detailMainContent"> 
 	<div class="wrapper"> 
-    	<?php $this->renderPartial('_discussionList', array('activities' => $project->activities,'project'=>$project)); ?>
+    	<?php $this->renderPartial('_discussionList', array('activities' => $project->comments,'project'=>$project)); ?>
         
         <div class="detailMainContentMain detailMainContentMainLft">
          <a id="tasks"></a>

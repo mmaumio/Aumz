@@ -1,7 +1,9 @@
 <?php foreach ($activities as $activity) {?>
 	<li activity_id="<?= $activity->id ?>" class="activity">
-  <img src="http://placehold.it/150x150" alt="Sample Image" />
-    <div class="listRt">
+  <!-- <img src="http://placehold.it/150x150" alt="Sample Image" /> -->
+  <a href="/project/index/<?= $activity->projectId?>">
+    
+    <div class="listRt" style="width: 95%;">
       <?php if ($activity->type == "comment") { ?>
         <h6><?= $activity->user->firstName ?></h6>
         <p>added a new coment "<?= $activity->content ?>" to <?= $activity->project->title ?></p>
@@ -14,5 +16,6 @@
       <?php } ?>
       <div class="listRtTime"><?= GeneralFunctions::getPrettyTime($activity->created);?></div>
     </div>  
+  </a>
 </li>
 <?php }?>

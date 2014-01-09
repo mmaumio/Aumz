@@ -1,7 +1,7 @@
 
 <center><h1> Privacy and Terms of Service </h1> </center>
-
-<div class="panel panel-default">
+<div class="container">
+<div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title">General information</h3>
   </div>
@@ -15,12 +15,12 @@ Content: You also provide us information in Content you post to the Service. You
 
  </div>
    </div>
-<div class="panel panel-default">
+<div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title">Data Storage</h3>
   </div>
 	  <div class="panel-body">
-Stirplate uses third party vendors, and hosting partners (Box.com and Google.com) to provide the necessary hardware, software, networking, storage, and related technology required to run Stirplate. Although Stirplate owns the code, databases, and all rights to the Stirplate application, you retain all rights to your data.
+Stirplate uses third party vendors, and hosting partners (Amazon.com and Google.com) to provide the necessary hardware, software, networking, storage, and related technology required to run Stirplate. Although Stirplate owns the code, databases, and all rights to the Stirplate application, you retain all rights to your data.
 <br>
 
 Log Files: When you use the Service, our servers automatically record certain information sent by your web browser. These server logs may include information such as your web request, Internet Protocol (“IP”) address, browser type, referring / exit pages and URLs, number of clicks and how you interact with links on the Service, domain names, landing pages, pages viewed, mobile carrier, and other such information.
@@ -30,7 +30,7 @@ Compliance with Laws and Law Enforcement Requests; Protection of Stirplate’s R
  </div>
    </div>
 
-<div class="panel panel-default">
+<div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title">Changes</h3>
   </div>
@@ -41,3 +41,4 @@ Stirplate may periodically update this policy. We will notify you about signific
 
 <center><b>Contact us: </b>
 If you have further questions, feel free to <a href="mailto:info@stirplate.io">Contact us</a></span> </center>
+</div>

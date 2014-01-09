@@ -9,9 +9,7 @@ class ActivityController extends Controller
 		{
 			// echo "2";
 			$activity = new Activity;
-			
-			$activity->attributes=$_POST['activity'];
-
+		    $activity->attributes=$_POST['activity'];
 			$activity->userId = Yii::app()->session['uid'];
 			// echo "3";
 			// print_r($activity);

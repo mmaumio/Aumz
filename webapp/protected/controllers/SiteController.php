@@ -362,7 +362,7 @@ class SiteController extends Controller
                         $login->password=base64_decode($_GET['string']);
                         if($login->login())
                         {
-                             Yii::app()->user->setFlash('success','<b>Welcome ! </b> You are all set to use stipulate, please fill in your first/last name and your preferred contact email address to get started');
+                             Yii::app()->user->setFlash('success','<b>Welcome!</b> You are all set to use Stirplate, please fill in your first/last name and your preferred contact email address to get started');
             
                            	$this->redirect(array('user/profile'));
     	                }
