@@ -29,7 +29,8 @@ class ActivityController extends Controller
 					preg_match_all ($pattern, $_POST['activity']['content'], $matches);
 					foreach ($matches[1] as $firstName) {
 						$user = User::model()->findByAttributes(array('firstName' => $firstName));
-						if ($user) {
+						if ($user) 
+                        {
 							Notification::sendEmail('newActivity', $user, $obj);
 							$activity->content =  str_replace("@$firstName", "<a href='#'>@$firstName</a>", $_POST['activity']['content']);
 							$activity->save();
