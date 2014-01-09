@@ -145,28 +145,12 @@
         $(document).ready(function(){
             
             
+            $('.close').click(function(){
+                $(this).parent('.info-line').fadeOut(1000);
+            });
             
             $('#sign-up-btn').click(function(){
-               /* if($('#User_firstName').val()=="")
-                {
-                    $('#firstnameerror').text("Please fill first name");
-                    return false;
-                }
-                else
-                {
-                     $('#firstnameerror').text("");
-                }
-                if($('#User_lastName').val()=="")
-                {
-                    $('#lastnameerror').text("Please fill last name");
-                    return false;
-                }
-                else
-                {
-                        $('#lastnameerror').text("");
-               
-                }*/
-                if($('#User_email').val()=="")
+               if($('#User_email').val()=="")
                 {
                     $('#emailerror').text("Please fill email");
                     return false;
@@ -183,8 +167,7 @@
                 }
                 else
                 {
-                          $('#passworderror').text("");
-              
+                  $('#passworderror').text("");
                 }
                 if($('#User_confirmpassword').val()=="")
                 {
@@ -245,52 +228,10 @@
                 });
                 
             });
-            
-            
-            /**-------------------------------*/
-            
-           /* $('#User_firstName').focus(function(){
-                $('#firstnameerror').text("");
-            });
-            
-            $('#User_firstName').blur(function(){
-                if($('#User_firstName').val()=="")
-                {
-                    $('#firstnameerror').text("Please fill first name");
-                    return false;
-                }
-                else
-                {
-                     $('#firstnameerror').text("");
-                }
-            });
-            
-            $('#User_lastName').focus(function(){
-                $('#lastnameerror').text("");
-            });
-             $('#User_lastName').blur(function(){
-           
-            if($('#User_lastName').val()=="")
-                {
-                    $('#lastnameerror').text("Please fill last name");
-                    return false;
-                }
-                else
-                {
-                        $('#lastnameerror').text("");
-               
-                }
-            });
-            */
-            
-             $('#User_email').focus(function(){
+            $('#User_email').focus(function(){
                 $('#emailerror').text("");
             });
-            
-            
-             $('#User_email').blur(function(){
-           
-            
+            $('#User_email').blur(function(){
             if($('#User_email').val()=="")
                 {
                     $('#emailerror').text("Please fill email");
@@ -337,24 +278,28 @@
             
                 }
             });
-            
-            
-            //*------------------------------*
-        });
+          });
 </script>
 <!--Page 1 Start-->
 <?php if(Yii::app()->user->hasFlash('success')){?>
-<div class="alert alert-warning" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
+<div class="alert alert-success info-line" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
                         <a href="#" class="close" data-dismiss="alert">x
                         </a>
                <strong>Thanks!</strong>         <?php echo Yii::app()->user->getFlash('success'); ?>
 </div>
 <?php } ?>
 <?php if(Yii::app()->user->hasFlash('error')){?>
-<div class="alert alert-warning" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
+<div class="alert alert-warning info-line" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
                         <a href="#" class="close" data-dismiss="alert">x
                         </a>
                <strong>Error ! </strong>         <?php echo Yii::app()->user->getFlash('error'); ?>
+</div>
+<?php } ?>
+<?php if(Yii::app()->user->hasFlash('welcome')){?>
+<div class="alert alert-warning info-line" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
+                        <a href="#" class="close" data-dismiss="alert">x
+                        </a>
+               <strong>Error ! </strong>         <?php echo Yii::app()->user->getFlash('welcome'); ?>
 </div>
 <?php } ?>
 <section class="homePage1">

@@ -279,9 +279,7 @@ class ProjectController extends Controller
 		if (isset($_POST['Task']))
 		{
                         Yii::log(json_encode($_POST['Task']), 'error');
-
-			//TODO: check to make sure user is a member of study before letting them create a task
-                        $task->attributes = $_POST['Task'];
+            $task->attributes = $_POST['Task'];
 			$task->ownerId = Yii::app()->user->id;
                         
 			$respArray = array();
