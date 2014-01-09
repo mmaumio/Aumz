@@ -75,7 +75,8 @@
                 </div>	
         </div>
                 <div class="dashBoxMainRt">
-                	<div class="dashBoxMainRtList">
+                	<div class="dashBoxMainRtList" id="activity_stream2">
+                            <div class="my_title">Activity on Stirplate</div>
                         <ul id="activity_stream">
                     	   <?php $this->renderPartial('//activity/_activity_streams', array('activities' => $activities)); ?>
                         </ul>

@@ -12,7 +12,7 @@
         <p> added <?=$activity->user->firstName?> to "<?= $activity->project->title ?>"</p>
       <?php }else if ($activity->type == "file_added"){?>
         <h6><?= $activity->user->firstName ?></h6>
-        <p> uploaded a file to "<?= $activity->project->title ?>"</p>
+        <p> added file(s) to "<?= $activity->project->title ?>"</p>
       <?php } ?>
       <div class="listRtTime"><?= GeneralFunctions::getPrettyTime($activity->created);?></div>
     </div>  
