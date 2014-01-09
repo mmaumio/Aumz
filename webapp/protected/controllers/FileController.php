@@ -145,8 +145,9 @@ class FileController extends Controller
 
 			if ($project->isMemberOf())
 			{
-                            $this->redirect($file->fpUrl.'?dl=true');
-			}
+			                $policy = base64_encode(json_encode(array('expiry'=>strtotime("+5 minutes"), 'call'=>array('read'))));
+							$signature = hash_hmac('sha256', $policy, Yii::app()->params['filepicker']['app_secret']);
+                            $this->redirect($file->fpUrl.'?dl=true&signature='.$signature.'&policy='.$policy);			}
                 }else{
                     throw new CHttpException(': Access Control','You are not authorised to download this file.');
                 }

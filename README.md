@@ -33,7 +33,8 @@ https://developers.google.com/appengine/docs/php/urlfetch/
 When you are done with your project
 ----------------
 1. Review it locally and make sure it works. 
-2. Push the code to github 
+2. Make sure your codebase is up to date, I've had a lot of conflicts and it takes time to fix them. 
+3. Push the code to github 
 3. In trello, move your project from "doing" to "Pending review"
 4. Choose a new project to start working on, assign it to yourself, and move it to "doing"
 

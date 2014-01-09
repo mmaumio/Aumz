@@ -144,16 +144,16 @@ header {
 }
 .headerNav ul {
 	float: left;
-	background: url(../img/nav/iconNavStrip.png) left top repeat-y;
+
 }
 .headerNav ul li {
 	display: inline;
-	background: url(../img/nav/iconNavStrip.png) top right repeat-y;
+    width: 100%;
 	float: left;
-	padding: 16px 24px;
 }
+
 .headerNav ul li a {
-	float: left;
+
 }
 .middle {
 	width: 100%;
@@ -338,6 +338,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 }
 .listRt p {
 	font-size: 11px;
+	width: 100%;
 	color: #333333;
 	float: left;
 	clear: both;
@@ -713,8 +714,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 
 
 #activity_stream{
-	height: 600px;
-	overflow-y: scroll;
+	height: 80%;
+overflow-y: scroll;
+position: fixed;
+width: 270px;
+top: 100px;
 
 }
 .input-xarge
@@ -727,3 +731,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
     padding: 3px 26px;
     width: 200px;
 }
+
+
+.margin-left-3em {
+    margin-left: 3em;
+}
+
+div#user-profile-title h3 {
+    padding: 0.5em 0;
+}
+.headerNav .dropdown-toggle{
+    margin: 10px 0;
+}
+.detailMainContentMainBtn #newComment{
+    background-color: white;
+    width: 90%;
+}
+.detailMainContentMainBtn .discussion-submit{
+    margin-right: 7%;
+}
+
