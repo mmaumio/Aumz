@@ -99,8 +99,12 @@ class ProjectController extends Controller
 	public function actionDashboard()
 	{
             $uid=Yii::app()->session['uid'];
+            $user_projects = ProjectUser::model()->findAllByAttributes(array('userId'=>$uid));
 			$projects = array();
-            $projects = Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
+            foreach ($user_projects as $user_project) {
+                $projects[] =  $user_project->project;
+            }
+            // $projects = Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
             $activities  = Activity::model()->findAllBySql("SELECT * FROM `activity` WHERE projectId in (SELECT projectId FROM `project_user` WHERE userId = ".Yii::app()->session['uid']." ) ORDER BY created DESC LIMIT 10");
             $this->render('dashboard', array('projects' => $projects, 'activities' => $activities));
 		
