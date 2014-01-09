@@ -1,4 +1,5 @@
 
+
 <center> <h1> About us </h1> </center>
 <div class="container">
 <div class="panel panel-info">
@@ -11,4 +12,4 @@ Keith worked professionally in IT for 4 years before starting his career in scie
 Keith’s PhD is in Behavioral Neuroscience at The University of NY at Albany, and did post-docs at Weill Cornell Medical College, Rockefeller University, and Columbia University.
    </div>
 </div>
-</div>
+
