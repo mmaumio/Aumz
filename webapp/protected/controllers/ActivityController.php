@@ -9,9 +9,7 @@ class ActivityController extends Controller
 		{
 			// echo "2";
 			$activity = new Activity;
-			
-			$activity->attributes=$_POST['activity'];
-
+		    $activity->attributes=$_POST['activity'];
 			$activity->userId = Yii::app()->session['uid'];
 			// echo "3";
 			// print_r($activity);
@@ -29,7 +27,8 @@ class ActivityController extends Controller
 					preg_match_all ($pattern, $_POST['activity']['content'], $matches);
 					foreach ($matches[1] as $firstName) {
 						$user = User::model()->findByAttributes(array('firstName' => $firstName));
-						if ($user) {
+						if ($user) 
+                        {
 							Notification::sendEmail('newActivity', $user, $obj);
 							$activity->content =  str_replace("@$firstName", "<a href='#'>@$firstName</a>", $_POST['activity']['content']);
 							$activity->save();

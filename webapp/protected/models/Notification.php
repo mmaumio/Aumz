@@ -152,7 +152,6 @@ public static function sendEmailBluk($type, $toUsers, $obj)
 			$data['studyName'] = $obj->project->title;
 			$data['user'] =  User::model()->findByPk($obj->invitedUser);
 			$data['invited_user'] =  User::model()->findByPk($obj->userId);
-
 			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('study/index', array('id' => $obj->id));
 			Notification::_sendEmailBluk($toUsers, $subject, $template, $data);
 		}

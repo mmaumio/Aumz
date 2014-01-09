@@ -1,5 +1,8 @@
 <?php
 
+
+
+
 class InvitationController extends Controller
 {
 	public function actionIndex()
@@ -38,4 +41,5 @@ class InvitationController extends Controller
 		);
 	}
 	*/
+
 }

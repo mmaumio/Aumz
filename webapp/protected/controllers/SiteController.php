@@ -223,13 +223,6 @@ class SiteController extends Controller
             {
                     $records =  User::model()->findByAttributes(array('email'=>$_POST['User']['email']));
                     if($records){
-                        // $message = new YiiMailMessage;
-                        // $message->view = 'forgotpassmail';
-                        // $message->setBody(array('records'=>$records), 'text/html');
-                        // $message->subject = 'Request to change password';
-                        // $message->addTo($records->email);
-                        // $message->from = Yii::app()->params['adminEmail'];
-                        // Yii::app()->mail->send($message);
                         $obj = array('token' => md5($records->id).md5(strtotime($records->created)));
                         Notification::sendEmail('passwordReset', $records, $obj);
                         Yii::app()->user->setFlash('success', "It's ok, it happens to the best of us. Check your email to reset your password");
