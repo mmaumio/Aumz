@@ -687,8 +687,6 @@ a.btn-signup:hover{
 }
 .signUp h3.newsletter-head{
     color: #FFFFFF;
-<<<<<<< HEAD
-=======
 }
 .signUpMain #NewsletterForm_email{
     float: left;
@@ -711,5 +709,4 @@ a.btn-signup:hover{
     font-size: 27px;
     font-weight: bold;
     padding: 5px;
->>>>>>> 73dedeb4ddbce26ef91f149df2089c7e6cdb9ea8
 }
