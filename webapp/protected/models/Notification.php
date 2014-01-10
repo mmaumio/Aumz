@@ -52,7 +52,7 @@ class Notification
 			$data['studyName'] = $obj['study']->title;
 			$data['authorName'] = $obj['author']->getName();
 			$data['comment'] = $obj['activity']->content;
-			Notification::_sendEmail($toName, $toEmail, $subject, $template, $data);	
+			Notification::_sendEmail($toName, $toEmail, $obj['author']->getName() . ' mentioned you in a comment', $template, $data);	
 		}
 		else if ($type === 'activityReply')
 		{
