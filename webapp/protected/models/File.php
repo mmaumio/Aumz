@@ -14,6 +14,7 @@
  * @property integer $boxFileSize
  * @property string $created
  * @property string $modified
+ * @property string $delete_date
  *
  * The followings are the available model relations:
  * @property Activity[] $activities
@@ -43,7 +44,7 @@ class File extends CActiveRecord
 			array('name, mimetype, fpUrl, boxId', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, userId, projectId, name, mimetype, fpUrl, boxId, boxFileSize, created, modified', 'safe', 'on'=>'search'),
+			array('id, userId, projectId, name, mimetype, fpUrl, boxId, boxFileSize, created, modified, delete_date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,6 +78,7 @@ class File extends CActiveRecord
 			'boxFileSize' => 'Box File Size',
 			'created' => 'Created',
 			'modified' => 'Modified',
+                        'delete_date'=>'Delete Date'
 		);
 	}
 
@@ -135,10 +137,10 @@ class File extends CActiveRecord
                     )
             );
         }
-  public function beforeSave()
-    {   
-    
-    		
-        return parent::beforeSave();
-    }      
+        public function beforeSave()
+          {   
+
+
+              return parent::beforeSave();
+          }      
 }

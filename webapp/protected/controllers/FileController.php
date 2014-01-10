@@ -158,5 +158,35 @@ class FileController extends Controller
                 }
 	}
         
+        
+        /*
+         * This function sets the status of file to be delete
+         */
+        public function actionDelete(){
+            //Collecting variables
+            $file_id = $_POST['delete_file_id'];
+            $referar_url = $_POST['referer_url'];
+            
+            
+            $file = File::model()->findByPk($file_id);
+            
+            $project = Project::model()->findByPk($file->projectId);
+            
+            if ($project->isMemberOf()){ // If current user is member of project then only he can delete it.
+               
+                $file->delete_date = new CDbExpression('UTC_TIMESTAMP()');
+                if($file->save()){
+                    //Sucess
+                }else{
+                    //Fail
+                }
+                
+            }else{
+                throw new CHttpException(':Authorization','You can\'t delete this file. You are not authorized to perform this action.' );
+            }  
+            
+            $this->redirect(urldecode($referar_url));
+        }
+        
 
 }
