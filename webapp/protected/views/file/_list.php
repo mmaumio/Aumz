@@ -68,10 +68,7 @@
                    break;                   
                    
            }
-              
-
-
-               
+             
          ?>            
             <div class="detailMainContentList">
             	<div class="detailMainContentList1">
@@ -79,16 +76,52 @@
                     <p><b><?php echo $user; ?></b><br/><?php echo $lab_title;?></p>
                 </div>
                 <div class="detailMainContentList2" >
-                	<p>   
-                            <span style="padding-left: 25px;width:100%"><a href="<?php echo $this->createUrl('file/download',array('file'=>$file_id)) ;?>" target="_blank"><img src="<?php echo $details_icon;?>" alt="Icon" /><?php echo $file_name;?></a></span>
+                	<p> 
+                            <div class="name-block" style="vertical-align: middle;width: -moz-max-content !important;padding-left: 25px;width:100%" >
+                                <img src="<?php echo $details_icon;?>" alt="Icon" style="vertical-align:middle" />
+
+                                <a href="<?php echo $this->createUrl('file/download',array('file'=>$file_id)) ;?>" target="_blank"><?php echo $file_name;?></a>
+                                &nbsp;
+                                <?php if(is_null($d->delete_date) || trim($d->delete_date)===''): ?>
+                                <span class="delete-icon">
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#deleteFile-<?php echo $file_id;?>-ConfirmBox"><b> x </b></a>                    
+                                </span>
+                                <?php else:?>
+                                <span style="color: red"> (Undo Delete)      </span>                                          
+                                <?php endif; ?>
+                            </div>
                         </p>
                 </div>
                 <div class="detailMainContentList3"><div class="listRtTime"><?php echo $time; ?></div></div>
             </div>
+                <div class="modal fade" id="deleteFile-<?php echo $file_id;?>-ConfirmBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">Are you sure to delete this file(<?php echo $file_name;?>) ?</h4>
+		      </div>
+			 <form action="<?php echo $this->createUrl('file/delete') ;?>"  method="POST">
+                             <input type="hidden" name="delete_file_id"  value="<?php echo $file_id;?>">
+                             <input type="hidden" name="referer_url" value="<?php echo urlencode(Yii::app()->request->requestUri);?>">
+				<div class="modal-footer" style="border-top:none !important;">
+					<div class="control-group buttons">
+						<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>				
+						<button class="btn btn-primary" type="submit" style="float:right" id="submitCommentBtn">Delete</button>	
+					</div>
+		        </div>		        		      
+			</form>
+		      <!--<div class="modal-footer">
+		        <button type="button" class="btn btn-primary">Add</button>
+		      </div>-->
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->             
          <?php
          endforeach;
          ?>    
          </div>
+
         		
 </div>
 

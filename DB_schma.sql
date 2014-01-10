@@ -1815,3 +1815,6 @@ CREATE TABLE `user_position` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2014-01-08 22:14:02
+
+-- 10 Jan 2014 : By Amit Thatey <amitthateywebexpert@gmail.com>
+ALTER TABLE `file` ADD `delete_date` DATETIME NULL DEFAULT NULL 
