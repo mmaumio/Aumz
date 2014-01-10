@@ -30,7 +30,7 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
 		        $this->layout='//layouts/columnfull';
-                $this->pageTitle='StirplateIO';
+                $this->pageTitle='Stirplate';
                 $userModel=new User;
                 $model=new LoginForm;
                 if(isset(Yii::app()->request->cookies['authentic']) && isset(Yii::app()->request->cookies['identity']))
