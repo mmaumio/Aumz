@@ -16,50 +16,14 @@ class UserController extends Controller
 
     public function actionProfile()
     {
-
-        if (!Yii::app()->user->isGuest) {
-
-            $user = User::model()->findByPk(Yii::app()->user->id);
-
-            if ($user) {
-                $this->render('profile', array('user' => $user, 'readonly' => false));
-                return;
-            }
-        }
-
-        $this->redirect('/');
-    }
-
-    public function actionPublicProfile()
-    {
-
-        if (!Yii::app()->user->isGuest && !empty($_GET['id'])) {
-
-            $user = User::model()->findByPk($_GET['id']);
-
-            if ($user) {
-                $this->render('profile', array('user' => $user, 'readonly' => true));
-                return;
-            }
-        }
-
-        //todo: render user not found
-        $this->render('notfound');
-    }
-
-    /**
-     * Creates a new model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     */
-    public function actionCreate()
-    {
+        //-- Start -- added by Kasun
         if (!Yii::app()->user->isGuest) {
             /* @var $model User */
             $model = new User;
 
             // Loads user model if signed in.
-            if (isset(Yii::app()->session['uid'])) {
-                $model = User::model()->findByPk(Yii::app()->session['uid']);
+            if (isset(Yii::app()->user->id)) {
+                $model = User::model()->findByPk(Yii::app()->user->id);
             }
 
             // Uncomment the following line if AJAX validation is needed
@@ -143,13 +107,30 @@ class UserController extends Controller
                     Yii::app()->user->setFlash('update', Yii::app()->params['FAILURE']);
                 }
             }
-            $this->render('create', array(
+            $this->render('profile', array(
                 'model' => $model,
                 'readonly' => false,
             ));
         } else {
-            $this->redirect(array('site/index'));
+            $this->redirect('/');
         }
+    }
+
+    public function actionPublicProfile()
+    {
+
+        if (!Yii::app()->user->isGuest && !empty($_GET['id'])) {
+
+            $user = User::model()->findByPk($_GET['id']);
+
+            if ($user) {
+                $this->render('profile', array('user' => $user, 'readonly' => true));
+                return;
+            }
+        }
+
+        //todo: render user not found
+        $this->render('notfound');
     }
 
     /**
