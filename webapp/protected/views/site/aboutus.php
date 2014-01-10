@@ -1,6 +1,8 @@
 
+
 <center> <h1> About us </h1> </center>
-<div class="panel panel-default">
+<div class="container">
+<div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title">Stirplate: made by scientists, for scientists</h3>
   </div>
@@ -10,3 +12,4 @@ Keith worked professionally in IT for 4 years before starting his career in scie
 Keith’s PhD is in Behavioral Neuroscience at The University of NY at Albany, and did post-docs at Weill Cornell Medical College, Rockefeller University, and Columbia University.
    </div>
 </div>
+

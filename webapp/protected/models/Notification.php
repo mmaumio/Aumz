@@ -42,17 +42,17 @@ class Notification
 			$data['user'] =  User::model()->findByPk($obj->invitedUser);
 			$data['invited_user'] =  User::model()->findByPk($obj->userId);
 
-			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('study/index', array('id' => $obj->id));
+			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('project/index/'.$obj->projectId);
 			Notification::_sendEmail($toName, $toEmail, $subject, $template, $data);
 		}
 		else if ($type === 'newActivity')
 		{
 			$data = array();
-			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('study/index', array('id' => $obj['study']->id));
+			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('project/index/'.$obj['study']->id);
 			$data['studyName'] = $obj['study']->title;
 			$data['authorName'] = $obj['author']->getName();
 			$data['comment'] = $obj['activity']->content;
-			Notification::_sendEmail($toName, $toEmail, $subject, $template, $data);	
+			Notification::_sendEmail($toName, $toEmail, $obj['author']->getName() . ' mentioned you in a comment', $template, $data);	
 		}
 		else if ($type === 'activityReply')
 		{
@@ -152,14 +152,13 @@ public static function sendEmailBluk($type, $toUsers, $obj)
 			$data['studyName'] = $obj->project->title;
 			$data['user'] =  User::model()->findByPk($obj->invitedUser);
 			$data['invited_user'] =  User::model()->findByPk($obj->userId);
-
-			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('study/index', array('id' => $obj->id));
+			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('project/index/'.$obj->projectId);
 			Notification::_sendEmailBluk($toUsers, $subject, $template, $data);
 		}
 		else if ($type === 'newActivity')
 		{
 			$data = array();
-			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('study/index', array('id' => $obj['study']->id));
+			$data['studyUrl'] = Yii::app()->createAbsoluteUrl('project/index/'. $obj['study']->id);
 			$data['studyName'] = $obj['study']->title;
 			$data['authorName'] = $obj['author']->getName();
 			$data['comment'] = $obj['activity']->content;

@@ -55,7 +55,7 @@ class LoginForm extends CFormModel
             {  
                 if($this->_identity->errorCode===UserIdentity::ERROR_UNKNOWN_IDENTITY)
                 {
-                 Yii::app()->user->setFlash('error','Email not Verified yet , click here to get verification <a href="'.$_SEREVER['SERVER_NAME'].'/site/resentemaillink?email='.$this->email.'&key='.base64_encode($this->password).'">link</a> again');
+                 Yii::app()->user->setFlash('error','Email not Verified yet , click here to get verification <a href="http://'.$_SERVER['SERVER_NAME'].'/site/resentemaillink?email='.$this->email.'&key='.base64_encode($this->password).'">link</a> again');
                  $this->addError('password','Email not verified yet');
                 }
                else 
