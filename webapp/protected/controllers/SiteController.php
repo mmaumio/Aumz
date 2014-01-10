@@ -276,6 +276,23 @@ class SiteController extends Controller
     /**
      * handles newsletter actions
      */
+
+    public function actionWebhook()
+    {
+      
+      $activity = new Activity;
+      $activity->userId = 144;
+      $activity->projectId = 144;
+      $activity->content = json_encode($_POST);
+      $activity->type = "webhook";
+      if($activity->save()){
+        echo "saved";
+      }else{
+        print_r($activity->getErrors());
+
+      }
+
+    } 
     public function actionNewsletter()
     {
         $this->layout = '//layouts/columnfull';

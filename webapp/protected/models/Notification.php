@@ -207,7 +207,7 @@ public static function sendEmailBluk($type, $toUsers, $obj)
         		'html' => Yii::app()->controller->renderPartial('//email/' . $template . 'Html', $data, true),
         		'text' => Yii::app()->controller->renderPartial('//email/' . $template, $data, true),
         		'subject' => $subject,
-        		'from_email' => 'info@stirplate.io',
+        		'from_email' => 'hodafokher@gmail.com',
         		'from_name' => 'Stirplate.IO',
         		'to' => $to
         		
