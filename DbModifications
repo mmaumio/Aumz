@@ -168,7 +168,6 @@ CREATE TABLE `position` (
 ) ENGINE=InnoDB CHARSET=utf8;
 
 KG OK
-
 INSERT INTO position (name, created, modified) values
 ('PI', '0000-00-00', '0000-00-00'),
 ('Lab Tech', '0000-00-00', '0000-00-00'),
@@ -188,6 +187,25 @@ CREATE TABLE `user_position` (
   CONSTRAINT `userPos_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB CHARSET=utf8;
 Kg-ok
+
+INSERT INTO lab (name, created, modified) values
+('Rat', '0000-00-00', '0000-00-00'),
+('Mouse', '0000-00-00', '0000-00-00'),
+('Culture', '0000-00-00', '0000-00-00'),
+('Human', '0000-00-00', '0000-00-00'),
+('Hamster', '0000-00-00', '0000-00-00'),
+('Zebra finsh', '0000-00-00', '0000-00-00');
+
+INSERT INTO tech (name, created, modified) values
+('qPCR', '0000-00-00', '0000-00-00'),
+('PCR', '0000-00-00', '0000-00-00'),
+('flow Cytometry', '0000-00-00', '0000-00-00'),
+('Western blots', '0000-00-00', '0000-00-00'),
+('Immunocytochemistry/Immunohistochemistry', '0000-00-00', '0000-00-00'),
+('Immunofluorescence', '0000-00-00', '0000-00-00'),
+('nano drop', '0000-00-00', '0000-00-00'),
+('HPLC', '0000-00-00', '0000-00-00'),
+('In Situ hybridization', '0000-00-00', '0000-00-00');
 
 -- End new create
 -- 01/08/2014
