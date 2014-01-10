@@ -1,165 +1,75 @@
-<div class="clearfix"></div>
-<?php ?>
-<?php if(Yii::app()->user->hasFlash('success')){ ?>
-<div class="alert alert-success" style="width:90%; margin:10px 0px 0px 5%">
-  <button data-dismiss="alert" class="close" type="button">x</button>
-  <?php echo Yii::app()->user->getFlash('success');?>
-</div>
-<?php } ?>
-<?php 
- if (isset($alertMsg)) { ?>
-<div class="alert alert-success">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <?php echo $alertMsg ?>
-</div>
-<?php } ?>
-<?php if (isset($errorMsg)) { ?>
-<div class="alert alert-danger">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <?php echo $errorMsg ?>
-</div>
-<?php } ?>
-<br />
-<div style="width: 300px; margin: 0px auto;clear: both;" >
+<?php
+/* @var $this Controller */
+/* @var $model User */
+/* @var $form CActiveForm */
+/* @var $readonly boolean */
+?>
+<section>
+    <div class="wrapper">
+        <div id="user-profile-title" class="clearBoth"><h3>User Profile</h3></div>
+        <?php
+        // if a flash exists as 'update' then show the message according to the value of the 'update'
+        if (Yii::app()->user->hasFlash('update')): {
+            $message = '';
+            $show = true;
+            if (Yii::app()->user->getFlash('update') === Yii::app()->params['SUCCESS']) {
+                $class = 'alert-success';
+                $message = 'Your profile has been updated.';
+            } elseif (Yii::app()->user->getFlash('update') === Yii::app()->params['FAILURE']) {
+                $class = 'alert-warning';
+                $message = 'Update unsuccessful.';
+            } else {
+                $show = false;
+            }
+            Yii::app()->user->setFlash('update', 0);
+        }
+            if ($show):
+                ?>
+                <div id="user-form-alert" class="clearBoth alert <?php echo $class; ?>">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong><?php echo $message; ?></strong>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+        <div class="general-form center-block">
+            <?php $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'user-form',
+                'enableAjaxValidation' => true,
+                'enableClientValidation' => true,
+                'focus' => array($model, 'firstName'),
+                'htmlOptions' => array('class' => 'clearfix'),
+            )); ?>
 
-<?php echo CHtml::beginForm('/user/update/' . $user->id, 'post', array('class' => 'form-horizontal')); ?>
-<fieldset>
+            <?php echo $form->errorSummary($model); ?>
+            <ul class="nav nav-tabs" id="tab-panel">
+                <li class="active"><a href="#general-tab" data-toggle="tab">General</a></li>
+                <li><a href="#lab-tab" data-toggle="tab">Lab</a></li>
+            </ul>
 
-<!-- Form Name -->
-<legend>
-	<div class="author" style="float:left">
-		<img src="<?php //echo $user->getUserImage() ?>" alt="avatar">
-	</div>
-	<div style="padding-left:5px;float:left;">
-		<?php echo $user->getName() ?>
-	</div>
-	<div class="clear" style="margin-bottom:10px;"></div>
-</legend>
+            <div class="tab-content">
+                <div class="tab-pane active" id="general-tab">
+                    <?php $this->renderPartial('_general', array('form' => $form, 'model' => $model, 'readonly' => $readonly)); ?>
+                </div>
+                <div class="tab-pane" id="lab-tab">
+                    <?php $this->renderPartial('_lab', array('form' => $form, 'model' => $model, 'readonly' => $readonly)); ?>
+                </div>
+            </div>
 
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="textinput">First Name</label>
-  <div class="controls">
-    <?php echo CHtml::activeTextField($user,'firstName', array('class' => 'input-xarge', 'required' => true, 'readonly' => $readonly)) ?>
-  </div>
-</div>
+            <script>
+                $(function () {
+                    $('#tab-panel').find('a:first').tab('show');
+                })
+            </script>
 
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="textinput">Last Name</label>
-  <div class="controls">
-    <?php echo CHtml::activeTextField($user,'lastName', array('class' => 'input-xarge', 'required' => true, 'readonly' => $readonly)) ?>
-  </div>
-</div>
+            <!-- Button -->
+            <div class="control-group">
+                <label class="control-label" for="singlebutton"></label>
 
-<?php if (!$readonly) { ?>
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="textinput">Email</label>
-  <div class="controls">
-    <?php echo CHtml::activeTextField($user,'email', array('class' => 'input-xarge', 'required' => true, 'readonly' => $readonly)) ?>
-  </div>
-</div>
-<?php } ?>
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="textinput">Position</label>
-  <div class="controls">
-    <?php echo CHtml::activeTextField($user,'position', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="textinput">Affiliation</label>
-  <div class="controls">
-    <?php echo CHtml::activeTextField($user,'affiliation', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="textinput">Department</label>
-  <div class="controls">
-    <?php echo CHtml::activeTextField($user,'department', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="textinput">Field of Study</label>
-  <div class="controls">
-    <?php echo CHtml::activeTextField($user,'fieldOfStudy', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
-  </div>
-</div>
-
-<!-- Text input-->
-<!--
-<div class="control-group">
-  <label class="control-label" for="textinput">Lab Title</label>
-  <div class="controls">
-    <?php echo CHtml::activeTextField($user,'labTitle', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
-  </div>
-</div>
--->
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="textinput">Lab Web Page</label>
-  <div class="controls">
-    <?php echo CHtml::activeTextField($user,'labUrl', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
-  </div>
-</div>
-
-<?php if (!$readonly) { ?>
-
-  <?php //if (NULL != $user->password) { ?>
-    <div class="control-group">
-      <label class="controls">Leave passwords blank if unchanged</label>
+                <div class="controls">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+            <?php $this->endWidget(); ?>
+        </div>
     </div>
-    <div class="control-group">
-      <label class="control-label" for="currentPassword">Current Password</label>
-      <div class="controls">
-        <?php echo CHtml::passwordField('currentPassword','', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="newPassword">New Password</label>
-      <div class="controls">
-        <?php echo CHtml::passwordField('newPassword','', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="repeatPassword">Repeat Password</label>
-      <div class="controls">
-        <?php echo CHtml::passwordField('repeatPassword','', array('class' => 'input-xarge', 'readonly' => $readonly)) ?>
-      </div>
-    </div>
-  <?php //} ?>
-
-<!-- Button -->
-<div class="control-group">
-  <label class="control-label" for="singlebutton"></label>
-  <div class="controls">
-    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Update</button>
-  </div>
-</div>
-<?php } ?>
-
-</fieldset>
-<?php echo CHtml::endForm(); ?>
-<div class="clearfix"></div>
-</div>
-<script>
-$(document).ready(function() {
-  $('#singlebutton').click(function() {
-    if ($('#newPassword').val() !== $('#repeatPassword').val()) {
-      alert("New Password and Repeat Password do not match, please enter them again");
-      return false;
-    } else {
-      return true;
-    }
-  });
-});
-</script>
+</section>
