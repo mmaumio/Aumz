@@ -1,2 +1,3 @@
 yii-framework/*
+.idea
 !README.md
