@@ -14,9 +14,22 @@
          <?php
          // Getting project's file data 
          $proid=$project->id;
-         $uid=Yii::app()->session['uid'];
+         
+         //$uids=Yii::app()->session['uid'];
+         $project_user_array = array();
+         $project_user = ProjectUser::model()->findAllByAttributes(array('projectId'=>$proid)); 
+         foreach ($project_user as $users) {
+             array_push($project_user_array, $users->userId);
+         }
+         $criteria = new CDbCriteria;
+         $criteria->condition = 'projectId=:projectId';
+         $criteria->params = array(
+            ':projectId' => $proid
+         );
+         $criteria->addInCondition('userId', $project_user_array);
 
-         $file = File::model()->findAllByAttributes(array('userId'=>$uid,'projectId'=>$proid));        
+         //var_dump($criteria);
+         $file = File::model()->findAll($criteria);        
          
          foreach($file as $d):
 
