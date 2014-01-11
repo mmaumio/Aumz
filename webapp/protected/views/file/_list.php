@@ -77,18 +77,36 @@
                 </div>
                 <div class="detailMainContentList2" >
                 	<p> 
-                            <div class="name-block" style="vertical-align: middle;width: -moz-max-content !important;padding-left: 25px;width:100%" >
+                            <div class="filename-block" style="vertical-align: middle;width: -moz-max-content !important;padding-left: 25px;width:100%" >
                                 <img src="<?php echo $details_icon;?>" alt="Icon" style="vertical-align:middle" />
-
                                 <a href="<?php echo $this->createUrl('file/download',array('file'=>$file_id)) ;?>" target="_blank"><?php echo $file_name;?></a>
                                 &nbsp;
-                                <?php if(is_null($d->delete_date) || trim($d->delete_date)===''): ?>
-                                <span class="delete-icon">
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#deleteFile-<?php echo $file_id;?>-ConfirmBox"><b> x </b></a>                    
-                                </span>
-                                <?php else:?>
-                                <span style="color: red"> (Undo Delete)      </span>                                          
-                                <?php endif; ?>
+                                <!-- Menu-->
+                                <span class="menu-bar">
+<!--Down Arrow -->                                    
+<div class="btn-group btn-group-xs">
+  <button type="button" class="btn  btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="#">Add a note</a></li>
+    <li><a href="#">Flag file</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Move file to top of the file list</a></li>
+    <li><a href="#">Move file to the bottom of the file list</a></li>   
+  </ul>
+</div>                                    
+                                    
+ 
+                                    
+                                    
+                                    <!-- Delete/Undo Delete Button -->
+                                    <?php if(is_null($d->delete_date) || trim($d->delete_date)===''): ?>
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#deleteFile-<?php echo $file_id;?>-ConfirmBox" class="btn  btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span> </a>                    
+                                    <?php else:?>
+                                        <span style="color: red"> (Undo Delete)      </span>                                          
+                                    <?php endif; ?>
+                                </span>  
                             </div>
                         </p>
                 </div>
