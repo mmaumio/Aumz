@@ -1,5 +1,8 @@
 <script type='text/javascript'>
     $(document).ready(function() {
+        $('.close').click(function(){
+            $(this).parent('.alert').fadeOut(1000);
+        });
         $('#LoginForm_password').val("");
         $('#login-form-ajaxcall').submit(function(e){
             if(parseInt("<?php if(isset(Yii::app()->request->cookies['user_trails'])){echo Yii::app()->request->cookies['user_trails']->value;}else{echo 0;} ?>") > parseInt("2")){
@@ -76,8 +79,9 @@
                        <td>
                             <div class="control-group">
                         <div class="controls">
-                            <?php echo $form->textField($userModel,'email',array('placeholder'=>'Email')); ?>
+                            <?php echo $form->textField($userModel,'email',array('placeholder'=>'eg : example@site.edu')); ?>
                           <?php //echo $form->error($userModel,'email'); ?>
+                         <!-- <p class="labelclass2">Only email address with .edu valid</p>-->
                            <p class="errorMessage" id="emailerror"></p>
                         </div>
                     </div>
@@ -118,12 +122,17 @@
                     </div>
                        </td>
                    </tr>
+                   <?php echo CHtml::hiddenField('confirmemail'); ?>)
+         
                    </table>
                <?php $this->endWidget();?> 
                <div class="clearBoth"></div>
       </div>
       <br />    
+        <p class="alert alert-success msg">An email verification link sent on your email , Please check your email</p>  
+    
       <div class="modal-footer">
+      <img class="load-image" style="display: none;" src="<?php echo Yii::app()->createUrl('/');?>/img/home/loading.gif"/>
         <button class="btn btn-primary" id="sign-up-btn"> Submit </button>
         <button type="button" class="btn btn-danger" data-dismiss="modal" id="forgot-close">Cancel</button>
       </div>
@@ -131,32 +140,17 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 	
+ 
 <script>
         $(document).ready(function(){
             
             
+            $('.close').click(function(){
+                $(this).parent('.info-line').fadeOut(1000);
+            });
             
             $('#sign-up-btn').click(function(){
-               /* if($('#User_firstName').val()=="")
-                {
-                    $('#firstnameerror').text("Please fill first name");
-                    return false;
-                }
-                else
-                {
-                     $('#firstnameerror').text("");
-                }
-                if($('#User_lastName').val()=="")
-                {
-                    $('#lastnameerror').text("Please fill last name");
-                    return false;
-                }
-                else
-                {
-                        $('#lastnameerror').text("");
-               
-                }*/
-                if($('#User_email').val()=="")
+               if($('#User_email').val()=="")
                 {
                     $('#emailerror').text("Please fill email");
                     return false;
@@ -173,8 +167,7 @@
                 }
                 else
                 {
-                          $('#passworderror').text("");
-              
+                  $('#passworderror').text("");
                 }
                 if($('#User_confirmpassword').val()=="")
                 {
@@ -195,10 +188,11 @@
                 }
                 $.ajax({
                     type:'post',
-                    url:'signup',
+                    url:'<?php echo Yii::app()->createUrl('site/signup');?>',
                     data:$('#signup-form-ajaxcall').serialize(),
                     beforeSend:function(){
                         $('#sign-up-btn').attr('disabled','disabled');
+                        $('.load-image').show();
                     },
                     success:function(response){
                         
@@ -216,62 +210,28 @@
                         }
                         else if(response=='success')
                         {
-                            $('.close').click();
+                           
+                           $('.msg').fadeIn(100,function(){
+                                      $('.msg').fadeOut(2000,function(){
+                                             
+                                      });
+                                      $('#forgot-close').click();
+                           });
+                            
                         }
                              $('#sign-up-btn').removeAttr('disabled');
+                              $('.load-image').hide();
                   
                     },
-                    complte:function(){},
+                    complete:function(){},
                     
                 });
                 
             });
-            
-            
-            /**-------------------------------*/
-            
-           /* $('#User_firstName').focus(function(){
-                $('#firstnameerror').text("");
-            });
-            
-            $('#User_firstName').blur(function(){
-                if($('#User_firstName').val()=="")
-                {
-                    $('#firstnameerror').text("Please fill first name");
-                    return false;
-                }
-                else
-                {
-                     $('#firstnameerror').text("");
-                }
-            });
-            
-            $('#User_lastName').focus(function(){
-                $('#lastnameerror').text("");
-            });
-             $('#User_lastName').blur(function(){
-           
-            if($('#User_lastName').val()=="")
-                {
-                    $('#lastnameerror').text("Please fill last name");
-                    return false;
-                }
-                else
-                {
-                        $('#lastnameerror').text("");
-               
-                }
-            });
-            */
-            
-             $('#User_email').focus(function(){
+            $('#User_email').focus(function(){
                 $('#emailerror').text("");
             });
-            
-            
-             $('#User_email').blur(function(){
-           
-            
+            $('#User_email').blur(function(){
             if($('#User_email').val()=="")
                 {
                     $('#emailerror').text("Please fill email");
@@ -318,12 +278,30 @@
             
                 }
             });
-            
-            
-            //*------------------------------*
-        });
+          });
 </script>
 <!--Page 1 Start-->
+<?php if(Yii::app()->user->hasFlash('success')){?>
+<div class="alert alert-success info-line" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
+                        <a href="#" class="close" data-dismiss="alert">x
+                        </a>
+               <strong>Thanks!</strong>         <?php echo Yii::app()->user->getFlash('success'); ?>
+</div>
+<?php } ?>
+<?php if(Yii::app()->user->hasFlash('error')){?>
+<div class="alert alert-warning info-line" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
+                        <a href="#" class="close" data-dismiss="alert">x
+                        </a>
+               <strong>Error ! </strong>         <?php echo Yii::app()->user->getFlash('error'); ?>
+</div>
+<?php } ?>
+<?php if(Yii::app()->user->hasFlash('welcome')){?>
+<div class="alert alert-warning info-line" style="width:90%;position:fixed;height:50px;left:5%;top:2%;">
+                        <a href="#" class="close" data-dismiss="alert">x
+                        </a>
+               <strong>Error ! </strong>         <?php echo Yii::app()->user->getFlash('welcome'); ?>
+</div>
+<?php } ?>
 <section class="homePage1">
   <div class="homePage1Main">
     <div class="wrapper">
@@ -339,7 +317,7 @@
       
       <div class="homeRt">
         <div class="signIn">
-          <h3>SignIn to stirplate</h3>
+          <h3>Sign In to stirplate</h3>
           <div class="signInMain">
             <?php $form=$this->beginWidget('CActiveForm', array(
                     'id'=>'login-form-ajaxcall',
@@ -357,36 +335,43 @@
                             <?php echo $form->passwordField($model,'password',array('placeholder'=>'Password')); ?>
                             </div>
                     </div>
+                    
+                    <div class="clearBoth"></div>
+                    <label class="floatLft">
+                             <?php 
+                             echo $form->checkBox($model,'remember');
+                             ?> Remember me
+                    </label>
                     <label class="floatRt">
-                             <?php echo CHtml::link('Forgot your passssword?', 'site/ForgotPassword') ?>
+                             <?php echo CHtml::link('Forgot your passssword?', '/site/ForgotPassword') ?>
                     </label>
                     <div class="control-group buttons">
                          <div class="controls">
-                            
                             <?php echo CHtml::submitButton('SIGN IN',array('class'=>'btn-submit')); ?>
-                             <a class="btn btn-success btn-signup" data-toggle="modal" data-target="#signup-dialog">SIGN UP</a>
-                         
-                            </div>
+                            <a class="btn-signup" data-toggle="modal" data-target="#signup-dialog" style="font-family:'HelveticaNeueLT Pro';font-size: 20px;">SIGN UP</a>
+                         </div>
                     </div>
+                    <?php echo CHtml::hiddenField('confirm-password'); ?>
             <?php $this->endWidget(); ?>
           </div>
         </div>
-        <div class="signUp">
+      <!-- <div class="signUp">
             <?php $form=$this->beginWidget('CActiveForm', array(
                     'id'=>'newsletter-form',
                     'action'=> $this->createUrl('site/newsletter'),
                 )); ?>
           <h3 align = "center">Stirplate Newsletter</h3>
-          <h4 align ="center"> We are currently invite only. Sign up for updates</h4>
+          <h4 align ="center"> Sign up for updates!</h4>
           <div class="signUpMain">
               <?php echo $form->error($newsLetterModel,'email'); ?>
               <?php echo Yii::app()->user->getFlash('success'); ?>
               <?php echo $form->textField($newsLetterModel, 'email', array('placeholder' => 'Email Address')); ?>
+               <?php echo CHtml::hiddenField('confirmemail'); ?>
+         
               <?php echo CHtml::submitButton('Subscribe'); ?>
           </div>
             <?php $this->endWidget(); ?>
-        </div>
-
+        </div>-->
       </div>
     </div>
   </div>
@@ -436,6 +421,9 @@
 <!--Page 3 Start-->
 <section class="page3">
   <div class="wrapper">
+      <div class="video-head">
+          <h2 >Watch this video to see what Stirplate.io can do for your lab</h2>
+      </div>
    <div class="page3Main">
                   <iframe src="//player.vimeo.com/video/75926086?title=0&amp;byline=0&amp;portrait=0" width="1020" height="640" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
   
@@ -474,40 +462,48 @@
 <!--Page 4 End--> 
 
 <!--Page 5 Start-->
+
+  <section class="homePage1">
+        <div class="signUp">
+            <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'newsletter-form',
+                    'action'=> $this->createUrl('site/newsletter'),
+                )); ?>
+          <h3 align = "center" class="newsletter-head">Stirplate Newsletter, sign up for updates.</h3>
+            <div class="newsletter-holder">
+                <div class="signUpMain">
+                    <?php echo $form->error($newsLetterModel, 'email'); ?>
+                    <?php echo Yii::app()->user->getFlash('success'); ?>
+                    <?php echo $form->textField(
+                        $newsLetterModel,
+                        'email',
+                        array('placeholder' => 'Enter email address')
+                    ); ?>
+                    <?php echo CHtml::hiddenField('confirmemail'); ?>
+                </div>
+                <?php echo CHtml::submitButton('Subscribe'); ?>
+            </div>
+            <?php $this->endWidget(); ?>
+        </div>
+  </section>
+  <!--Footer section-->
 <section class="contact">
   <div class="wrapper">
     <div class="contactMain">
       <div class="contactMainHead">
         <div class="contactMainHeadBox">
-          <!--<h2>Contact us</h2>-->
 		  <p class="homelinks">
-			<span><a href="site/aboutus">About us</a></span>
-			<span><a href="site/privacy">Privacy and terms of service</a></span>
-			<span><a href="site/faq">FAQ</a></span>
+			<span><a href="<?php echo $this->createUrl('site/aboutus'); ?>">About us</a></span>
+			<span><a href="<?php echo $this->createUrl('site/privacy'); ?>">Privacy and terms of service</a></span>
+			<span><a href="<?php echo $this->createUrl('site/faq'); ?>">FAQ</a></span>
 			<span><a href="mailto:info@stirplate.io">Contact us</a></span>
-			<span><a href="site/blog">Blog</a></span>
-			<span class="">Follow us :</a> 
+			<span><a href="<?php echo $this->createUrl('site/blog'); ?>">Blog</a></span>
 			     <a target="_blank" href="https://www.Facebook.com/stirplate" class="middle-content"><i class="facebook-class"></i></a> 
 				<a target="_blank;" href="https://www.twitter.com/stirplate" class="middle-content"><i class="twitter-class"></i></a>
-			</span> 		
 		<p>
-<!--<h3>Want to know more about what we are up to? Send us a message </h3> -->       
       </div>
       </div>
-      <!--<div class="contactForm">
-        <div class="contactFormMain">
-          <div class="contactFormMainLft">
-            <input type="text" value="" name="" placeholder="NAME" />
-            <input type="text" value="" name="" placeholder="COMPANY" />
-            <input type="text" value="" name="" placeholder="EMAIL" />
-          </div>
-          <div class="contactFormMainRt">
-            <textarea></textarea>
-            <input type="submit" value="SEND" name="" />
-          </div>
-        </div>
-      </div>-->
+     
     </div>
   </div>
 </section>
-

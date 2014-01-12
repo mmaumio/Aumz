@@ -1,3 +1,4 @@
+
 		<div class="detailMainContentMain">
     		<a id="discussion"></a>
          	<h3>Discussion</h3>
@@ -8,10 +9,27 @@
          	</div>
          	
 	        <div class="detailMainContentMainBtn">
-	        	<a href="#" data-toggle="modal" data-target="#discussionModal"><img src="/img/details/btnAdd.png" alt="Add comment" /><span>Add Comment</span></a>
+	        	<!--a href="#" data-toggle="modal" data-target="#discussionModal"><img src="/img/details/btnAdd.png" alt="Add comment" /><span>Add Comment</span></a-->
 	        	<!--
 	            <a href="javascript:void(0);"><img src="/img/details/btnMore.png" alt="More Discussions" /><span>More Discussions</span></a>
 	        	-->
+				
+				 <form action="/activity/create" id="newCommentForm" method="POST">			
+		        <fieldset>
+		            <div class="form-group">
+		                <div class="col-md-11">
+						<input type="hidden" name="activity[projectId]" value="<?php echo $project->id ?>">
+				<input type="hidden" name="activity[type]" value="comment">
+				<textarea id="newComment" name="activity[content]" class="diss-form col-md-8" placeholder="Add to the discussion. Direct a comment to an individual by typing @(their name)." style="word-wrap: break-word;  height: 80px;" required=""></textarea>
+				<div class="clear"></div>
+
+				<button class="btn btn-primary discussion-submit" type="submit" style="float:right;margin-top:45px;" id="submitCommentBtn">Submit Comment</button>
+
+		                   <!-- <textarea id="textarea" name="textarea">default text</textarea>-->
+		                </div>
+		            </div>
+		        </fieldset>		      
+			  </form>
 	        </div>
         </div>
 
@@ -30,9 +48,9 @@
 		                <div class="col-md-11">
 						<input type="hidden" name="activity[projectId]" value="<?php echo $project->id ?>">
 				<input type="hidden" name="activity[type]" value="comment">
-				<textarea id="newComment" name="activity[content]" class="diss-form" placeholder="Add comment here" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 40px;" required=""></textarea>
+				<textarea id="newComment" name="activity[content]" class="diss-form" placeholder="Add comment here" rows="7" cols="70" required=""></textarea>
 				<div class="clear"></div>
-				<button class="btn btn-primary" type="submit" style="float:right" id="submitCommentBtn">Submit Comment</button>
+				<button class="btn btn-primary" type="submit" style="float:right;margin-right: 30%;" id="submitCommentBtn">Submit Comment</button>
 		                   <!-- <textarea id="textarea" name="textarea">default text</textarea>-->
 		                </div>
 		            </div>
@@ -64,7 +82,7 @@
 				<input id="mynames" name="names" type="hidden" />
 
 				<div class="clear"></div>
-				<button class="btn btn-primary" type="submit" style="float:right" id="submitCommentBtn">Submit</button>
+				<button class="btn btn-primary" type="submit" style="float:right;margin-right: 30%;" id="submitCommentBtn">Submit</button>
 		                   <!-- <textarea id="textarea" name="textarea">default text</textarea>-->
 		                </div>
 		            </div>
@@ -77,3 +95,13 @@
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
+<script>
+  $(document).ready(function(){
+    console.log("letting width............");
+	setTimeout(function () { 
+		$(".textoverlay").css("width","67%");
+	}, 1000);
+    
+  });
+</script>
+		

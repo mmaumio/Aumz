@@ -29,31 +29,61 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-                $this->layout='//layouts/columnfull';
+		        $this->layout='//layouts/columnfull';
+                $this->pageTitle='Stirplate';
                 $userModel=new User;
                 $model=new LoginForm;
+                if(isset(Yii::app()->request->cookies['authentic']) && isset(Yii::app()->request->cookies['identity']))
+                  { 
+                    $model->remember=1;
+                    $model->email= base64_decode(Yii::app()->request->cookies['identity']);
+                    $model->password=base64_decode(Yii::app()->request->cookies['authentic']);
+                    if($model->validate() && $model->login())
+                      {
+                           $this->redirect('/dashboard');                                             
+                      }
+                  
+                  }               
                 $newsLetterModel = new NewsletterForm;
-                //collect user input
-                if(isset($_POST['LoginForm']))
+               if(isset($_POST['LoginForm']))
                 {  
-                        if(isset(Yii::app()->request->cookies['user_trails'])){
+                       if(!empty($_POST['confirm-password']))
+                       {
+                           Yii::app()->user->setFlash('error','Stirplate not permitting you to perform this action');
+                           $this->redirect(Yii::app()->createUrl('/'));
+                       }
+                       if(isset(Yii::app()->request->cookies['user_trails'])){
                             $val = Yii::app()->request->cookies['user_trails']->value;
                             Yii::app()->request->cookies['user_trails'] =new CHttpCookie('user_trails', (1 + $val));
-                        }else{
+                        }
+                        else
+                        {
                              Yii::app()->request->cookies['user_trails'] = new CHttpCookie('user_trails', 1);
                         }
                         
-			$model->attributes=$_POST['LoginForm'];
-                            // validate user input
-                           if($model->validate() && $model->login()){
-                                $user = User::model()->findByPk(Yii::app()->user->id);
-				{	
-                                        {
-                                            $this->redirect('/dashboard');
-                                        }
-				}
+			                  $model->attributes=$_POST['LoginForm'];
+                              $model->remember=$_POST['LoginForm']['remember'];
+                               if($model->validate() && $model->login())
+                               {
+                                 if($model->remember)
+                                  {
+                                   $cookie = new CHttpCookie('identity',base64_encode($model->email));
+                                   $cookie->expire = time()+3600*24*14;
+                                   Yii::app()->request->cookies['identity'] = $cookie;
+                                   $cookie = new CHttpCookie('authentic',base64_encode($model->password));
+                                   $cookie->expire = time()+3600*24*14;
+                                   Yii::app()->request->cookies['authentic'] = $cookie;
+                                  }
+                                  else 
+                                  {
+                                    if(isset(Yii::app()->request->cookies['authentic']))
+                                    unset(Yii::app()->request->cookies['authentic']);
+                                    if(isset(Yii::app()->request->cookies['identity']))
+                                    unset(Yii::app()->request->cookies['identity']);
+                                  }
+                                   $this->redirect('/dashboard');
+                                        
+				            
                          }
                 }
 		$this->render('index',array('model'=>$model, 'newsLetterModel'=>$newsLetterModel,'userModel'=>$userModel));
@@ -105,16 +135,12 @@ class SiteController extends Controller
 	public function actionLogin()
 	{
         $model=new LoginForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+     	if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
+     	if(isset($_POST['LoginForm']))
 		{
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
@@ -133,8 +159,14 @@ class SiteController extends Controller
 	 */
 	public function actionLogout()
 	{
+	    if(isset(Yii::app()->request->cookies['authentic']))
+                                   Yii::app()->request->cookies['authentic']->expire;
+                                    if(isset(Yii::app()->request->cookies['identity']))
+                                    Yii::app()->request->cookies['identity']->expire;
+                                
 		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
+      
+		$this->redirect('site/index');
 	}
 
     public function actionGoogleLogin()
@@ -192,15 +224,9 @@ class SiteController extends Controller
             {
                     $records =  User::model()->findByAttributes(array('email'=>$_POST['User']['email']));
                     if($records){
-                        $message = new YiiMailMessage;
-                        $message->view = 'forgotpassmail';
-                        $message->setBody(array('records'=>$records), 'text/html');
-                        $message->subject = 'Request to change password';
-                        $message->addTo('arvind@sprytechies.com');
-                        $message->from = Yii::app()->params['adminEmail'];
-                        Yii::app()->mail->send($message);
-                        
-                        Yii::app()->user->setFlash('success', "Please check your mails");
+                        $obj = array('token' => md5($records->id).md5(strtotime($records->created)));
+                        Notification::sendEmail('passwordReset', $records, $obj);
+                        Yii::app()->user->setFlash('success', "It's ok, it happens to the best of us. Check your email to reset your password");
 
                         $this->redirect('ForgotPassword');
                     }else{
@@ -213,23 +239,26 @@ class SiteController extends Controller
         /**
          * Change password 
          */
-        public function actionChangepass()
+    public function actionChangepass()
 	{       
                 $model = new User;
                 $records=  User::model()->findAll();
                 if(isset($_POST) && isset($_POST['k'])){
                     foreach ($records as $value) {
-                            if(md5($value->id).md5(strtotime($value->created))==$_POST['k']){
+                            if(md5($value->id).md5(strtotime($value->created)) == $_POST['k']){
                                 $pass1 = trim($_POST['newpassword']);
                                 $pass2 = trim($_POST['confirmpassword']);
                                 if(isset($_POST['newpassword']) && isset($_POST['confirmpassword']) && !empty($pass1) && !empty($pass2)){
-                                        $data=User::model()->findByPk($value->idusers);
+                                        $data=$value;
                                         if($pass1 != $pass2){
                                                     Yii::app()->user->setFlash('error', "Passwords don't match. Please try again.");
                                             }else{
-                                                    $data->password=$pass1;
-                                                    $data->save();
-                                                    Yii::app()->user->setFlash('success', "Password is changed. Please login with your new password.");
+                                                    $data->password=User::hashPassword($pass1);
+                                                    if ($data->update()) {
+                                                      Yii::app()->user->setFlash('success', "Password is changed. Please login with your new password.");
+                                                    }else{
+                                                      Yii::app()->user->setFlash('error', "Password not updated.");
+                                                    }
                                             }
                                 }else{
                                     Yii::app()->user->setFlash('error', "Please check entered values.");
@@ -248,19 +277,50 @@ class SiteController extends Controller
     /**
      * handles newsletter actions
      */
+
+    public function actionWebhook()
+    {
+      
+      $activity = new Activity;
+      $activity->userId = 144;
+      $activity->projectId = 144;
+      $activity->content = json_encode($_POST);
+      $activity->type = "webhook";
+      if($activity->save()){
+        echo "saved";
+      }else{
+        print_r($activity->getErrors());
+
+      }
+
+    } 
     public function actionNewsletter()
     {
         $this->layout = '//layouts/columnfull';
         $model        = new NewsletterForm;
+        $userModel=new User;
         // collect user input data
         if (isset($_POST['NewsletterForm'])) {
-            $model->attributes = $_POST['NewsletterForm'];
-            if ($model->validate() && $model->process()) {
-                Yii::app()->user->setFlash('success', 'User subscribed successfully!');
-            }
+            
+            if(!empty($_POST['confirmemail']))
+                       {
+                           Yii::app()->user->setFlash('error','Stirplate not permitting you to perform this action');
+                           $this->redirect(Yii::app()->createUrl('/'));
+             }
+             
+                $model->attributes = $_POST['NewsletterForm'];
+                if ($model->validate() && $model->process())
+                {
+                    
+                      Yii::app()->user->setFlash('success', 'Good news is coming your way!');
+                       $model->unsetAttributes();
+                    
+                }
+             
+           
         }
         $loginModel = new LoginForm;
-        $this->render('index', array('model' => $loginModel, 'newsLetterModel' => $model));
+        $this->render('index', array('model' => $loginModel, 'newsLetterModel' => $model, 'userModel'=>$userModel));
     }
     
     public function actionSignup()
@@ -268,31 +328,96 @@ class SiteController extends Controller
         $userModel=new User;
         if(isset($_POST['User']))
         {
-           
-            $userModel->attributes=$_POST['User'];
+           if(!empty($_POST['confirmemail']))
+           {
+             echo 'Access Denied'; exit;
+           }
+          
+           $userModel->attributes=$_POST['User'];
            if(User::model()->exists('email=:email',array(":email"=>$userModel->email)))
            {
-            echo 'exits';exit;
+              echo 'exits'; exit;
            }
            if(!filter_var($userModel->email, FILTER_VALIDATE_EMAIL))
            {
              echo "invalid1";exit;
            }
-          $array=explode("@",$userModel->email);
-          $array2=explode(".",$array[1]);
-          if($array2[1]!='edu')
-          {
-            echo 'invalid';exit;
-          }
-         
-            $userModel->password=User::hashPassword($_POST['Users']['password']);
+             /* $array=explode("@",$userModel->email);
+              $array2=expl ode(".",$array[1]);
+              if($array2[1]!='edu')
+              {
+                echo 'invalid';exit;
+              }*/
+             
+            $userModel->password=User::hashPassword($_POST['User']['password']);
                         $userModel->status='block';
-                        
-            if($userModel->save())
+                        $userModel->keystring=md5($userModel->email.time());
+                  
+            if($userModel->save(false))
             {
-                echo 'success';
+                Yii::app()->user->setFlash('success','Please check your email '.$userModel->email.'</i> for a verification link');
+                $obj = array('records'=>$userModel,'string'=>base64_encode($_POST['User']['password']));
+                Notification::sendEmail('newSignup', $userModel, $obj);
+                echo 'success'; 
+                
             }
         }
         exit;
     }
+     public function actionVerifyemail()
+     {
+            $login=new LoginForm;
+           if(isset($_GET['key']) && isset($_GET['string']))
+           {
+               $userData=User::model()->findByAttributes(array('keystring'=>$_GET['key']));
+               if(!empty($userData))
+               {
+                   $userData->keystring=$_GET['key'];
+                   $userData->status='notlogged';
+                   if($userData->update(false))
+                     {
+                        $login->email=$userData->email;
+                        $login->password=base64_decode($_GET['string']);
+                        if($login->login())
+                        {
+                             Yii::app()->user->setFlash('success','<b>Welcome!</b> You are all set to use Stirplate, please fill in your first/last name and your preferred contact email address to get started');
+            
+                           	$this->redirect(array('user/profile'));
+    	                }
+                      exit;
+                     }
+               }
+               else
+               {
+               echo  'invalid link'; exit;
+               }
+           }
+           else{
+              echo 'invalid link'; exit;
+           }
+    }
+    
+    public function actionResentemaillink()
+    {
+         
+         
+         $userModel=User::model()->findByAttributes(array('email'=>$_GET['email']));
+          if($userModel)
+          {
+         Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
+                $obj = array('records'=>$userModel,'string'=>$_GET['key']);
+                Notification::sendEmail('newSignup', $userModel, $obj);
+          Yii::app()->user->setFlash('success','Email verification sent successfully');
+          }
+          else
+          {
+            Yii::app()->user->setFlash('error','Fails to sent email verification link , Please check your email');
+          
+          } 
+          $this->redirect(array('site/index'));                
+    }
+    
+   
+    
+    
 }

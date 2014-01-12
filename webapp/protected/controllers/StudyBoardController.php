@@ -26,7 +26,8 @@ class StudyboardController extends Controller
     public function actionAjaxStudyboards(){
         $uid=Yii::app()->session['uid'];
         $studyboards=Studyboard::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
-        $this->renderPartial('_ajaxStudyboards', array('studyboards' => $studyboards,));
+        $activities  = Activity::model()->findAllBySql("SELECT * FROM `activity` WHERE projectId in (SELECT projectId FROM `project_user` WHERE userId = ".Yii::app()->session['uid']." ) ORDER BY created DESC LIMIT 10");
+        $this->renderPartial('_ajaxStudyboards', array('studyboards' => $studyboards,'activities' => $activities));
     }
 
     public function actionCreate()

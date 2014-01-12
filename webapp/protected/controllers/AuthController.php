@@ -179,8 +179,14 @@ class AuthController extends Controller
 
 	public function actionLogout()
 	{
+	   if(isset(Yii::app()->request->cookies['authentic']))
+                                   unset(Yii::app()->request->cookies['authentic']);
+                                    if(isset(Yii::app()->request->cookies['identity']))
+                                    unset(Yii::app()->request->cookies['identity']);
+                                
+	
 		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->baseUrl);
+		$this->redirect(Yii::app()->createUrl('site/index'));
 	}
 
 }

@@ -144,16 +144,16 @@ header {
 }
 .headerNav ul {
 	float: left;
-	background: url(../img/nav/iconNavStrip.png) left top repeat-y;
+
 }
 .headerNav ul li {
 	display: inline;
-	background: url(../img/nav/iconNavStrip.png) top right repeat-y;
+    width: 100%;
 	float: left;
-	padding: 16px 24px;
 }
+
 .headerNav ul li a {
-	float: left;
+
 }
 .middle {
 	width: 100%;
@@ -336,8 +336,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 	float: left;
 	clear: both;
 }
+.activity:hover{
+	background-color: #DDDDDD;
+}
+.my_title {
+	font-size: 16px;
+	color: #000000;
+	font-weight: bold;
+	float: left;
+	clear: both;
+	width: 100%;
+	text-align: center;
+}
 .listRt p {
 	font-size: 11px;
+	width: 100%;
 	color: #333333;
 	float: left;
 	clear: both;
@@ -565,10 +578,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 .project-header{
     background:none;
     border:none;
-    width:100%;
-    padding-right: 50px;
+    width:95%;
     
 }
+.edit-img
+{
+    cursor: pointer;
+}
+
 .edit-project-header{
    background: none repeat scroll 0 0 #FFFFFF;
     border: 2px none #ADD8E6;
@@ -576,7 +593,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
     -moz-box-shadow: 0 0 1px 1px #0000FF;
     -webkit-box-shadow: 0 0 1px 1px #0000FF;
     height: 40px;
-    width: 100%;
+    width:100%;
+    margin-left: 0px;
    
 }
 .toolpopup
@@ -594,10 +612,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
     
 }
 
-.mainheader:hover  .toolpopup
-{
-    display: block;
-}
+
 .mainheader:focus .toolpopup{
     display: none;
 }
@@ -708,3 +723,43 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 	margin: 10px 0 0 0;
 	cursor: pointer;
 }
+
+
+#activity_stream2{
+	height: 80%;
+overflow-y: scroll;
+position: fixed;
+width: 270px;
+top: 100px;
+
+}
+.input-xarge
+{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    font-size: 19px;
+    height: 34px;
+    padding: 3px 26px;
+    width: 200px;
+}
+
+
+.margin-left-3em {
+    margin-left: 3em;
+}
+
+div#user-profile-title h3 {
+    padding: 0.5em 0;
+}
+.headerNav .dropdown-toggle{
+    margin: 10px 0;
+}
+.detailMainContentMainBtn #newComment{
+    background-color: white;
+    width: 90%;
+}
+.detailMainContentMainBtn .discussion-submit{
+    margin-right: 7%;
+}
+

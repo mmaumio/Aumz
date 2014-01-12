@@ -10,10 +10,12 @@ class LoginForm extends CFormModel
 	public $email;
 	public $password;
 	public $rememberMe;
-
+    public $remember;
+    public $spamblocker;
 	private $_identity;
-
-	/**
+    public $verified;
+   
+    /**
 	 * Declares the validation rules.
 	 * The rules state that username and password are required,
 	 * and password needs to be authenticated.
@@ -50,8 +52,18 @@ class LoginForm extends CFormModel
 		{
 			$this->_identity=new UserIdentity($this->email,$this->password);
 			if(!$this->_identity->authenticate())
+            {  
+                if($this->_identity->errorCode===UserIdentity::ERROR_UNKNOWN_IDENTITY)
+                {
+                 Yii::app()->user->setFlash('error','Email not Verified yet , click here to get verification <a href="http://'.$_SERVER['SERVER_NAME'].'/site/resentemaillink?email='.$this->email.'&key='.base64_encode($this->password).'">link</a> again');
+                 $this->addError('password','Email not verified yet');
+                }
+               else 
+               {
 				$this->addError('password','Incorrect email or password.');
-		}
+		        }
+        }   
+        }
 	}
 
 	/**
@@ -67,11 +79,18 @@ class LoginForm extends CFormModel
 		}
 		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
 		{
-			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
-			Yii::app()->user->login($this->_identity,$duration);
+		    $duration=$this->rememberMe ? 3600*24*14 : 0; // 30 days
+			
+            Yii::app()->user->login($this->_identity,$duration);
+            
+           
 			return true;
-		}
+		} 
+        
 		else
-			return false;
+        {
+            
+            return false;
+        }    
 	}
 }

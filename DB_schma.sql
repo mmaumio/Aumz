@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `omniscience` /*!40100 DEFAULT CHARACTER SET utf8
 USE `omniscience`;
 -- MySQL dump 10.13  Distrib 5.6.13, for osx10.6 (i386)
 --
--- Host: 127.0.0.1    Database: omniscience
+-- Host: 173.194.111.34    Database: omniscience
 -- ------------------------------------------------------
--- Server version	5.6.14
+-- Server version	5.5.35
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -1160,7 +1160,7 @@ CREATE TABLE `activity` (
   CONSTRAINT `activity_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `activity_ibfk_2` FOREIGN KEY (`studyId`) REFERENCES `study` (`id`) ON DELETE CASCADE,
   CONSTRAINT `activity_ibfk_3` FOREIGN KEY (`parentActivityId`) REFERENCES `activity` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=545 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=723 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1330,7 +1330,7 @@ CREATE TABLE `file` (
   KEY `file_project_fk` (`projectId`),
   CONSTRAINT `file_project_fk` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `file_user_fk2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1374,7 +1374,7 @@ CREATE TABLE `lab` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1394,6 +1394,24 @@ CREATE TABLE `lab_user` (
   CONSTRAINT `labUser_lab_fk` FOREIGN KEY (`labId`) REFERENCES `lab` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `labUser_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `lab_user_other`
+--
+
+DROP TABLE IF EXISTS `lab_user_other`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `lab_user_other` (
+  `userId` int(11) NOT NULL,
+  `name` varchar(45) COLLATE utf8_bin NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  KEY `lab_user_other_user_idx` (`userId`),
+  CONSTRAINT `lab_user_other_user` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1418,6 +1436,22 @@ CREATE TABLE `member` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `position`
+--
+
+DROP TABLE IF EXISTS `position`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `position` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `project`
 --
 
@@ -1435,7 +1469,7 @@ CREATE TABLE `project` (
   PRIMARY KEY (`id`),
   KEY `project_user_fk` (`userId`),
   CONSTRAINT `project_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1491,6 +1525,8 @@ DROP TABLE IF EXISTS `project_user`;
 CREATE TABLE `project_user` (
   `projectId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `invitedUser` int(11) NOT NULL,
   `role` varchar(255) DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
@@ -1575,17 +1611,17 @@ CREATE TABLE `task` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `dueBy` datetime DEFAULT NULL,
-  `studyId` int(11) DEFAULT NULL,
+  `projectId` int(11) DEFAULT NULL,
   `relatedObjectId` int(11) DEFAULT NULL,
   `relatedObjectType` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `owner_fk` (`ownerId`),
   KEY `assignee_fk` (`assigneeId`),
-  KEY `task_idx_study_id` (`studyId`),
+  KEY `task_idx_study_id` (`projectId`),
   CONSTRAINT `assignee_fk` FOREIGN KEY (`assigneeId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `owner_fk` FOREIGN KEY (`ownerId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `task_ibfk_1` FOREIGN KEY (`studyId`) REFERENCES `study` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+  CONSTRAINT `task_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1600,6 +1636,58 @@ CREATE TABLE `tbl_migration` (
   `apply_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tech`
+--
+
+DROP TABLE IF EXISTS `tech`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tech` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tech_user`
+--
+
+DROP TABLE IF EXISTS `tech_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tech_user` (
+  `techId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`techId`,`userId`),
+  KEY `fk_tech_user_user_id_idx` (`userId`),
+  CONSTRAINT `fk_tech_user_tech_id` FOREIGN KEY (`techId`) REFERENCES `tech` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_tech_user_user_id` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tech_user_other`
+--
+
+DROP TABLE IF EXISTS `tech_user_other`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tech_user_other` (
+  `userId` int(11) NOT NULL,
+  `name` varchar(45) COLLATE utf8_bin NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  CONSTRAINT `tech_user_other_user` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1638,7 +1726,7 @@ CREATE TABLE `user` (
   `profileImageUrl` varchar(128) DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
-  `position` varchar(128) DEFAULT NULL,
+  `position` int(10) unsigned DEFAULT NULL,
   `affiliation` varchar(128) DEFAULT NULL,
   `department` varchar(128) DEFAULT NULL,
   `fieldOfStudy` varchar(128) DEFAULT NULL,
@@ -1649,8 +1737,11 @@ CREATE TABLE `user` (
   `socialMediaTwitter` varchar(128) DEFAULT NULL,
   `socialMediaLinkedIn` varchar(128) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=latin1;
+  `keystring` varchar(255) DEFAULT '',
+  `contactEmail` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_position_idx` (`position`)
+) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1692,6 +1783,25 @@ CREATE TABLE `user_group_member` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `user_position`
+--
+
+DROP TABLE IF EXISTS `user_position`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_position` (
+  `positionId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`positionId`,`userId`),
+  KEY `fk_user_pos_user` (`userId`),
+  CONSTRAINT `userPos_position_fk` FOREIGN KEY (`positionId`) REFERENCES `position` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `userPos_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping routines for database 'omniscience'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1704,4 +1814,7 @@ CREATE TABLE `user_group_member` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-19 21:13:36
+-- Dump completed on 2014-01-08 22:14:02
+
+-- 10 Jan 2014 : By Amit Thatey <amitthateywebexpert@gmail.com>
+ALTER TABLE `file` ADD `delete_date` DATETIME NULL DEFAULT NULL 

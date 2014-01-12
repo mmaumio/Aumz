@@ -39,7 +39,7 @@ class Task extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ownerId, assigneeId, projectId, subject, created, modified', 'required'),
+			array('ownerId, assigneeId, projectId, subject', 'required'),
 			array('ownerId, assigneeId, projectId', 'numerical', 'integerOnly'=>true),
 			array('subject, status', 'length', 'max'=>255),
 			array('description, dueBy', 'safe'),
@@ -134,6 +134,7 @@ class Task extends CActiveRecord
                             'class' => 'zii.behaviors.CTimestampBehavior',
                             'createAttribute' => 'created',
                             'updateAttribute' => 'modified',
+                            'setUpdateOnCreate' => true,
                     )
             );
         }

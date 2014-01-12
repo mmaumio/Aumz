@@ -1,6 +1,6 @@
 <?php
 Yii::import('application.extensions.*');
-require_once'Mailchimp/Mailchimp.php';
+require_once'Mailchimp/MailchimpStream.php';
 
 
 /**
@@ -15,7 +15,7 @@ class NewsletterForm extends CFormModel
      * @var Mailchimp
      */
     private $mc;
-
+    public $spamblocker; 
     /**
      * Declares the validation rules.
      * The rules state that email is required,
@@ -25,7 +25,8 @@ class NewsletterForm extends CFormModel
     {
         return array(
             // username and password are required
-            array('email', 'required'),
+            array('email,spamblocker', 'required'),
+            
             array('email', 'email')
         );
     }
@@ -36,7 +37,7 @@ class NewsletterForm extends CFormModel
     public function process()
     {
         try {
-            $this->mc = new Mailchimp(Yii::app()->params['mailChimpApiKey']);
+            $this->mc = new MailchimpStream(Yii::app()->params['mailChimpApiKey']);
             $this->mc->lists->subscribe(
                 Yii::app()->params['mailChimpListId'],
                 array('email' => $this->email)

@@ -8,14 +8,14 @@ class ProjectController extends Controller
         public function filters()
     	{
     		return array(
-                			'accessControl',
+                			'accessControl', 
                 		);
     	}
   	public function accessRules()
 	{
 		return array(
-			array('allow',
-				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask', 'ajaxProjects'),
+			array('allow', 
+				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask', 'Updateactivity', 'ajaxProjects'),
 				'users'=>array('@'),
 			),
 			array('deny','users'=>array('*'),),
@@ -34,8 +34,8 @@ class ProjectController extends Controller
             }
             $project = Project::model()->findByPk($_GET['id']);
             $task = new Task;
-            $user = User::model()->findByPk(Yii::app()->user->id);
-            $tasks = Task::model()->findAll(array('condition'=>"ownerId='".Yii::app()->user->id."'"));
+            $modeluser = User::model()->findByPk(Yii::app()->session['uid']);
+            $tasks = Task::model()->findAllByAttributes(array('ownerId'=>Yii::app()->session['uid'], 'projectId'=>$_GET['id']));
             
             $authers_projects = ProjectUser::model()->findAllByAttributes(array('projectId' => $_GET['id']));
             $all_users = User::model()->findAll();
@@ -44,7 +44,7 @@ class ProjectController extends Controller
             }
             if ($project)
             {
-                    $this->render('index', array('project' => $project, 'authers' => $authers, 'all_users' => $all_users,'task'=>$task, 'user'=>$user,'tasks'=>$tasks));
+                    $this->render('index', array('project' => $project, 'authers' => $authers, 'all_users' => $all_users,'task'=>$task, 'modeluser'=>$modeluser,'tasks'=>$tasks));
             }
 		}
 	}
@@ -99,14 +99,23 @@ class ProjectController extends Controller
 	public function actionDashboard()
 	{
             $uid=Yii::app()->session['uid'];
+            $user_projects = ProjectUser::model()->findAllByAttributes(array('userId'=>$uid));
 			$projects = array();
-            //$projects=Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
-            //$studyboards=Studyboard::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
-
-            //$this->render('dashboard', array('projects' => $projects, 'studyboards' =>$studyboards));
-            $this->render('dashboard');
+            foreach ($user_projects as $user_project) {
+                $projects[] =  $user_project->project;
+            }
+            // $projects = Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
+            $activities  = Activity::model()->findAllBySql("SELECT * FROM `activity` WHERE projectId in (SELECT projectId FROM `project_user` WHERE userId = ".Yii::app()->session['uid']." ) ORDER BY created DESC LIMIT 10");
+            $this->render('dashboard', array('projects' => $projects, 'activities' => $activities));
 		
 	}
+
+    public function actionUpdateactivity()
+    {
+        $lastId = $_POST['last_id'];
+        $activities  = Activity::model()->findAllBySql('SELECT * FROM `activity` WHERE id > '.$lastId.' AND  projectId in (SELECT projectId FROM `project_user` WHERE userId = '.Yii::app()->session["uid"].' ) ORDER BY created DESC LIMIT 10');
+        $this->renderPartial('/activity/_activity_streams', array('activities' => $activities));
+    }
 
 	public function actionCreate()
 	{
@@ -122,15 +131,10 @@ class ProjectController extends Controller
 				$project->title = $_POST['title'];
 				$project->status = 'active';
 
-                // In case the project is created from Study board then
-                // set the project studyboard id
-                if(!empty($_POST['studyboardId'])){
-                    $project->studyboardId = $_POST['studyboardId'];
-                }
-
 				if ($project->save())
 				{
-    				$this->redirect('/project/index/'.$project->id);
+					
+				$this->redirect('/project/index/'.$project->id);
 				}
 				else
 				{
@@ -279,11 +283,8 @@ class ProjectController extends Controller
 		if (isset($_POST['Task']))
 		{
                         Yii::log(json_encode($_POST['Task']), 'error');
-
-			//TODO: check to make sure user is a member of study before letting them create a task
-                        $task->attributes = $_POST['Task'];
+            $task->attributes = $_POST['Task'];
 			$task->ownerId = Yii::app()->user->id;
-			$task->status = empty($task->status) ? 'Pending' : $task->status;
                         
 			$respArray = array();
                         if ( $task->validate() && $task->save())
@@ -293,17 +294,10 @@ class ProjectController extends Controller
 				$activity->relatedObjectId = $task->id;
 				$activity->relatedObjectType = 'task';
 				$activity->type = 'task';
+                                $activity->projectId = $_POST['Task']['projectId'];
 				$activity->content = $task->owner->firstName . ' added a new task: "' . $task->subject . '"';
 
 				if($activity->save()){
-
-                                    $respArray['status'] = 'OK';
-                                    $respArray['id'] = $task->id;
-                                    $respArray['task'] = array();
-                                    $respArray['task']['subject'] = $task->subject;
-                                    $respArray['task']['description'] = $task->description;
-                                    $respArray['task']['assigneeImgUrl'] = $task->owner->profileImageUrl;
-                                    //$respArray['task']['assigneeImgUrl'] = $task->assignedToUser->getUserImage();
                                     ob_end_clean();
                                     echo CJSON::encode(array(
                                        'status'=>'success',
@@ -327,7 +321,8 @@ class ProjectController extends Controller
         $uid=Yii::app()->session['uid'];
         $projects=Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active', 'studyboardId' => null));
         $studyboards=Studyboard::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
-        $this->renderPartial('_ajaxProjects', array('projects' => $projects,'studyboards' => $studyboards));
+        $activities  = Activity::model()->findAllBySql("SELECT * FROM `activity` WHERE projectId in (SELECT projectId FROM `project_user` WHERE userId = ".Yii::app()->session['uid']." ) ORDER BY created DESC LIMIT 10");
+        $this->renderPartial('_ajaxProjects', array('projects' => $projects,'studyboards' => $studyboards, 'activities' => $activities));
     }
-   
+
 }

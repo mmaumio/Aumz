@@ -6,18 +6,70 @@ Yii::import('application.extensions.*');
 class FileController extends Controller
 {
 
+
 	public function actionAjaxcreate()
 	{
-	// echo "enter";
-	$uid = Yii::app()->session['uid'];
-	// echo $uid;
+
+//        $token_path = 'protected/config/';
+//
+//        $client_id = 'oqyuzb6qkeg9ziufh89u70r8rz54la9h'; 
+//        $client_secret = 'HyEAPF1kMf3wVPyi3qXGxXBhZg90oHnS';
+//        $redirect_uri = $this->createAbsoluteUrl('file/ajaxcreate');
+//        
+//	$box = new Box_API($client_id, $client_secret,$redirect_uri);
+//        
+//	if(!$box->load_token($token_path)){
+//		if(isset($_GET['code'])){
+//			$token = $box->get_token($_GET['code'], true);
+//			if($box->write_token($token, 'file',$token_path)){
+//				$box->load_token($token_path);
+//			}
+//		} else {
+//			$box->get_code();
+//		}
+//	}	
+        
+        
+//        var_dump($box->get_user());
+//        echo '<br>';
+        
+//        $temp_file_content = file_get_contents('https://www.filepicker.io/api/file/rMSic7mKRBuB8lf0E4j9?dl=true',FALSE);
+//        $temp_file_name = 'Penguins.jpg';
+//        if(file_put_contents('protected/data/temp/'.$temp_file_name,$temp_file_content)){
+//            //create a file
+//            $box->put_file('protected/data/temp/'.$temp_file_name, '1421092800');            
+//        }
+        
+//
+//        var_dump($box->put_file('D:\yii_test_GAE.txt','0'));
+//        print_r(getallheaders ());
+
+//       echo '<hr>';
+//        var_dump($box->get_folder_items('1421092800'));
+//       echo '<hr>' ;
+//	if (isset($box->error)){
+//		echo $box->error . "\n";
+//	}        
+//        
+//        die();
+        
+//        foreach ($attachments as $attachment)
+//        {
+//            $filename = $attachment['url'];
+//            $this->putFileOnBox();        
+//        }
+        
+        
+         $uid = Yii::app()->session['uid'];
+         $attachments = $_POST['attachments'] ;
+         
 		if ($uid)
 		{
 			// print_r($_POST['attachments']);
 
 		
 			$respArray = array();
-			foreach ($_POST['attachments'] as $a)
+			foreach ($attachments as $a)
 			{
 				$file = new File;
 				
@@ -43,7 +95,12 @@ class FileController extends Controller
                                 
                                 Yii::app()->db->createCommand($sql)->execute($parameters);
                                 //var_dump(Yii::app()->db->createCommand($sql));
-                                
+       $activity = new Activity;
+				$activity->userId = Yii::app()->user->id;
+				$activity->type = 'file_added';
+                                $activity->projectId = $file->projectId;
+                                $activity->save();
+                         
 			/*	if ($file->save())
 				{
 					echo "success";
@@ -62,6 +119,8 @@ class FileController extends Controller
 	//	$this->_sendResponse(200, json_encode($file));
 		}
 	}
+        
+        
 /*	public function actionDelete_Comment(){
 		if (!empty($_GET['id'])){
 			$uid=Yii::app()->session['uid'];
@@ -78,27 +137,56 @@ class FileController extends Controller
 		}
 	}
 	*/
-	public function actionDownload()
+	public function actionDownload($file)
 	{
-		if (Yii::app()->session['uid'] && !empty($_GET['id']))
+                $file_id = $file;
+                unset($file);
+                
+		if (Yii::app()->session['uid'] && !empty($file_id))
 		{
-			$file = File::model()->findByPk($_GET['id']);
+			$file = File::model()->findByPk($file_id);
 
-			$project = Project::model()->findByPk($file->projectId);
+                        $project = Project::model()->findByPk($file->projectId);
 
-			if (!empty($file->boxId) && $project->isMemberOf())
+			if ($project->isMemberOf())
 			{
-				$box = new Box_API(Yii::app()->params['boxclientid'], Yii::app()->params['boxclientsecret'], 'n/a');
-
-				if(!$box->load_token('protected/config/')){
-					$box->get_code();
-				}
-
-				$redirectUrl = $box->get_file_download_link($file->boxId);
-
-				$this->redirect($redirectUrl);
-			}
-		}
+			                $policy = base64_encode(json_encode(array('expiry'=>strtotime("+5 minutes"), 'call'=>array('read'))));
+							$signature = hash_hmac('sha256', $policy, Yii::app()->params['filepicker']['app_secret']);
+                            $this->redirect($file->fpUrl.'?dl=true&signature='.$signature.'&policy='.$policy);			}
+                }else{
+                    throw new CHttpException(': Access Control','You are not authorised to download this file.');
+                }
 	}
+        
+        
+        /*
+         * This function sets the status of file to be delete
+         */
+        public function actionDelete(){
+            //Collecting variables
+            $file_id = $_POST['delete_file_id'];
+            $referar_url = $_POST['referer_url'];
+            
+            
+            $file = File::model()->findByPk($file_id);
+            
+            $project = Project::model()->findByPk($file->projectId);
+            
+            if ($project->isMemberOf()){ // If current user is member of project then only he can delete it.
+               
+                $file->delete_date = new CDbExpression('UTC_TIMESTAMP()');
+                if($file->save()){
+                    //Sucess
+                }else{
+                    //Fail
+                }
+                
+            }else{
+                throw new CHttpException(':Authorization','You can\'t delete this file. You are not authorized to perform this action.' );
+            }  
+            
+            $this->redirect(urldecode($referar_url));
+        }
+        
 
 }

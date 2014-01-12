@@ -1,8 +1,4 @@
-<p>Hi there fellow scientist,
-	<?php echo $user->name;?> added 
-	You were added to a projcet called 
-
-<a href="<?php echo $studyUrl ?>"><?php echo $studyName ?></a>
-Click on that link to view the files, discussions and tasks set by your collegues.
-Thanks from the Stirplate team! </p>
-
+<p>Hi there, <br>
+<?php echo $user->name;?> wants to work with you on a new project titled: <a href="<?php echo $studyUrl ?>"><?php echo $studyName ?></a>
+<br>
+Best of luck from the Stirplate team!

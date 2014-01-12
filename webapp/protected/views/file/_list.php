@@ -14,20 +14,37 @@
          <?php
          // Getting project's file data 
          $proid=$project->id;
-         $uid=Yii::app()->session['uid'];
+         
+         //$uids=Yii::app()->session['uid'];
+         $project_user_array = array();
+         $project_user = ProjectUser::model()->findAllByAttributes(array('projectId'=>$proid)); 
+         foreach ($project_user as $users) {
+             array_push($project_user_array, $users->userId);
+         }
+         $criteria = new CDbCriteria;
+         $criteria->condition = 'projectId=:projectId';
+         $criteria->params = array(
+            ':projectId' => $proid
+         );
+         $criteria->addInCondition('userId', $project_user_array);
 
-         $file = File::model()->findAllByAttributes(array('userId'=>$uid,'projectId'=>$proid));        
+         //var_dump($criteria);
+         $file = File::model()->findAll($criteria);        
          
          foreach($file as $d):
 
            $user = ucfirst($d->user->firstName).' '.ucfirst($d->user->lastName);   
-           $lab_title = 'Job Title '.ucfirst($d->user->labTitle);
+           $lab_title = ucfirst($d->user->labTitle);
            $time = GeneralFunctions::getPrettyTime($d->created);          
            
            $file_name = $d->name;
-           $fp_url= $d['fpUrl'];      
+           $file_id = $d->id;
+//           $fp_url= $d['fpUrl'];      
+//           
+//           $fp_url_elements = explode('/', $fp_url);
+//           $fp_url_elements = array_reverse($fp_url_elements);
            
-           $thumbnail = "images/sampleImg1.png";
+           //$thumbnail = "images/sampleImg1.png";
            $type = explode('/', $d->mimetype);           
            switch ($type[0]){
                case 'text':
@@ -35,7 +52,7 @@
                    break;
                case 'image':
                    $details_icon = '/img/details/greenIcon2.png';
-                   $thumbnail = $fp_url.'/convert?w=80&h=80&dl=false';
+                   //$thumbnail = $fp_url.'/convert?w=80&h=80&dl=false';
                    break;
                
                case 'audio':
@@ -51,24 +68,60 @@
                    break;                   
                    
            }
-              
-
-
-               
+             
          ?>            
             <div class="detailMainContentList">
-            	<div class="detailMainContentList1"><img src="<?php echo $thumbnail;?>" alt="Image" /><p><b><?php echo $user; ?></b><br/><?php echo $lab_title;?></p></div>
+            	<div class="detailMainContentList1">
+<!--                    <img src="<?php // echo $thumbnail;?>" alt="Image" />-->
+                    <p><b><?php echo $user; ?></b><br/><?php echo $lab_title;?></p>
+                </div>
                 <div class="detailMainContentList2" >
-                	<p>   
-                            <span style="padding-left: 25px;width:100%"><a href="<?php echo $fp_url;?>?dl=true" target="_blank"><img src="<?php echo $details_icon;?>" alt="Icon" /><?php echo $file_name;?></a></span>
+                	<p> 
+                            <div class="name-block" style="vertical-align: middle;width: -moz-max-content !important;padding-left: 25px;width:100%" >
+                                <img src="<?php echo $details_icon;?>" alt="Icon" style="vertical-align:middle" />
+
+                                <a href="<?php echo $this->createUrl('file/download',array('file'=>$file_id)) ;?>" target="_blank"><?php echo $file_name;?></a>
+                                &nbsp;
+                                <?php if(is_null($d->delete_date) || trim($d->delete_date)===''): ?>
+                                <span class="delete-icon">
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#deleteFile-<?php echo $file_id;?>-ConfirmBox"><b> x </b></a>                    
+                                </span>
+                                <?php else:?>
+                                <span style="color: red"> (Undo Delete)      </span>                                          
+                                <?php endif; ?>
+                            </div>
                         </p>
                 </div>
                 <div class="detailMainContentList3"><div class="listRtTime"><?php echo $time; ?></div></div>
             </div>
+                <div class="modal fade" id="deleteFile-<?php echo $file_id;?>-ConfirmBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">Are you sure to delete this file(<?php echo $file_name;?>) ?</h4>
+		      </div>
+			 <form action="<?php echo $this->createUrl('file/delete') ;?>"  method="POST">
+                             <input type="hidden" name="delete_file_id"  value="<?php echo $file_id;?>">
+                             <input type="hidden" name="referer_url" value="<?php echo urlencode(Yii::app()->request->requestUri);?>">
+				<div class="modal-footer" style="border-top:none !important;">
+					<div class="control-group buttons">
+						<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>				
+						<button class="btn btn-primary" type="submit" style="float:right" id="submitCommentBtn">Delete</button>	
+					</div>
+		        </div>		        		      
+			</form>
+		      <!--<div class="modal-footer">
+		        <button type="button" class="btn btn-primary">Add</button>
+		      </div>-->
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->             
          <?php
          endforeach;
          ?>    
          </div>
+
         		
 </div>
 
@@ -77,25 +130,35 @@
 		</div>
 
 		<div class="clear">&nbsp;</div>
-
-		
+                
+                <?php 
+                $store_path = $project->title.'/'.GeneralFunctions::getUsername().'/'.date("Y-m-d").'/'; 
+                
+                $policy = base64_encode(json_encode(array('expiry'=>strtotime("+5 minutes"), 'call'=>array('pick','store'))));
+                $signature = hash_hmac('sha256', $policy, Yii::app()->params['filepicker']['app_secret']);
+                ?>
+                
 		<input type="filepicker" 
-		data-fp-apikey="<?php echo Yii::app()->params['filepickerioapikey'] ?>" 
+                data-fp-policy="<?php echo $policy ?>"       
+                data-fp-signature ="<?php echo $signature; ?>"       
+                data-fp-store-container="filepicker_elance"       
+		data-fp-apikey="<?php echo Yii::app()->params['filepicker']['api_key'] ?>" 
 		data-fp-mimetypes="*/*" 
 		data-fp-container="modal"
 		data-fp-multiple="true" 
 		data-fp-services="COMPUTER,BOX,DROPBOX"
 		data-fp-button-text="Add Files" 
+                data-fp-store-location="S3"
+                data-fp-store-path="<?php echo $store_path?>"                    
 		onchange="processFpResponse(event);"
 		class="btn btn-success fpaddfiles" >
-		
-			
+
 	</div>
 
 <script>
 
 var processFpResponse = function(event) {
-	// console.log(event);
+	 console.log(event);
 
 	// file uploaded successfully
 
@@ -134,13 +197,15 @@ var processFpResponse = function(event) {
             success: function (result) {
 		location.reload();
 	    },
-			error:function (e){
-		//		alert(JSON.stringify(e));
-						location.reload();
-
-			}
-			});
+            error:function (e){
+                    //alert(JSON.stringify(e));
+                    location.reload();
+                }
+            });
+                        
 }
+
+
 </script>
 		<style>
 
@@ -281,7 +346,7 @@ var processFpResponse = function(event) {
 		margin:0;
 		}
 		.discussions ul.children li {
-		//border-top:1px solid #e4e6eb;
+		/*border-top:1px solid #e4e6eb;*/
 		}
 
 		.discussions ul li ul li .author {
@@ -386,4 +451,4 @@ var processFpResponse = function(event) {
 
 	<script type="text/javascript" src="/js/clickheat.js"></script><noscript><p><a href="http://www.dugwood.com/index.html">Open Source Sofware</a></p></noscript>-->
 
-	<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+<script src="//api.filepicker.io/v1/filepicker.js" type="text/javascript"></script>

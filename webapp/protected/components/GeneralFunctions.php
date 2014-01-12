@@ -47,6 +47,19 @@ class GeneralFunctions {
     
     	return $result;    	
     }
+	
+    
+    public static function getUsername($user_id=NULL){
+        
+        if(is_null($user_id)){
+            $user_id = Yii::app()->session['uid'];
+        }
+        
+        $user = User::model()->findByPk($user_id);
+        
+        return $user->firstName.'_'.$user->lastName;
+        
+    }	
     
 
 	    

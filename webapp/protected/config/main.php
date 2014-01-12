@@ -27,7 +27,7 @@ return array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'stirplateio',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
+//			'ipFilters'=>array('127.0.0.1','::1'),
 		),
         //'demo' // Yii on Google App Engine demo module
 	),
@@ -37,7 +37,10 @@ return array(
                 'assetManager'=>array(
                     'class'=>'application.components.CGAssetManager',
                     'basePath'=>'gs://temp__dev',
-                    'baseUrl'=> 'http://commondatastorage.googleapis.com/temp__dev'
+                    'baseUrl'=> 'http://storage.cloud.google.com/temp__dev'
+		// KG edited out on 1/4/13. Changes from f2fce44b001c4ec5dde1b76c84bd0345606eb751 commit  
+        //            'basePath'=>Yii::getPathOfAlias('assets'),
+        //           'baseUrl'=> '/assets'
                 ),
                 'request'=>array(
                     'baseUrl' => '/',
@@ -48,6 +51,7 @@ return array(
 			'allowAutoLogin'=>true,
                         'loginUrl'=>array('site/index'),
 		),
+       
 		
 		// uncomment the following to enable URLs in path-format
 
@@ -60,6 +64,7 @@ return array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+                '<user:\w+>'=>'user/profile',
 			),
 		),
 
@@ -70,10 +75,10 @@ return array(
 //		),
 		'db'=>array(
 	//		KG comment: The following line connects the app w/ the cloudsql database, does not work w/ local copy
-		//	'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
+			'connectionString' => 'mysql:unix_socket=/cloudsql/stirplateio:db4;dbname=omniscience',
 		// Uncomment the following to use a local copy of the DB(located in the repo)
-			'connectionString' => 'mysql:host=localhost;dbname=omniscience',
-            'emulatePrepare' => true,
+	//		'connectionString' => 'mysql:host=localhost;dbname=omniscience',
+			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',
@@ -113,13 +118,14 @@ return array(
  			'logging' => true,
  			'dryRun' => false
  		),
-            
-		'clientScript'=>array(
-			'class' => 'CClientScript',
-			'scriptMap' => array(
-				'jquery.min.js' => false
-			)
-		)
+                   //added by KG 1/4/13
+//                        'clientScript'=>array(
+//                   'class' => 'CClientScript',
+//                   'scriptMap' => array(
+//                     'jquery.min.js' => false
+//                   )
+//                )
+		
 	),
 
 	// application-level parameters that can be accessed
@@ -131,12 +137,18 @@ return array(
 		'gaId' => 'UA-42897925-2',
 		'gaDomain' => 'appspot.com',
 		'mandrilKey' => 'yCf02-rOhL7JGHEii0eqDg',
-		'filepickerioapikey' => 'APipHjEy4SYCn4SfbVvUzz',
+		//'filepickerioapikey' => 'APipHjEy4SYCn4SfbVvUzz',
+		'filepicker'=>array('api_key'=>'Ak5y64NaQW4XUby4g17mgz','app_secret'=>'QU22TYAZRRAYHHFFIJUZVGTH24'),
 		'emailNotifications' => true,
-		'boxfolderid' => 1302694889,
-		'boxclientid' => '58l43p0xw5nv4vqpakexbg4iajqsadfh',
-		'boxclientsecret' => 'NwDCRMooJATY9pFv5ROl3bWRjcEGpqvZ',
+		//'boxfolderid' => 1302694889,
+		//'boxclientid' => '58l43p0xw5nv4vqpakexbg4iajqsadfh',
+		//'boxclientsecret' => 'NwDCRMooJATY9pFv5ROl3bWRjcEGpqvZ',
 		'mailChimpApiKey' => 'dff5a7e5f0ef8a7c5b2d077b4c525def-us7',
-		'mailChimpListId' => '64a24c221c'
-	),
+		'mailChimpListId' => '64a24c221c',
+
+        //constants
+        'FAILURE' => 0,
+        'SUCCESS' => 1,
+        'ERROR' => 2,
+    ),
 );

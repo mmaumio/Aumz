@@ -1,18 +1,26 @@
 <section class="detailMain">
 	<div class="wrapper">
         <div class="detailMainGreen">
-         
             <h3 class="mainheader">
             <div class="toolpopup"><img src="/img/dashboard/file_edit2.png" style="margin:-3px 5px;">Click on title to edit</div>
-               <input value="<?php echo $project->title ?>" type="text" style="background:url('/img/dashboard/file_edit.png') no-repeat scroll 100% center / 4% 100% rgba(0, 0, 0, 0);" class="project-header"/><img class="loadclass" src="/img/dashboard/loadimage.gif"/></h3>
+            <img class="edit-img" src="/img/dashboard/file_edit.png" style="height:23px"/>
+             <input value="<?php echo $project->title ?>" type="text" style="" class="project-header"/><img class="loadclass" src="/img/dashboard/loadimage.gif"/></h3>
             <div class="detailMainGreenImg">
             	<h3> Project members: </h3> 
                     
                 <?php foreach ($project->users as $user) { ?>            		
-            		<h3><?php echo $user->firstName  ?>
-                    <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">x</a>
-                    <br />
-            	<?php } ?> </h3>
+            		<div class="name-block" style="width: -moz-max-content !important;">
+					<span style="font-weight:bold"><?php echo $user->firstName  ?></span>
+					<span class="delete-icon">
+                    <a href="/project/remove_collaborator/<?php echo $project->id ?>?userId=<?php echo $user->id ?>">
+					  <b>
+					  x
+					  </b>
+					</a>                    
+					</span>
+					</div>
+					
+            	<?php } ?> 
                 <script type="text/javascript">
                     var names_array = [ <?php foreach ($all_users as $user) {
 
@@ -21,11 +29,22 @@
                     } ?> ]
                  
                 $(document).ready(function() {
+				    $(".delete-icon").hide();
                     $("#names").select2({tags:names_array, width: "400"});
                     $("#names").on("change", function(e) {
                       $("#mynames").val($("#names").select2("val").join(","));
                     });
-                    
+					
+					$(".name-block").on("mouseover", function(){
+					  $(this).children(".delete-icon").show();
+					  $(this).children("border","1px solid grey");
+					});
+					
+					$(".name-block").on("mouseout", function(){
+					  $(this).children(".delete-icon").hide();
+					  $(this).children("border","none");
+					});
+
                 });
             </script>
             <br><a href="javascript:void(0);" data-toggle="modal" data-target="#collaboratorsModal"> Add new project member  </a>
@@ -45,7 +64,7 @@
              <li class="dropdown " style="" >
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img height="40px" src="/img/details/dashNav5.png" alt="Files"><span>Settings</span> <b class="caret" style=""></b></a>
               <ul class="dropdown-menu " style="background: #FFFFFF;width: 116%;">
-                <li style="background: none;" class="dropdownli"><a href="javascript:void(0);" rel="<?php echo $project->id;?>" id="del-btn"><img src="/img/dashboard/remove.png"  width="30px"/><b>Delete Study</b></a></li>
+                <li style="background: none;" class="dropdownli"><a href="javascript:void(0);" rel="<?php echo $project->id;?>" id="del-btn"><img src="/img/dashboard/remove.png"  width="30px"/><b>Delete Project</b></a></li>
                 <li style="background: none;" class="dropdownli"><a href="#"><img src="/img/dashboard/move.png"  width="25px"/> <b>Move Project to Study Board</b></a></li>
                 
               </ul>
@@ -56,35 +75,14 @@
 </section>
 <section class="detailMainContent"> 
 	<div class="wrapper"> 
-    	<?php $this->renderPartial('_discussionList', array('activities' => $project->activities,'project'=>$project)); ?>
+    	<?php $this->renderPartial('_discussionList', array('activities' => $project->comments,'project'=>$project)); ?>
         
         <div class="detailMainContentMain detailMainContentMainLft">
          <a id="tasks"></a>
          <h3>My Tasks</h3>
          <div class="detailMainContentListBor">
             <?php 
-            if(isset($tasks)){
-                foreach($tasks as $val){
-                   
-                   ?>
-                       <div class="detailMainContentList">
-                           <div class="detailMainContentList1 detailMainContentList1Sm"><?php if(isset($user->profileImageUrl)){ ?> <img src="<?php echo $user->profileImageUrl;?>" alt="Image" /><?php } ?><p><b><?php echo Yii::app()->user->name;?></b><br/><?php echo $project->title;?></p></div>
-                            <div class="detailMainContentList2">
-                                    <p><?php echo $val->description;?></p>
-                            </div>
-                        </div>
-                       
-                  <?php
-                }
-            }
-            else{
-                ?>
-                    <div class="detailMainContentList">
-                        No Result Found
-                    </div>
-                  <?php
-            }
-            ?> 
+                $this->renderPartial('_tasklist', array('user' => $modeluser,'tasks'=>$tasks)); ?>
          </div>   
          <div class="detailMainContentMainBtn">
             	<?php $this->renderPartial('_tasks', array('task' => $task)); ?>
@@ -146,6 +144,16 @@
 <div class="modal-backdrop fade in" id="hiddenel" ></div>
      <script>
     $(document).ready(function(){
+        
+        $('.edit-img').mouseover(function(){
+            
+            $('.toolpopup').show();
+        });
+	
+         $('.edit-img').mouseout(function(){
+            
+            $('.toolpopup').hide();
+        });
         $('#hiddenel').hide();
         $('.project-header').attr('readonly','readonly');
         
@@ -189,20 +197,18 @@
              
         });
         });
+        $('.edit-img').click(function(){
+             $('.project-header').click();
+        });
         $('.project-header').click(function()
         {
             
             $(this).addClass("edit-project-header");
             $(this).removeAttr("readonly");
-            $('.toolpopup').addClass('hiddenalert');
+           $('.edit-img').hide();
             
         });
-        $('.project-header').focus(function()
-        {
-            
-            $('.toolpopup').addClass('hiddenalert');
-            
-        });                                                                      
+                                                                            
       /* $('.project-header').mouseover(function(){
             
               $('.toolpopup').css('display','block');
@@ -219,6 +225,7 @@
            var title=$(this).val();
             $(this).removeClass("edit-project-header");
             $(this).attr('readonly','readonly');
+            $('.edit-img').show();
             if(title=="")
             {
                 title="Untitled Project";
@@ -240,5 +247,24 @@
             
             
         });
+        
+      
+            
+       
+    var mentions = [<?php foreach ($project->users as $user) { echo '"' . $user->firstName . '" ,';}?>];
+                $('#newComment').textcomplete([
+                    { // html
+                        match: /\B@(\w*)$/,
+                        search: function (term, callback) {
+                            callback($.map(mentions, function (mention) {
+                                return mention.toLowerCase().indexOf(term.toLowerCase()) === 0 ? mention : null;
+                            }));
+                        },
+                        index: 1,
+                        replace: function (mention) {
+                            return '@' + mention + ' ';
+                        }
+                    }
+                ]).overlay([{match: /\B@\w+/g,css: {'background-color': '#d8dfea'}}]);        
     });
 </script>

@@ -14,6 +14,7 @@
  * @property integer $boxFileSize
  * @property string $created
  * @property string $modified
+ * @property string $delete_date
  *
  * The followings are the available model relations:
  * @property Activity[] $activities
@@ -38,12 +39,12 @@ class File extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('userId, projectId, created, modified', 'required'),
+			array('userId, projectId', 'required'),
 			array('userId, projectId, boxFileSize', 'numerical', 'integerOnly'=>true),
 			array('name, mimetype, fpUrl, boxId', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, userId, projectId, name, mimetype, fpUrl, boxId, boxFileSize, created, modified', 'safe', 'on'=>'search'),
+			array('id, userId, projectId, name, mimetype, fpUrl, boxId, boxFileSize, created, modified, delete_date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,6 +78,7 @@ class File extends CActiveRecord
 			'boxFileSize' => 'Box File Size',
 			'created' => 'Created',
 			'modified' => 'Modified',
+                        'delete_date'=>'Delete Date'
 		);
 	}
 
@@ -124,4 +126,21 @@ class File extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public function behaviors(){
+            return array(
+                    'CTimestampBehavior' => array(
+                            'class' => 'zii.behaviors.CTimestampBehavior',
+                            'createAttribute' => 'created',
+                            'updateAttribute' => 'modified',
+                            'setUpdateOnCreate' => true,
+                    )
+            );
+        }
+        public function beforeSave()
+          {   
+
+
+              return parent::beforeSave();
+          }      
 }
