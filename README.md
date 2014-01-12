@@ -1,5 +1,10 @@
 Getting started:
 ==============
+1. Pull down the master branch
+2. Check the branch names to see if there is one already set up for your task. If you are working on the "design" card in Trello, there should be a "deisgn" branch. If not, make a new one and only use this branch.
+
+Do not push to the master branch. Only push to the branch that corresponds to your project. If you have questions, ask me before pushing please. 
+---------
 
 Software to download:
 --------------------
@@ -22,21 +27,21 @@ Note: When you do this, you won’t be able to reach the database. Here is how t
 Note: after your final commit, please revert this so I can push the code to the server without any issue.
 
 That’s it, you now have a local copy of the program to edit. 
-Before pushing your final commit, please make sure it works locally. 
+
+When you are done with your project(very important):
+----------------
+1. Review it locally and make sure it works. 
+2. Make sure your codebase is up to date, I've had a lot of conflicts and it takes time to fix them. 
+3. Push the code to github on the branch specific to your project.
+3. In trello, move your project from "doing" to "Pending review"
+4. Choose a new project to start working on, assign it to yourself, and move it to "doing"
+
 
 Notes for those trying to use curl. 
 ---------------------------------
 GAE doesn't allow curl on their servers, instead you can use URLfetch. See more information here
 https://developers.google.com/appengine/docs/php/urlfetch/
 
-
-When you are done with your project
-----------------
-1. Review it locally and make sure it works. 
-2. Make sure your codebase is up to date, I've had a lot of conflicts and it takes time to fix them. 
-3. Push the code to github 
-3. In trello, move your project from "doing" to "Pending review"
-4. Choose a new project to start working on, assign it to yourself, and move it to "doing"
 
 Live version: 
 -------------
