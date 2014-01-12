@@ -29,21 +29,36 @@
                     } ?> ]
                  
                 $(document).ready(function() {
-				    $(".delete-icon").hide();
+                    $(".delete-icon").hide();
+                    
+                    
                     $("#names").select2({tags:names_array, width: "400"});
                     $("#names").on("change", function(e) {
                       $("#mynames").val($("#names").select2("val").join(","));
                     });
 					
-					$(".name-block").on("mouseover", function(){
-					  $(this).children(".delete-icon").show();
-					  $(this).children("border","1px solid grey");
-					});
-					
-					$(".name-block").on("mouseout", function(){
-					  $(this).children(".delete-icon").hide();
-					  $(this).children("border","none");
-					});
+                    $(".name-block").on("mouseover", function(){
+                      $(this).children(".delete-icon").show();
+                      $(this).children("border","1px solid grey");
+                    });
+
+                    $(".name-block").on("mouseout", function(){
+                      $(this).children(".delete-icon").hide();
+                      $(this).children("border","none");
+                    });
+                    
+                    $(".menu-bar").hide();
+                    $(".filename-block").on("mouseover", function(){
+                      $(this).children(".menu-bar").show();
+                      $(this).children("border","1px solid grey");
+                    });
+                    $(".filename-block").on("mouseout", function(){
+                      $(this).children(".menu-bar").hide();
+                      $(this).children("border","none");
+                    });   
+
+
+
 
                 });
             </script>
