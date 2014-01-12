@@ -1160,7 +1160,7 @@ CREATE TABLE `activity` (
   CONSTRAINT `activity_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `activity_ibfk_2` FOREIGN KEY (`studyId`) REFERENCES `study` (`id`) ON DELETE CASCADE,
   CONSTRAINT `activity_ibfk_3` FOREIGN KEY (`parentActivityId`) REFERENCES `activity` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=723 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=753 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1325,12 +1325,13 @@ CREATE TABLE `file` (
   `boxFileSize` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
+  `delete_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `file_user_fk2` (`userId`),
   KEY `file_project_fk` (`projectId`),
   CONSTRAINT `file_project_fk` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `file_user_fk2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1374,7 +1375,7 @@ CREATE TABLE `lab` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1466,10 +1467,13 @@ CREATE TABLE `project` (
   `status` varchar(255) DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `studyboardId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `project_user_fk` (`userId`),
+  KEY `project_studyboard_fk` (`studyboardId`),
+  CONSTRAINT `project_studyboard_fk` FOREIGN KEY (`studyboardId`) REFERENCES `studyboard` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `project_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1559,6 +1563,26 @@ CREATE TABLE `study` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `studyboard`
+--
+
+DROP TABLE IF EXISTS `studyboard`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `studyboard` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `studyboard_user_fk` (`userId`),
+  CONSTRAINT `studyboard_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `system_event`
 --
 
@@ -1621,7 +1645,7 @@ CREATE TABLE `task` (
   CONSTRAINT `assignee_fk` FOREIGN KEY (`assigneeId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `owner_fk` FOREIGN KEY (`ownerId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `task_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1651,7 +1675,7 @@ CREATE TABLE `tech` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1814,7 +1838,4 @@ CREATE TABLE `user_position` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-08 22:14:02
-
--- 10 Jan 2014 : By Amit Thatey <amitthateywebexpert@gmail.com>
-ALTER TABLE `file` ADD `delete_date` DATETIME NULL DEFAULT NULL 
+-- Dump completed on 2014-01-12 15:44:48
