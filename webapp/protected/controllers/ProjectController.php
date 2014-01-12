@@ -8,14 +8,14 @@ class ProjectController extends Controller
         public function filters()
     	{
     		return array(
-                			'accessControl', 
+                			'accessControl',
                 		);
     	}
   	public function accessRules()
 	{
 		return array(
-			array('allow', 
-				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask'),
+			array('allow',
+				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask', 'ajaxProjects'),
 				'users'=>array('@'),
 			),
 			array('deny','users'=>array('*'),),
@@ -100,8 +100,11 @@ class ProjectController extends Controller
 	{
             $uid=Yii::app()->session['uid'];
 			$projects = array();
-            $projects=Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
-            $this->render('dashboard', array('projects' => $projects,));
+            //$projects=Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
+            //$studyboards=Studyboard::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
+
+            //$this->render('dashboard', array('projects' => $projects, 'studyboards' =>$studyboards));
+            $this->render('dashboard');
 		
 	}
 
@@ -119,10 +122,15 @@ class ProjectController extends Controller
 				$project->title = $_POST['title'];
 				$project->status = 'active';
 
+                // In case the project is created from Study board then
+                // set the project studyboard id
+                if(!empty($_POST['studyboardId'])){
+                    $project->studyboardId = $_POST['studyboardId'];
+                }
+
 				if ($project->save())
 				{
-					
-				$this->redirect('/project/index/'.$project->id);
+    				$this->redirect('/project/index/'.$project->id);
 				}
 				else
 				{
@@ -312,6 +320,14 @@ class ProjectController extends Controller
                         $resp = json_decode(json_encode($respArray), false);
                 }
                 
+    }
+
+    public function actionAjaxProjects()
+    {
+        $uid=Yii::app()->session['uid'];
+        $projects=Project::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active', 'studyboardId' => null));
+        $studyboards=Studyboard::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
+        $this->renderPartial('_ajaxProjects', array('projects' => $projects,'studyboards' => $studyboards));
     }
    
 }
