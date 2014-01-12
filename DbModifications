@@ -209,3 +209,22 @@ INSERT INTO tech (name, created, modified) values
 
 -- End new create
 -- 01/08/2014
+
+-- #Start new create
+-- 01/13/2014 Jaya
+CREATE TABLE `studyboard` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `studyboard_user_fk` (`userId`),
+  CONSTRAINT `studyboard_user_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `project` ADD COLUMN `studyboardId` int(11);
+ALTER TABLE `project` ADD CONSTRAINT `project_studyboard_fk` FOREIGN KEY(`studyboardId`) REFERENCES `studyboard`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+-- End new create
+-- 01/13/2014
