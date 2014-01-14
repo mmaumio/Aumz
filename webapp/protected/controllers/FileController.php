@@ -94,6 +94,16 @@ class FileController extends Controller
 				//var_dump($parameters);
                                 
                                 Yii::app()->db->createCommand($sql)->execute($parameters);
+                                $userData=User::model()->findByPk(Yii::app()->session['uid']);
+                $projectData=Project::model()->findByPk($a['projectId']);
+                $act='AddFile';
+                $description=$userData->email.' added file to project : '.$projectData->title;
+                $initiator=$userData->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) );
+                
                                 //var_dump(Yii::app()->db->createCommand($sql));
        $activity = new Activity;
 				$activity->userId = Yii::app()->user->id;
@@ -150,7 +160,17 @@ class FileController extends Controller
 
 			if ($project->isMemberOf())
 			{
-			                $policy = base64_encode(json_encode(array('expiry'=>strtotime("+5 minutes"), 'call'=>array('read'))));
+			          $userData=User::model()->findByPk(Yii::app()->session['uid']);
+                 $act='DownloadFile';
+                $description=$userData->email.' file file from project : '.$project->title;
+                $initiator=$userData->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) );   
+                      
+                      
+                            $policy = base64_encode(json_encode(array('expiry'=>strtotime("+5 minutes"), 'call'=>array('read'))));
 							$signature = hash_hmac('sha256', $policy, Yii::app()->params['filepicker']['app_secret']);
                             $this->redirect($file->fpUrl.'?dl=true&signature='.$signature.'&policy='.$policy);			}
                 }else{
@@ -176,7 +196,14 @@ class FileController extends Controller
                
                 $file->delete_date = new CDbExpression('UTC_TIMESTAMP()');
                 if($file->save()){
-                    //Sucess
+                    $userData=User::model()->findByPk(Yii::app()->session['uid']);
+                 $act='RemoveFile';
+                $description=$userData->email.' remove file from project : '.$project->title;
+                $initiator=$userData->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) );   
                 }else{
                     //Fail
                 }

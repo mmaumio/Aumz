@@ -81,6 +81,14 @@ class SiteController extends Controller
                                     if(isset(Yii::app()->request->cookies['identity']))
                                     unset(Yii::app()->request->cookies['identity']);
                                   }
+                                  $activity='Login';
+                                  $description=$model->email.' login on '.Yii::app()->name;
+                                  $initiator=$model->email;
+                                  
+                                 Yii::app()->session['event']=array('0'=>array('activity'=>$activity,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                       ) );
                                    $this->redirect('/dashboard');
                                         
 				            
@@ -380,6 +388,14 @@ class SiteController extends Controller
                         $login->password=base64_decode($_GET['string']);
                         if($login->login())
                         {
+                            
+                            $activity='Login';
+                               $description=$login->email.' login on '.Yii::app()->name.' after successfull verification';
+                               $initiator=$login->email;
+                               Yii::app()->session['event']=array('0'=>array('activity'=>$activity,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                       ) );
                              Yii::app()->user->setFlash('success','<b>Welcome!</b> You are all set to use Stirplate, please fill in your first/last name and your preferred contact email address to get started');
             
                            	$this->redirect(array('user/profile'));

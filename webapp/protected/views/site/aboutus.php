@@ -1,4 +1,6 @@
-
+<script>
+mixpanel.track('viewAboutus');
+</script>
 
 <center> <h1> About us </h1> </center>
 <div class="container">

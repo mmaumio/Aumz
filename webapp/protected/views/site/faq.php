@@ -1,3 +1,6 @@
+<script>
+mixpanel.track('viewFAQ');
+</script>
 
   <center> <h1>Frequently asked questions</h1> </center>
 <div class="container">

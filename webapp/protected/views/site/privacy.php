@@ -10,7 +10,9 @@
 We may use your email address to send you Service-related notices (including any notices required by law, in lieu of communication by postal mail). We may also use your contact information to send you marketing messages. If you don’t want to receive these messages, you can opt out by following the instructions in the message. If you correspond with us by email, we may retain the content of your email messages, your email address and our responses.
 If you choose to use our invitation service to invite a friend to the Service, we will ask you for that person’s email address and automatically send an email invitation. Stirplate stores this information to send this email, to register your friend if your invitation is accepted, and to track the success of our invitation service.
 <br>
-
+<script>
+mixpanel.track('viewPrivacy');
+</script>
 Content: You also provide us information in Content you post to the Service. Your Content and metadata about your Content may be viewed by other users in accordance with your settings on the Service, by default everything is private however. Stirplate can, but has no obligation, to monitor your Content you post on the Service. We can remove any information you post for any reason or no reason. Unless Content is made viewable in accordance with your settings on the Service, Stirplate and Stirplate employees will not view your Content except: (i) to maintain, provide or improve the Service; (ii) to help you and resolve your support requests; or (iii) as Stirplate believes, in its sole opinion, is necessary to comply with or avoid the violation of applicable law or regulation or to cooperate with law enforcement.
 
  </div>

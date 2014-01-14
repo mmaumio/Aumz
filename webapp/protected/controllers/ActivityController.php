@@ -19,7 +19,16 @@ class ActivityController extends Controller
 				$obj['study'] = Project::model()->findByPk($_POST['activity']['projectId']);
 				$obj['activity'] = $activity;
 				$obj['author'] = User::model()->findByPk($activity->userId);
-				$criteria = new CDbCriteria();
+				
+                $act='use@Comment';
+                $description=$obj['author']->email.' comments on Project : '.$obj['study']->title;
+                $initiator=$obj['author']->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) ); 
+                
+                $criteria = new CDbCriteria();
 				$criteria->condition = "projectId =:projectId";
 				$criteria->params = array(':projectId' => $_POST['activity']['projectId']);
 				if (strpos($_POST['activity']['content'],'@') !== false) {

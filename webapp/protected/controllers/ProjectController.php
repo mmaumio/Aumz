@@ -44,6 +44,18 @@ class ProjectController extends Controller
             }
             if ($project)
             {
+                if(isset($_GET['da']))
+                {
+                $userData=User::model()->findByPk(Yii::app()->session['uid']);
+              
+                $act='useDashboardLink';
+                $description=$userData->email.'useDashboardLink from Project : '.$project->title;
+                $initiator=$userData->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) );
+               }          
                     $this->render('index', array('project' => $project, 'authers' => $authers, 'all_users' => $all_users,'task'=>$task, 'modeluser'=>$modeluser,'tasks'=>$tasks));
             }
 		}
@@ -71,8 +83,19 @@ class ProjectController extends Controller
 			$project = Project::model()->findByPk($_GET['id']);
 			$authers_projects = ProjectUser::model()->findByAttributes(array('projectId' => $_GET['id'], 'userId' => $_GET['userId'], 'role' => 'collaborator'));
 			if($authers_projects){
+			   	$userData=User::model()->findByPk(Yii::app()->session['uid']);
+               
+                $act='Remove Collab';
+                $description=$authers_projects->user->email.' remove from project : '.$authers_projects->title;
+                $initiator=$userData->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) );    
+             
+                
 				$authers_projects->delete();
-				$this->redirect('/project/index/'.$_GET['id']);
+        		$this->redirect('/project/index/'.$_GET['id']);
 			}
 			else
 				echo "Can't remove this user";
@@ -90,7 +113,19 @@ class ProjectController extends Controller
 				else
 					$user = User::model()->find(array('condition'=>'firstName=:name or lastName=:name','params'=>array(':name'=>$splited_names[0])));
 				if($user)
-					$user->add_to_project($_POST['projectId']);
+                {
+				//	$user->add_to_project($_POST['projectId']);
+                    $userData=User::model()->findByPk(Yii::app()->session['uid']);
+                $ProjectData=Project::model()->findByPk($_POST['projectId']);
+                $user->add_to_project($_POST['projectId']);
+                $act='Add Collab';
+                $description=$user->email.' added on project : '.$ProjectData->title.' By '.$userData->email;
+                $initiator=$userData->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) ); 
+                }    
 			}
 			$this->redirect('/project/index/' . $_POST['projectId']);
 		}
@@ -133,7 +168,14 @@ class ProjectController extends Controller
 
 				if ($project->save())
 				{
-					
+					$userData=User::model()->findByAttributes(array('id'=>$uid));
+                 $act='CreateProject';
+                $description=$userData->email.' created new project : '.$project->title;
+                $initiator=$userData->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) );  
 				$this->redirect('/project/index/'.$project->id);
 				}
 				else

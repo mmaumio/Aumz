@@ -48,20 +48,15 @@ class FileController extends Controller
 		if (Yii::app()->session['uid'] && !empty($_GET['id']))
 		{
 			$file = File::model()->findByPk($_GET['id']);
-
 			$project = Project::model()->findByPk($file->projectId);
-
 			if (!empty($file->boxId) && $project->isMemberOf())
 			{
 				$box = new Box_API(Yii::app()->params['boxclientid'], Yii::app()->params['boxclientsecret'], 'n/a');
-
 				if(!$box->load_token('protected/config/')){
 					$box->get_code();
 				}
-
 				$redirectUrl = $box->get_file_download_link($file->boxId);
-
-				$this->redirect($redirectUrl);
+    			$this->redirect($redirectUrl);
 			}
 		}
 	}

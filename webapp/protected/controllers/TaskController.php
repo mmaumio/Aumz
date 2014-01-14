@@ -59,7 +59,15 @@ class TaskController extends Controller
 				$respArray['task']['subject'] = $task->subject;
 				$respArray['task']['description'] = $task->description;
 				$respArray['task']['assigneeImgUrl'] = $task->assignedToUser->getUserImage();
-			}
+                $act='Task';
+                $description=$activity->content;
+                $initiator=$task->createdByUser->getName();
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) );    
+        
+        	}
 			else
 			{
 				$respArray['status'] = 'ERROR';

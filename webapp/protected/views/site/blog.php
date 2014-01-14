@@ -1,3 +1,6 @@
+<script>
+mixpanel.track('viewBlog');
+</script>
 <center> <h1> Thoughts from the Stirplate Founder  </h1> </center>
 <br>
 <div class="container">
