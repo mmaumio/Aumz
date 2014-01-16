@@ -415,14 +415,12 @@ class SiteController extends Controller
     
     public function actionResentemaillink()
     {
-         
-         
-         $userModel=User::model()->findByAttributes(array('email'=>$_GET['email']));
+          $userModel=User::model()->findByAttributes(array('email'=>$_GET['email']));
           if($userModel)
           {
-         Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
-                $obj = array('records'=>$userModel,'string'=>$_GET['key']);
-                Notification::sendEmail('newSignup', $userModel, $obj);
+          Yii::app()->user->setFlash('success','Please check your email, an verification link sent on <i>'.$userModel->email.'</i>');
+          $obj = array('records'=>$userModel,'string'=>$_GET['key']);
+          Notification::sendEmail('newSignup', $userModel, $obj);
           Yii::app()->user->setFlash('success','Email verification sent successfully');
           }
           else

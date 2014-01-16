@@ -206,7 +206,14 @@ class ProjectController extends Controller
 
                      if($projectData->update(false))
                      {
-                        
+                $userData=User::model()->findByPk(Yii::app()->session['uid']);
+                $act='deleteProject';
+                $description=$userData->email.' has delete project  : '.$projectData->title;
+                $initiator=$userData->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) );    
                      
                         Yii::app()->session['msg']='Project has been moved to Trash .<a href="/project/undo_delete/node/'.$_GET['node'].'"> Undo? </a>';
 	    

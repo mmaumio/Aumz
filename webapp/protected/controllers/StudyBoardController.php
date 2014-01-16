@@ -44,6 +44,15 @@ class StudyboardController extends Controller
 
                 if ($studyboard->save())
                 {
+                    
+                $userData=User::model()->findByPk(Yii::app()->session['uid']);
+                $act='addStudyboard';
+                $description=$userData->email.' has add a study board : '.$studyboard->title;
+                $initiator=$userData->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) );    
                     $this->redirect('/studyboard/index/'.$studyboard->id);
                 }
                 else
@@ -94,6 +103,14 @@ class StudyboardController extends Controller
                         $project = Project::model()->findByPk($project);
                         $project->studyboardId = $_POST['studyboardId'];
                         $project->save();
+                $userData=User::model()->findByPk(Yii::app()->session['uid']);
+                $act='addProjectToStudyboard';
+                $description=$userData->email.' has move project to study board';
+                $initiator=$userData->email;
+                Yii::app()->session['event']=array('0'=>array('activity'=>$act,
+                                                                        'description'=>$description,
+                                                                        'initiator'=>$initiator
+                                                                      ) );   
                     }
                 }
                 $this->redirect('/studyboard/index/'.$_POST['studyboardId']);
