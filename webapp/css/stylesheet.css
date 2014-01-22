@@ -762,4 +762,61 @@ div#user-profile-title h3 {
 .detailMainContentMainBtn .discussion-submit{
     margin-right: 7%;
 }
+.black-popup
+{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.9);
+    border-radius: 8px;
+    bottom: 20px;
+    color: #FFFFFF;
+    height: 60px;
+    padding: 9px;
+    position: fixed;
+    right: 20px;
+    width: 20%;
+    z-index: 9;
+}
+.links
+{
+    margin:0px 17px;
+}
 
+.black-popup-large,.black-popup-large-2,.black-popup-large-3
+{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.9);
+    color: #FFFFFF;
+    height: 100%;
+    padding: 9px;
+    position: fixed;
+    width: 100%;
+    z-index: 9;
+    right:100%;
+}
+/*.black-popup-large-2
+{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.9);
+    color: #FFFFFF;
+    height: 100%;
+    padding: 9px;
+    position: fixed;
+    width: 100%;
+    z-index: 9;
+}*/
+.container-middle
+{
+    width: 460px;
+    margin:0px auto;
+}
+.btn-popup{
+  background: none repeat scroll 0 0 #66CC66;
+    color: #FFFFFF !important;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none !important;
+    width: 86px;
+}
+.content-part
+{
+    min-height: 200px;
+}

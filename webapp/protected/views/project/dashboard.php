@@ -116,3 +116,93 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->  
+
+<div class="black-popup">
+<p class="links"><input type="checkbox" name=""/> Don't show this again</p>
+<p><a href="#" class="links nxt">Next</a><a href="#" class="links can">Cancel</a></p>
+</div>
+<!-----------------------POP UP DIV1----------------->
+<div class="black-popup-large" style="">
+<div class="container-middle">
+<div class="dashNewStdy">
+    <div class="detailMainContentMainBtn">
+        <a href="#" ><img src="/img/dashboard/arrow.png" alt="New Project" /><span>This is a demonstration project </span></a>
+    </div>
+    <div class="content-part">
+    </div>
+    <div class="lower-part">
+            <p class="links"><input type="checkbox" name=""/> Don't show this again</p>
+<p><a href="#" class="btn-popup next1">Next</a><a href="#" class="btn-popup">Cancel</a></p>
+
+    </div>
+</div>
+</div>
+</div>
+<!----------------------------------------------->
+<!------------------POP UP DIV2------------------->
+<div class="black-popup-large-2" style="">
+<div class="container-middle">
+<div class="dashNewStdy">
+    <div class="detailMainContentMainBtn">
+        <a href="#" ><img src="/img/dashboard/activity.png" alt="This is the activity stream" /><span>This is the activity stream</span></a>
+    </div>
+    <div class="content-part">
+    </div>
+    <div class="lower-part">
+            <p class="links"><input type="checkbox" name=""/> Don't show this again</p>
+<p><a href="#" class="btn-popup next2">Next</a><a href="#" class="btn-popup">Cancel</a></p>
+
+    </div>
+</div>
+</div>
+
+</div>
+<!----------------------------------------------->
+<!------------------POP UP 3--------------------->
+<div class="black-popup-large-3" style="">
+<div class="container-middle">
+<div class="dashNewStdy">
+    <div class="detailMainContentMainBtn">
+        <a href="#" ><img src="/img/dashboard/activity.png" alt="This is study board area" /><span>This is study board area</span></a>
+    </div>
+    <div class="content-part">
+    </div>
+    <div class="lower-part">
+            <p class="links"><input type="checkbox" name=""/> Don't show this again</p>
+<p><a href="#" class="btn-popup">Next</a><a href="#" class="btn-popup">Cancel</a></p>
+
+    </div>
+</div>
+</div>
+
+</div>
+<!----------------------------------------------->
+<script>
+    $(document).ready(function(){
+        $('.can').click(function(){
+            $('.black-popup').fadeOut();
+        });
+        $('.nxt').click(function(){
+            $(".black-popup-large").animate({right:'0'},1000,function(){
+              //  $(".black-popup-large").fadeIn();
+            });
+        });
+        $('.next1').click(function(){
+            $(".black-popup-large").animate({right:'100%'},1000,function(){
+               // $(".black-popup-large").fadeIn();
+            });
+            $(".black-popup-large-2").animate({right:'0'},1000,function(){
+               // $(".black-popup-large").fadeIn();
+            });
+        });
+       $('.next2').click(function(){
+            $(".black-popup-large-2").animate({right:'100%'},1000,function(){
+               // $(".black-popup-large").fadeIn();
+            });
+            $(".black-popup-large-3").animate({right:'0'},1000,function(){
+               // $(".black-popup-large").fadeIn();
+            });
+        });
+    });
+
+</script>
