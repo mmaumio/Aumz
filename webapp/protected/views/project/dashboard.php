@@ -163,7 +163,7 @@
 <div class="container-middle">
 <div class="dashNewStdy">
     <div class="detailMainContentMainBtn">
-        <a href="#" ><img src="/img/dashboard/activity.png" alt="This is study board area" /><span>This is study board area</span></a>
+        <a href="#" ><img src="/img/dashboard/calendar.png" alt="This is study board area" /><span>This is study board area</span></a>
     </div>
     <div class="content-part">
     </div>
