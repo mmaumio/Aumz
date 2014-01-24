@@ -223,7 +223,7 @@
     </div>
     <div class="lower-part">
             <p class="links"><input type="checkbox" name="" class="setflag" /> Don't show this again</p>
-<p><a href="#" class="btn-popup">Finish</a><a href="#" class="btn-popup btn-can5">Later</a></p>
+<p><a href="#" class="btn-popup">Finish</a><a href="#" class="btn-popup btn-can5">Later</a> </p>
 
     </div>
 </div>
