@@ -398,7 +398,7 @@ class SiteController extends Controller
                                                                        ) );
                              Yii::app()->user->setFlash('success','<b>Welcome!</b> You are all set to use Stirplate, please fill in your first/last name and your preferred contact email address to get started');
             
-                           	$this->redirect(array('user/profile'));
+                           	$this->redirect(array('user/profile?welcome'));
     	                }
                       exit;
                      }

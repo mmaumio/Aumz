@@ -780,7 +780,7 @@ div#user-profile-title h3 {
     margin:0px 17px;
 }
 
-.black-popup-large,.black-popup-large-2,.black-popup-large-3
+.black-popup-large,.black-popup-large-2,.black-popup-large-3,.black-popup-large-4,.black-popup-large-5
 {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.9);
     color: #FFFFFF;
@@ -790,6 +790,22 @@ div#user-profile-title h3 {
     width: 100%;
     z-index: 9;
     right:100%;
+}
+.black-popup-large-4
+{
+    font-size: 11px;
+    height: 17px;
+    left: 2%;
+    top: 2%;
+    width: 95%;
+}
+.welcome
+{
+    color: #FFFFFF;
+}
+.container-middle2
+{
+    width: 700px !important;
 }
 /*.black-popup-large-2
 {

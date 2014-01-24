@@ -102,6 +102,13 @@ class UserController extends Controller
 //                $this->redirect(array('create', 'id' => $model->id));
                     // sets success flash named 'update'
                     Yii::app()->user->setFlash('update', Yii::app()->params['SUCCESS']);
+                   if(isset($_GET['welcome']))
+                   {
+                            $this->redirect(Yii::app()->createUrl('project/dashboard?welcome'));
+                   }
+                   else{
+                     $this->redirect(Yii::app()->createUrl('project/dashboard'));
+                   }
                 } else {
                     // sets failure flash named 'update'
                     Yii::app()->user->setFlash('update', Yii::app()->params['FAILURE']);

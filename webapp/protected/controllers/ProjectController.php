@@ -15,7 +15,7 @@ class ProjectController extends Controller
 	{
 		return array(
 			array('allow', 
-				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask', 'Updateactivity', 'ajaxProjects'),
+				'actions'=>array('index','Delete_Comment','Remove_Collaborator','Add_Collaborators','Dashboard','Create','Delete_project','Undo_delete','Update_title','ajaxTaskCreate','getAssignee','fetchNewTask', 'Updateactivity', 'ajaxProjects','updateflash','updatewelcomeflash'),
 				'users'=>array('@'),
 			),
 			array('deny','users'=>array('*'),),
@@ -372,6 +372,23 @@ class ProjectController extends Controller
         $studyboards=Studyboard::model()->findAllByAttributes(array('userId'=>$uid,'status'=>'active'));
         $activities  = Activity::model()->findAllBySql("SELECT * FROM `activity` WHERE projectId in (SELECT projectId FROM `project_user` WHERE userId = ".Yii::app()->session['uid']." ) ORDER BY created DESC LIMIT 10");
         $this->renderPartial('_ajaxProjects', array('projects' => $projects,'studyboards' => $studyboards, 'activities' => $activities));
+    }
+    public function actionUpdateflash()
+    {
+        $cookie = new CHttpCookie('flash','flash');
+        $cookie->expire = time()+3600*24*365;
+        Yii::app()->request->cookies['flash'] = $cookie;
+        
+        exit;
+    }
+    
+     public function actionUpdatewelcomeflash()
+    {
+        /*$cookie = new CHttpCookie('welcomeflash','welcomeflash');
+        $cookie->expire = time()+3600*24*365;
+        Yii::app()->request->cookies['welcomeflash'] = $cookie;
+        
+        exit;*/
     }
 
 }
