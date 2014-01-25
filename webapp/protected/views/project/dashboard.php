@@ -116,6 +116,8 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->  
 <!--------------------------------------------------->
+<a id="btn-wel" href="#" data-toggle="modal" data-target="#myModal2" style="display:none;"><span>Start New Project</span></a>
+   
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -139,16 +141,30 @@
 <!--------------------------------------------------->
 <?php if(isset($_GET['welcome'])){  ?>
 
-<div class="black-popup-large-4" style="right: 0;">
+<!--<div class="black-popup-large-4" style="right: 0;">
 
 
        <h3 class="welcome">
         Welcome to Strirplate, we are just going to point out a few features here...
        </h3>
 
-</div>
+</div>-->
+<script>
+ 
+ $(document).ready(function(){
+    
+    
+     /*$('.black-popup-large-4').click(function(){
+                $(this).animate({top:'-10%'},2000,function(){
+                       
+                });
+          
+        });*/
+        $('#btn-wel').click();
+ });
+</script>
 <?php } ?>
-<?php //if(!isset(Yii::app()->request->cookies['flash'])){  ?>
+<?php if(!isset(Yii::app()->request->cookies['flash'])){  ?>
 <div class="black-popup">
 <p class="links"><input type="checkbox" name="" class="setflag"/> Don't show this again</p>
 <p><a href="#" class="links nxt">Next</a><a href="#" class="links can">Cancel</a></p>
@@ -223,7 +239,7 @@
     </div>
     <div class="lower-part">
             <p class="links"><input type="checkbox" name="" class="setflag" /> Don't show this again</p>
-<p><a href="#" class="btn-popup">Finish</a><a href="#" class="btn-popup btn-can5">Later</a> </p>
+<p><a href="#" class="btn-popup btn-can5">Finish</a><a href="#" class="btn-popup btn-can5">Later</a> </p>
 
     </div>
 </div>
@@ -306,13 +322,8 @@
                // $(".black-popup-large").fadeIn();
             });
         });
-        $('.black-popup-large-4').click(function(){
-                $(this).animate({top:'-10%'},2000,function(){
-                       
-                });
-          
-        });
+        
     });
 
 </script>
-<?php //} ?>
+<?php } ?>

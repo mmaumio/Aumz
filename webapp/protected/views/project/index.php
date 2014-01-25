@@ -30,8 +30,6 @@
                  
                 $(document).ready(function() {
                     $(".delete-icon").hide();
-                    
-                    
                     $("#names").select2({tags:names_array, width: "400"});
                     $("#names").on("change", function(e) {
                       $("#mynames").val($("#names").select2("val").join(","));
@@ -157,6 +155,168 @@
 </div>
 </div>
 <div class="modal-backdrop fade in" id="hiddenel" ></div>
+<?php if(!isset(Yii::app()->request->cookies['flash'])){  ?>
+<div class="black-popup">
+<p class="links"><input type="checkbox" name="" class="setflag"/> Don't show this again</p>
+<p><a href="#" class="links nxt">Next</a><a href="#" class="links can">Cancel</a></p>
+</div>
+<!-----------------------POP UP DIV1----------------->
+<div class="black-popup-large" style="">
+<div class="container-middle container-middle2">
+<div class="dashNewStdy">
+    <div class="detailMainContentMainBtn">
+        <a href="#" ><img src="/img/dashboard/discussion.png" alt="New Project" /><span> This is a the discussion area </span></a>
+    </div>
+    <div class="content-part">
+    <img src="/img/dashboard/p5.png"/>
+    </div>
+    <div class="lower-part">
+            <p class="links"><input type="checkbox" name="" class="setflag"/> Don't show this again</p>
+<p><a href="#" class="btn-popup next1">Next</a><a href="#" class="btn-popup btn-can">Later</a></p>
+
+    </div>
+</div>
+</div>
+</div>
+<!----------------------------------------------->
+<!------------------POP UP DIV2------------------->
+<div class="black-popup-large-2" style="">
+<div class="container-middle container-middle2">
+<div class="dashNewStdy">
+    <div class="detailMainContentMainBtn">
+        <a href="#" ><img src="/img/dashboard/documents_512.png" alt="This is the activity stream" /><span>This is the files area</span></a>
+    </div>
+    <div class="content-part">
+    <img src="/img/dashboard/p6.png"/>
+    </div>
+    <div class="lower-part">
+            <p class="links"><input type="checkbox" name="" class="setflag"/> Don't show this again</p>
+<p><a href="#" class="btn-popup next2">Next</a><a href="#" class="btn-popup btn-can2">Later</a></p>
+
+    </div>
+</div>
+</div>
+</div>
+<!----------------------------------------------->
+<!------------------POP UP 3------------------->
+<!--<div class="black-popup-large-3" style="">
+<div class="container-middle container-middle2">
+<div class="dashNewStdy">
+    <div class="detailMainContentMainBtn">
+        <a href="#" ><img src="/img/dashboard/calendar.png" alt="This is study board area" /><span>This is study board area</span></a>
+    </div>
+    <div class="content-part">
+    <img src="/img/dashboard/p2.png"/>
+    </div>
+    <div class="lower-part">
+            <p class="links"><input type="checkbox" name="" class="setflag" /> Don't show this again</p>
+<p><a href="#" class="btn-popup nxt4">Next</a><a href="#" class="btn-popup btn-can3">Later</a></p>
+
+    </div>
+</div>
+</div>
+
+</div>
+
+<div class="black-popup-large-5" style="">
+<div class="container-middle container-middle2">
+<div class="dashNewStdy">
+    <div class="detailMainContentMainBtn">
+        <a href="#" ><img src="/img/dashboard/admin.png" alt="This is study board area" /><span>This is the profile button</span></a>
+    </div>
+    <div class="content-part">
+    <img src="/img/dashboard/p4.png"/>
+    </div>
+    <div class="lower-part">
+            <p class="links"><input type="checkbox" name="" class="setflag" /> Don't show this again</p>
+<p><a href="#" class="btn-popup btn-can5">Finish</a><a href="#" class="btn-popup btn-can5">Later</a> </p>
+
+    </div>
+</div>
+</div>
+
+</div>  -->
+
+
+<script>
+    $(document).ready(function(){
+        
+        $.ajax({
+                url:'<?php echo Yii::app()->createUrl('project/updatewelcomeflash');?>',
+                type:'POST',
+                success:function(){},
+                complete:function(){},
+            });
+        
+        
+        $('.can').click(function(){
+            $('.black-popup').fadeOut();
+        });
+        $('.nxt').click(function(){
+            $(".black-popup-large").animate({right:'0'},1000,function(){
+                         //  $(".black-popup-large").fadeIn();
+            });
+        });
+        $('.next1').click(function(){
+            $(".black-popup-large").animate({right:'100%'},1000,function(){
+                     // $(".black-popup-large").fadeIn();
+            });
+            $(".black-popup-large-2").animate({right:'0'},1000,function(){
+                   // $(".black-popup-large").fadeIn();
+            });
+        });
+      /* $('.next2').click(function(){
+            $(".black-popup-large-2").animate({right:'100%'},1000,function(){
+               // $(".black-popup-large").fadeIn();
+            });
+            $(".black-popup-large-3").animate({right:'0'},1000,function(){
+            // $(".black-popup-large").fadeIn();
+            });                                
+        });
+        $('.nxt4').click(function(){
+            $(".black-popup-large-3").animate({right:'100%'},1000,function(){
+               // $(".black-popup-large").fadeIn();
+            });
+            $(".black-popup-large-5").animate({right:'0'},1000,function(){
+            // $(".black-popup-large").fadeIn();
+            });                                
+        }); */
+        
+        $('.setflag').click(function(){
+            $.ajax({
+                url:'<?php echo Yii::app()->createUrl('project/updateflash');?>',
+                type:'POST',
+                success:function(){},
+                complete:function(){},
+            });
+        });
+        
+        $('.btn-can3').click(function(){
+              $(".black-popup-large-3").animate({right:'100%'},1000,function(){
+               // $(".black-popup-large").fadeIn();
+            });
+        });
+        $('.btn-can5').click(function(){
+              $(".black-popup-large-5").animate({right:'100%'},1000,function(){
+               // $(".black-popup-large").fadeIn();
+            });
+        });
+        
+        $('.btn-can2').click(function(){
+              $(".black-popup-large-2").animate({right:'100%'},1000,function(){
+               // $(".black-popup-large").fadeIn();
+            });
+        });
+         $('.btn-can').click(function(){
+              $(".black-popup-large").animate({right:'100%'},1000,function(){
+               // $(".black-popup-large").fadeIn();
+            });
+        });
+        
+    });
+
+</script>
+<?php } ?>
      <script>
     $(document).ready(function(){
         
@@ -283,3 +443,5 @@
                 ]).overlay([{match: /\B@\w+/g,css: {'background-color': '#d8dfea'}}]);        
     });
 </script>
+
+
