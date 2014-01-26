@@ -97,6 +97,10 @@ class SiteController extends Controller
 		$this->render('index',array('model'=>$model, 'newsLetterModel'=>$newsLetterModel,'userModel'=>$userModel));
 	}
 
+  public function actionPricing() {
+    $this->render('pricing');
+  }
+
 	/**
 	 * This is the action to handle external exceptions.
 	 */
