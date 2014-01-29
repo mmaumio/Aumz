@@ -349,6 +349,7 @@
                          <div class="controls">
                             <?php echo CHtml::submitButton('SIGN IN',array('class'=>'btn-submit')); ?>
                             <a class="btn-signup" data-toggle="modal" data-target="#signup-dialog" style="font-family:'HelveticaNeueLT Pro';font-size: 20px;">SIGN UP</a>
+                            <a class="btn-signup" href="site/pricing">pricing/plan</a>
                          </div>
                     </div>
                     <?php echo CHtml::hiddenField('confirm-password'); ?>
