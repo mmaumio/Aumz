@@ -364,6 +364,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 	margin: 5px 0;
 	font-weight: normal;
 }
+
+/* ======== Pricing and Plans CSS ========== */
+
+#pricing-plan {
+	margin-top: 1em;
+}
+
+ul#pricing-plan li {
+	display: inline;
+	margin: 2px 10px;
+	border-right: 1px solid #ACACAC;
+	padding-right: 14px;
+}
+
 /*-------------------------------------------*/
 .detailMain {
 	width: 100%;
