@@ -40,7 +40,10 @@ class SiteController extends Controller
                     $model->password=base64_decode(Yii::app()->request->cookies['authentic']);
                     if($model->validate() && $model->login())
                       {
-                           $this->redirect('/dashboard');                                             
+                           
+                               $this->redirect('/dashboard'); 
+                          
+                                                                   
                       }
                   
                   }               
@@ -89,7 +92,10 @@ class SiteController extends Controller
                                                                         'description'=>$description,
                                                                         'initiator'=>$initiator
                                                                        ) );
-                                   $this->redirect('/dashboard');
+                           
+                               $this->redirect('/dashboard'); 
+                          
+                           
                                         
 				            
                          }
