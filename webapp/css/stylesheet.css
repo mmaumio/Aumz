@@ -782,11 +782,11 @@ div#user-profile-title h3 {
     border-radius: 8px;
     bottom: 20px;
     color: #FFFFFF;
-    height: 60px;
+    height: 70px;
     padding: 9px;
     position: fixed;
     right: 20px;
-    width: 20%;
+    width: 25%;
     z-index: 9;
 }
 .links

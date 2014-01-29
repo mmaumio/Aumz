@@ -131,8 +131,10 @@
           </h5>
       </div>
       <div class="modal-footer">
-       <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
-                   
+            <button class="btn btn-default nxtbtn" data-dismiss="modal" aria-hidden="true">Next</button>
+      <button class="btn btn-default ltrbtn" data-dismiss="modal" aria-hidden="true">Later</button>
+
+             
       </div>
       
     </div><!-- /.modal-content -->
@@ -165,7 +167,8 @@
 </script>
 <?php } ?>
 <?php if(!isset(Yii::app()->request->cookies['flash'])){  ?>
-<div class="black-popup">
+<div class="black-popup" style="<?php if(isset($_GET['welcome'])) {?>bottom:-100px;<?php } ?>">
+<p> We are just going to point out a few features here..</p>
 <p class="links"><input type="checkbox" name="" class="setflag"/> Don't show this again</p>
 <p><a href="#" class="links nxt">Next</a><a href="#" class="links can">Cancel</a></p>
 </div>
@@ -262,11 +265,17 @@
         $('.can').click(function(){
             $('.black-popup').fadeOut();
         });
-        $('.nxt').click(function(){
+        $('.nxt,.nxtbtn').click(function(){
             $(".black-popup-large").animate({right:'0'},1000,function(){
                          //  $(".black-popup-large").fadeIn();
             });
         });
+        $('.ltrbtn').click(function(){
+            $(".black-popup").animate({bottom:'20px'},1000,function(){
+                         //  $(".black-popup-large").fadeIn();
+            });
+        });
+        
         $('.next1').click(function(){
             $(".black-popup-large").animate({right:'100%'},1000,function(){
                      // $(".black-popup-large").fadeIn();
