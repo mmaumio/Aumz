@@ -367,6 +367,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8b8b8', end
 
 /* ======== Pricing and Plans CSS ========== */
 
+#myself-tab {
+	padding: 5px 10px;
+}
+
 #pricing-plan {
 	margin-top: 1em;
 }
